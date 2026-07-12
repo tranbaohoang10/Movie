@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phim Đang Chiếu - CineTicket</title>
+    <link rel="stylesheet" href="../assets/css/user/style.css">
+    <link rel="stylesheet" href="../assets/css/user/phim.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+
+<body>
+    <nav class="navbar user-ext-1">
+        <a href="index.html" class="logo">CineTicket</a>
+        <ul class="nav-links">
+            <li><a href="index.html">Trang Chủ</a></li>
+            <li><a href="phim.html" class="text-primary">Phim Đang Chiếu</a></li>
+            <li><a href="lich-chieu.html">Lịch Chiếu</a></li>
+            <li><a href="khuyen-mai.html">Khuyến Mãi</a></li>
+        </ul>
+        <div class="nav-right d-flex-center">
+            <form action="phim.html" method="GET" class="search-form">
+                <input type="text" name="q" placeholder="Tìm kiếm phim...">
+                <button type="submit"><i class="fas fa-search"></i></button>
+            </form>
+            <div class="nav-buttons">
+                <a href="login.html" class="btn btn-login">Đăng Nhập</a>
+                <a href="register.html" class="btn btn-primary">Đăng Ký</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="phim-header">
+        <h1>Phim Đang Chiếu</h1>
+        <div class="filter-bar">
+            <button class="filter-btn active">Tất cả</button>
+            <button class="filter-btn">Hành Động</button>
+            <button class="filter-btn">Kinh Dị</button>
+            <button class="filter-btn">Hoạt Hình</button>
+        </div>
+    </header>
+
+    <main class="movies user-ext-68">
+        <div class="movie-grid">
+
+            <!-- Movie 1 -->
+            <div class="movie-card">
+                <img class="user-ext-47" onclick="window.location.href='detail.html'" src="../assets/images/poster1.png"
+                    alt="Action Movie">
+                <div class="movie-content-wrapper">
+                    <h3 class="movie-title user-ext-48" onmouseover="this.style.color='var(--primary-red)'"
+                        onmouseout="this.style.color=''" onclick="window.location.href='detail.html'">Nhiệm Vụ Đỏ</h3>
+                    <div class="movie-meta-info">
+                        <span>Hành Động, Kịch Tính</span>
+                        <span>120 phút</span>
+                        <span>Việt Nam</span>
+                        <span>Phụ đề</span>
+                    </div>
+                    <div class="movie-age">T18: Phim dành cho khán giả từ đủ 18 tuổi trở lên (18+)</div>
+
+                    <div class="movie-date-group">
+                        <div class="movie-date-header">
+                            <span>Thứ Tư, 01/07/2026</span>
+                            <span>^</span>
+                        </div>
+                        <div class="movie-showtimes">
+                            <div class="format-label">STANDARD</div>
+                            <button class="showtime-btn"
+                                onclick="window.location.href='booking-seat.html'">21:35</button>
+                            <button class="showtime-btn"
+                                onclick="window.location.href='booking-seat.html'">23:50</button>
+                        </div>
+                    </div>
+
+                    <div class="movie-date-group">
+                        <div class="movie-date-header">
+                            <span>Thứ Năm, 02/07/2026</span>
+                            <span>^</span>
+                        </div>
+                        <div class="movie-showtimes">
+                            <div class="format-label">STANDARD</div>
+                            <button class="showtime-btn"
+                                onclick="window.location.href='booking-seat.html'">08:00</button>
+                            <button class="showtime-btn"
+                                onclick="window.location.href='booking-seat.html'">10:15</button>
+                            <button class="showtime-btn"
+                                onclick="window.location.href='booking-seat.html'">12:30</button>
+                            <button class="showtime-btn"
+                                onclick="window.location.href='booking-seat.html'">14:45</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Movie 2 -->
+            <div class="movie-card">
+                <img class="user-ext-47" onclick="window.location.href='detail.html'" src="../assets/images/poster4.png"
+                    alt="Rabbit Movie">
+                <div class="movie-content-wrapper">
+                    <h3 class="movie-title user-ext-48" onmouseover="this.style.color='var(--primary-red)'"
+                        onmouseout="this.style.color=''" onclick="window.location.href='detail.html'">Thỏ Ơi Chạy Đi!
+                    </h3>
+                    <div class="movie-meta-info">
+                        <span>Hoạt Hình, Gia Đình</span>
+                        <span>95 phút</span>
+                        <span>Hoa Kỳ</span>
+                        <span>Lồng Tiếng</span>
+                    </div>
+                    <div class="movie-age user-ext-65">P: Phim dành cho khán giả mọi lứa tuổi</div>
+
+                    <div class="movie-date-group">
+                        <div class="movie-date-header">
+                            <span>Thứ Tư, 01/07/2026</span>
+                            <span>^</span>
+                        </div>
+                        <div class="movie-showtimes">
+                            <div class="format-label">STANDARD</div>
+                            <button class="showtime-btn"
+                                onclick="window.location.href='booking-seat.html'">21:20</button>
+                            <button class="showtime-btn"
+                                onclick="window.location.href='booking-seat.html'">22:15</button>
+                            <button class="showtime-btn"
+                                onclick="window.location.href='booking-seat.html'">23:15</button>
+                        </div>
+                    </div>
+
+                    <div class="movie-date-group">
+                        <div class="movie-date-header">
+                            <span>Thứ Năm, 02/07/2026</span>
+                            <span>^</span>
+                        </div>
+                        <div class="movie-showtimes">
+                            <div class="format-label">STANDARD</div>
+                            <button class="showtime-btn"
+                                onclick="window.location.href='booking-seat.html'">08:50</button>
+                            <button class="showtime-btn"
+                                onclick="window.location.href='booking-seat.html'">10:45</button>
+                            <button class="showtime-btn"
+                                onclick="window.location.href='booking-seat.html'">13:40</button>
+                            <button class="showtime-btn"
+                                onclick="window.location.href='booking-seat.html'">16:30</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Movie 3 -->
+            <div class="movie-card">
+                <img class="user-ext-47" onclick="window.location.href='detail.html'" src="../assets/images/poster2.png"
+                    alt="Horror Movie">
+                <div class="movie-content-wrapper">
+                    <h3 class="movie-title user-ext-48" onmouseover="this.style.color='var(--primary-red)'"
+                        onmouseout="this.style.color=''" onclick="window.location.href='detail.html'">Ám Ảnh Đêm Thâu
+                    </h3>
+                    <div class="movie-meta-info">
+                        <span>Tâm Lý, Kinh Dị</span>
+                        <span>105 phút</span>
+                        <span>Hoa Kỳ</span>
+                        <span>Phụ Đề</span>
+                    </div>
+                    <div class="movie-age">T18: Phim dành cho khán giả từ đủ 18 tuổi trở lên (18+)</div>
+
+                    <div class="movie-date-group">
+                        <div class="movie-date-header">
+                            <span>Thứ Tư, 01/07/2026</span>
+                            <span>^</span>
+                        </div>
+                        <div class="movie-showtimes">
+                            <div class="format-label">STANDARD</div>
+                            <button class="showtime-btn"
+                                onclick="window.location.href='booking-seat.html'">21:35</button>
+                            <button class="showtime-btn"
+                                onclick="window.location.href='booking-seat.html'">23:50</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Movie 4 -->
+            <div class="movie-card">
+                <img class="user-ext-47" onclick="window.location.href='detail.html'" src="../assets/images/poster8.png"
+                    alt="Cyberpunk Movie">
+                <div class="movie-content-wrapper">
+                    <h3 class="movie-title user-ext-48" onmouseover="this.style.color='var(--primary-red)'"
+                        onmouseout="this.style.color=''" onclick="window.location.href='detail.html'">Thành Phố Neon
+                    </h3>
+                    <div class="movie-meta-info">
+                        <span>Viễn Tưởng, Hành Động</span>
+                        <span>130 phút</span>
+                        <span>Anh Quốc</span>
+                        <span>Phụ Đề</span>
+                    </div>
+                    <div class="movie-age user-ext-69">T16: Phim dành cho khán giả từ 16 tuổi trở lên</div>
+
+                    <div class="movie-date-group">
+                        <div class="movie-date-header">
+                            <span>Thứ Tư, 01/07/2026</span>
+                            <span>^</span>
+                        </div>
+                        <div class="movie-showtimes">
+                            <div class="format-label">STANDARD</div>
+                            <button class="showtime-btn"
+                                onclick="window.location.href='booking-seat.html'">19:00</button>
+                            <button class="showtime-btn"
+                                onclick="window.location.href='booking-seat.html'">22:00</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-col">
+                <h3 class="logo user-ext-50">CineTicket</h3>
+                <p class="user-ext-51">Hệ thống đặt vé xem phim trực tuyến hàng đầu, mang đến trải nghiệm điện ảnh
+                    tuyệt vời nhất cho bạn.</p>
+            </div>
+            <div class="footer-col">
+                <h4 class="user-ext-52">Liên Kết</h4>
+                <ul class="user-ext-53">
+                    <li><a href="#" class="user-ext-54">Về Chúng Tôi</a></li>
+                    <li><a href="#" class="user-ext-54">Thỏa Thuận Sử Dụng</a></li>
+                    <li><a href="#" class="user-ext-54">Quy Chế Hoạt Động</a></li>
+                    <li><a href="#" class="user-ext-54">Chính Sách Bảo Mật</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4 class="user-ext-52">Hỗ Trợ</h4>
+                <ul class="user-ext-53">
+                    <li><a href="#" class="user-ext-54">Góp Ý</a></li>
+                    <li><a href="#" class="user-ext-54">Sale & Services</a></li>
+                    <li><a href="#" class="user-ext-54">Rạp / Giá Vé</a></li>
+                    <li><a href="#" class="user-ext-54">Tuyển Dụng</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4 class="user-ext-52">Kết Nối</h4>
+                <div class="user-ext-55">
+                    <div class="user-ext-56">FB</div>
+                    <div class="user-ext-56">YT</div>
+                    <div class="user-ext-56">IG</div>
+                </div>
+            </div>
+        </div>
+        <div class="user-ext-57">
+            &copy; 2026 CineTicket. All rights reserved.
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const movieCards = document.querySelectorAll('.movie-card');
+
+            const genres = ["Hành Động", "Hoạt Hình", "Kinh Dị", "Hành Động"];
+            movieCards.forEach((card, index) => {
+                if (genres[index]) {
+                    card.setAttribute('data-genre', genres[index]);
+                }
+            });
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function () {
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+
+                    const filterValue = this.textContent.trim();
+
+                    movieCards.forEach(card => {
+                        if (filterValue === 'Tất cả') {
+                            card.style.display = 'flex';
+                        } else {
+                            const genre = card.getAttribute('data-genre') || "";
+                            if (genre.includes(filterValue)) {
+                                card.style.display = 'flex';
+                            } else {
+                                card.style.display = 'none';
+                            }
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+    <script src="../assets/js/app.js"></script>
+</body>
+
+</html>
