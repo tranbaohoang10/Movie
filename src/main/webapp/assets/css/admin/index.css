@@ -1,0 +1,107 @@
+.revenue-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.chart-title-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.chart-title-text {
+    font-weight: bold;
+    color: #4e73df;
+    font-size: 1.1rem;
+}
+
+.filtered-total-badge {
+    background-color: #ffeaea;
+    color: #e74a3b;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    border: 1px solid #ffc2c2;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.date-filter-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: normal;
+    font-size: 0.9rem;
+}
+
+.date-filter-input {
+    width: auto;
+    padding: 5px;
+    height: 35px;
+}
+
+.btn-filter {
+    padding: 5px 15px;
+    height: 35px;
+    border: none;
+    border-radius: 4px;
+}
+
+.btn-reset {
+    padding: 5px 15px;
+    height: 35px;
+    border: none;
+    border-radius: 4px;
+    background: #e3e6f0;
+    color: #333;
+    cursor: pointer;
+}
+
+.chart-body-container {
+    height: 350px;
+}
+
+.sample-data-table-wrapper {
+    overflow-x: auto;
+}
+
+.sample-data-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 14px;
+}
+
+.sample-data-table thead tr {
+    background-color: #f8f9fa;
+    border-bottom: 2px solid #ddd;
+}
+
+.sample-data-table th,
+.sample-data-table td {
+    padding: 12px;
+}
+
+.sample-data-table th.border-right,
+.sample-data-table td.border-right {
+    border-right: 1px solid #eee;
+}
+
+.sample-data-table th.text-center,
+.sample-data-table td.text-center {
+    text-align: center;
+}
+
+.sample-data-table tbody tr {
+    border-bottom: 1px solid #eee;
+}
+
+.sample-data-table .highlight-revenue {
+    color: #1cc88a;
+    font-weight: bold;
+}
