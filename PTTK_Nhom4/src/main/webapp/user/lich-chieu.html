@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lịch Chiếu - CineTicket</title>
+    <link rel="stylesheet" href="../assets/css/user/style.css?v=2.7">
+    <link rel="stylesheet" href="../assets/css/user/lich-chieu.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+
+<body>
+    <nav class="navbar user-ext-62">
+        <a href="index.html" class="logo">CineTicket</a>
+        <ul class="nav-links">
+            <li><a href="index.html">Trang Chủ</a></li>
+            <li><a href="phim.html">Phim Đang Chiếu</a></li>
+            <li><a href="lich-chieu.html" class="text-primary">Lịch Chiếu</a></li>
+            <li><a href="khuyen-mai.html">Khuyến Mãi</a></li>
+        </ul>
+        <div class="nav-right d-flex-center">
+            <form action="phim.html" method="GET" class="search-form">
+                <input type="text" name="q" placeholder="Tìm kiếm phim...">
+                <button type="submit"><i class="fas fa-search"></i></button>
+            </form>
+            <div class="nav-buttons">
+                <a href="login.html" class="btn btn-login">Đăng Nhập</a>
+                <a href="register.html" class="btn btn-primary">Đăng Ký</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="lc-header">
+        <h1>Lịch Chiếu Phim</h1>
+    </header>
+
+    <section id="lich-chieu" class="showtimes-section">
+        <h2 class="section-title user-ext-63">MUA VÉ THEO RẠP</h2>
+
+        <div class="date-tabs">
+            <div class="date-tab active">
+                <span class="date">1/7</span>
+                <span class="day">Thứ 4</span>
+            </div>
+            <div class="date-tab">
+                <span class="date">2/7</span>
+                <span class="day">Thứ 5</span>
+            </div>
+            <div class="date-tab">
+                <span class="date">3/7</span>
+                <span class="day">Thứ 6</span>
+            </div>
+            <div class="date-tab">
+                <span class="date">4/7</span>
+                <span class="day">Thứ 7</span>
+            </div>
+            <div class="date-tab">
+                <span class="date">5/7</span>
+                <span class="day">CN</span>
+            </div>
+        </div>
+
+        <div class="user-ext-64">
+            &#x2139; Nhấn vào suất chiếu để tiến hành mua vé
+        </div>
+
+        <div class="st-grid">
+            <div class="st-card">
+                <img src="../assets/images/poster4.png" alt="Minions">
+                <div class="st-content">
+                    <h3 class="st-title">Thỏ Ơi Chạy Đi!</h3>
+                    <div class="st-meta">
+                        <span>Hoạt Hình, Hài Hước</span>
+                        <span>95 phút</span>
+                        <span>Lồng Tiếng</span>
+                    </div>
+                    <div class="st-age user-ext-65">P: Phim dành cho khán giả mọi lứa tuổi</div>
+
+                    <div class="st-showtimes">
+                        <div class="st-format">2D Lồng Tiếng</div>
+                        <button class="st-btn" onclick="window.location.href='booking-seat.html'">08:00</button>
+                        <button class="st-btn" onclick="window.location.href='booking-seat.html'">08:50</button>
+                        <button class="st-btn" onclick="window.location.href='booking-seat.html'">09:50</button>
+                        <button class="st-btn" onclick="window.location.href='booking-seat.html'">10:45</button>
+                        <button class="st-btn" onclick="window.location.href='booking-seat.html'">11:45</button>
+                        <button class="st-btn" onclick="window.location.href='booking-seat.html'">12:40</button>
+                        <button class="st-btn" onclick="window.location.href='booking-seat.html'">13:40</button>
+                        <button class="st-btn" onclick="window.location.href='booking-seat.html'">14:35</button>
+                        <button class="st-btn" onclick="window.location.href='booking-seat.html'">15:35</button>
+                        <button class="st-btn" onclick="window.location.href='booking-seat.html'">16:30</button>
+                        <button class="st-btn" onclick="window.location.href='booking-seat.html'">17:30</button>
+                        <button class="st-btn" onclick="window.location.href='booking-seat.html'">18:25</button>
+                        <button class="st-btn" onclick="window.location.href='booking-seat.html'">19:25</button>
+                        <button class="st-btn" onclick="window.location.href='booking-seat.html'">20:20</button>
+                        <button class="st-btn" onclick="window.location.href='booking-seat.html'">21:20</button>
+                        <button class="st-btn" onclick="window.location.href='booking-seat.html'">22:15</button>
+                        <button class="st-btn" onclick="window.location.href='booking-seat.html'">23:15</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="st-card">
+                <img src="../assets/images/poster2.png" alt="Ám Ảnh">
+                <div class="st-content">
+                    <h3 class="st-title">Ám Ảnh Đêm Thâu</h3>
+                    <div class="st-meta">
+                        <span>Kinh Dị, Giật Gân</span>
+                        <span>105 phút</span>
+                        <span>Phụ Đề</span>
+                    </div>
+                    <div class="st-age">T18: Phim dành cho khán giả từ đủ 18 tuổi trở lên</div>
+
+                    <div class="st-showtimes">
+                        <div class="st-format">2D Phụ Đề Việt</div>
+                        <button class="st-btn" onclick="window.location.href='booking-seat.html'">08:00</button>
+                        <button class="st-btn" onclick="window.location.href='booking-seat.html'">10:15</button>
+                        <button class="st-btn" onclick="window.location.href='booking-seat.html'">12:30</button>
+                        <button class="st-btn" onclick="window.location.href='booking-seat.html'">14:45</button>
+                        <button class="st-btn" onclick="window.location.href='booking-seat.html'">17:00</button>
+                        <button class="st-btn" onclick="window.location.href='booking-seat.html'">19:20</button>
+                        <button class="st-btn" onclick="window.location.href='booking-seat.html'">20:35</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="st-card">
+                <img src="../assets/images/poster1.png" alt="Nhiệm Vụ Đỏ">
+                <div class="st-content">
+                    <h3 class="st-title">Nhiệm Vụ Đỏ</h3>
+                    <div class="st-meta">
+                        <span>Hành Động, Kịch Tính</span>
+                        <span>120 phút</span>
+                        <span>Phụ Đề</span>
+                    </div>
+                    <div class="st-age" style="color: #e74a3b; margin-bottom: 15px; font-weight: bold;">T18: Phim dành
+                        cho khán giả từ đủ 18 tuổi trở lên (18+)</div>
+
+                    <div class="st-showtimes">
+                        <div class="st-format">2D Phụ Đề Việt</div>
+                        <button class="st-btn" onclick="window.location.href='booking-seat.html'">09:30</button>
+                        <button class="st-btn" onclick="window.location.href='booking-seat.html'">13:15</button>
+                        <button class="st-btn" onclick="window.location.href='booking-seat.html'">16:00</button>
+                        <button class="st-btn" onclick="window.location.href='booking-seat.html'">18:45</button>
+                        <button class="st-btn" onclick="window.location.href='booking-seat.html'">21:00</button>
+                    </div>
+                    <div class="st-showtimes" style="margin-top: 15px;">
+                        <div class="st-format" style="color: #1cc88a;">IMAX 3D Phụ Đề</div>
+                        <button class="st-btn" onclick="window.location.href='booking-seat.html'">10:30</button>
+                        <button class="st-btn" onclick="window.location.href='booking-seat.html'">15:00</button>
+                        <button class="st-btn" onclick="window.location.href='booking-seat.html'">19:30</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="st-card">
+                <img src="../assets/images/poster3.png" alt="Đại Chiến Hành Tinh"
+                    onerror="this.src='../assets/images/poster1.png'">
+                <div class="st-content">
+                    <h3 class="st-title">Đại Chiến Hành Tinh</h3>
+                    <div class="st-meta">
+                        <span>Viễn Tưởng, Hành Động</span>
+                        <span>135 phút</span>
+                        <span>Lồng Tiếng & Phụ Đề</span>
+                    </div>
+                    <div class="st-age" style="color: #f39c12; margin-bottom: 15px; font-weight: bold;">T13: Phim dành
+                        cho khán giả từ đủ 13 tuổi trở lên (13+)</div>
+
+                    <div class="st-showtimes">
+                        <div class="st-format">2D Phụ Đề Việt</div>
+                        <button class="st-btn" onclick="window.location.href='booking-seat.html'">11:15</button>
+                        <button class="st-btn" onclick="window.location.href='booking-seat.html'">14:20</button>
+                        <button class="st-btn" onclick="window.location.href='booking-seat.html'">16:45</button>
+                        <button class="st-btn" onclick="window.location.href='booking-seat.html'">20:10</button>
+                        <button class="st-btn" onclick="window.location.href='booking-seat.html'">22:40</button>
+                    </div>
+                </div>
+            </div>
+            <div class="st-card">
+                <img src="../assets/images/poster5.png" alt="Chiến Thần"
+                    onerror="this.src='../assets/images/poster2.png'">
+                <div class="st-content">
+                    <h3 class="st-title">Chiến Thần Đỉnh Cao</h3>
+                    <div class="st-meta">
+                        <span>Hành Động, Võ Thuật</span>
+                        <span>110 phút</span>
+                        <span>Phụ Đề</span>
+                    </div>
+                    <div class="st-age" style="color: #e74a3b; margin-bottom: 15px; font-weight: bold;">T16: Phim dành
+                        cho khán giả từ đủ 16 tuổi trở lên</div>
+
+                    <div class="st-showtimes">
+                        <div class="st-format">2D Phụ Đề Việt</div>
+                        <button class="st-btn" onclick="window.location.href='booking-seat.html'">08:30</button>
+                        <button class="st-btn" onclick="window.location.href='booking-seat.html'">12:45</button>
+                        <button class="st-btn" onclick="window.location.href='booking-seat.html'">17:15</button>
+                        <button class="st-btn" onclick="window.location.href='booking-seat.html'">21:30</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="st-card">
+                <img src="../assets/images/poster6.png" alt="Bí Ẩn Hành Tinh"
+                    onerror="this.src='../assets/images/poster4.png'">
+                <div class="st-content">
+                    <h3 class="st-title">Bí Ẩn Trạm Vũ Trụ</h3>
+                    <div class="st-meta">
+                        <span>Khoa Học Viễn Tưởng</span>
+                        <span>125 phút</span>
+                        <span>Thuyết Minh</span>
+                    </div>
+                    <div class="st-age" style="color: #f39c12; margin-bottom: 15px; font-weight: bold;">T13: Phim dành
+                        cho khán giả từ đủ 13 tuổi trở lên</div>
+
+                    <div class="st-showtimes">
+                        <div class="st-format">IMAX 3D Thuyết Minh</div>
+                        <button class="st-btn" onclick="window.location.href='booking-seat.html'">09:00</button>
+                        <button class="st-btn" onclick="window.location.href='booking-seat.html'">14:30</button>
+                        <button class="st-btn" onclick="window.location.href='booking-seat.html'">19:45</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-col">
+                <h3 class="logo user-ext-50">CineTicket</h3>
+                <p class="user-ext-51">Hệ thống đặt vé xem phim trực tuyến hàng đầu, mang đến trải nghiệm điện ảnh tuyệt
+                    vời nhất cho bạn.</p>
+            </div>
+            <div class="footer-col">
+                <h4 class="user-ext-52">Liên Kết</h4>
+                <ul class="user-ext-53">
+                    <li><a href="#" class="user-ext-54">Về Chúng Tôi</a></li>
+                    <li><a href="#" class="user-ext-54">Thỏa Thuận Sử Dụng</a></li>
+                    <li><a href="#" class="user-ext-54">Quy Chế Hoạt Động</a></li>
+                    <li><a href="#" class="user-ext-54">Chính Sách Bảo Mật</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4 class="user-ext-52">Hỗ Trợ</h4>
+                <ul class="user-ext-53">
+                    <li><a href="#" class="user-ext-54">Góp Ý</a></li>
+                    <li><a href="#" class="user-ext-54">Sale & Services</a></li>
+                    <li><a href="#" class="user-ext-54">Rạp / Giá Vé</a></li>
+                    <li><a href="#" class="user-ext-54">Tuyển Dụng</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4 class="user-ext-52">Kết Nối</h4>
+                <div class="user-ext-55">
+                    <div class="user-ext-56">FB</div>
+                    <div class="user-ext-56">YT</div>
+                    <div class="user-ext-56">IG</div>
+                </div>
+            </div>
+        </div>
+        <div class="user-ext-57">
+            &copy; 2026 CineTicket. All rights reserved.
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const dateTabs = document.querySelectorAll('.date-tab');
+            const stCards = document.querySelectorAll('.st-card');
+            const dates = ["1/7", "2/7", "3/7", "4/7", "5/7"];
+
+            stCards.forEach((card, cardIndex) => {
+                const contentDiv = card.querySelector('.st-content');
+                const originalShowtimes = card.querySelectorAll('.st-showtimes');
+
+                originalShowtimes.forEach(st => {
+                    st.setAttribute('data-date', "1/7");
+                });
+
+                for (let i = 1; i < dates.length; i++) {
+                    const d = dates[i];
+
+                    // Tạo sự khác biệt: không phải phim nào cũng chiếu mỗi ngày
+                    if (cardIndex % 2 === 0 && i === 2) continue;
+                    if (cardIndex % 3 === 0 && i === 1) continue;
+                    if (cardIndex === 1 && i === 4) continue;
+                    if (cardIndex === 4 && i === 3) continue;
+
+                    originalShowtimes.forEach((st, stIndex) => {
+                        const clone = st.cloneNode(true);
+                        clone.setAttribute('data-date', d);
+                        clone.style.display = 'none';
+                        const btns = clone.querySelectorAll('.st-btn');
+                        btns.forEach((btn, btnIndex) => {
+                            let [h, m] = btn.textContent.split(':').map(Number);
+                            h = (h + i + btnIndex) % 24;
+                            btn.textContent = `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`;
+                        });
+
+                        contentDiv.appendChild(clone);
+                    });
+                }
+            });
+
+            dateTabs.forEach(tab => {
+                tab.addEventListener('click', function () {
+                    dateTabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    const selectedDate = this.querySelector('.date').textContent.trim();
+                    stCards.forEach((card) => {
+                        const showtimeBlocks = card.querySelectorAll('.st-showtimes');
+                        let hasVisible = false;
+                        showtimeBlocks.forEach(block => {
+                            if (block.getAttribute('data-date') === selectedDate) {
+                                block.style.display = '';
+                                hasVisible = true;
+                            } else {
+                                block.style.display = 'none';
+                            }
+                        });
+                        card.style.display = hasVisible ? 'flex' : 'none';
+                    });
+                });
+            });
+        });
+    </script>
+    <script src="../assets/js/app.js"></script>
+</body>
+
+</html>
