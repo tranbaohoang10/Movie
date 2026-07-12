@@ -1,0 +1,213 @@
+.rooms-ext-1 {
+    display: block;
+    width: 100%;
+    margin-top: 5px;
+}
+
+.rooms-ext-2 {
+    margin-right: 8px;
+    color: #36b9cc;
+}
+
+.rooms-ext-3 {
+    background: #222;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.rooms-ext-4 {
+    background: #e3e6f0;
+    padding: 5px;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.rooms-ext-5 {
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+    margin-bottom: 5px;
+}
+
+.rooms-ext-6 {
+    width: 25px;
+    height: 25px;
+    background: #95a5a6;
+    border-radius: 4px;
+    border: 2px solid #7f8c8d;
+    cursor: pointer;
+}
+
+.rooms-ext-7 {
+    width: 25px;
+    height: 25px;
+    background: transparent;
+    border-radius: 4px;
+}
+
+.rooms-ext-8 {
+    width: 25px;
+    height: 25px;
+    background: #e74a3b;
+    border-radius: 4px;
+    border: 2px solid #c0392b;
+    cursor: pointer;
+}
+
+.rooms-ext-9 {
+    width: 55px;
+    height: 25px;
+    background: #e83e8c;
+    border-radius: 4px;
+    border: 2px solid #d63384;
+    cursor: pointer;
+}
+
+.rooms-ext-10 {
+    margin-top: 15px;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    justify-content: center;
+}
+
+.rooms-ext-11 {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.rooms-ext-12 {
+    width: 15px;
+    height: 15px;
+    background: #95a5a6;
+    border: 1px solid #7f8c8d;
+}
+
+.rooms-ext-13 {
+    width: 15px;
+    height: 15px;
+    background: #e74a3b;
+    border: 1px solid #c0392b;
+}
+
+.rooms-ext-14 {
+    width: 15px;
+    height: 15px;
+    background: #e83e8c;
+    border: 1px solid #d63384;
+}
+
+.rooms-ext-15 {
+    justify-content: center;
+}
+
+.rooms-ext-16 {
+    background: #858796;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+}
+
+.rooms-ext-17 {
+    background: #f8f9fc;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    border: 1px solid #e3e6f0;
+}
+
+.rooms-ext-18 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.rooms-ext-19 {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.rooms-ext-20 {
+    font-weight: 600;
+    color: #4e73df;
+    font-size: 14px;
+}
+
+.rooms-ext-21 {
+    background: #eaecf4;
+    border: 1px solid #d1d3e2;
+    color: #5a5c69;
+    font-weight: bold;
+}
+
+.rooms-ext-22 {
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+    background: #858796;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 4px;
+}
+
+.rooms-ext-23 {
+    background: #fff;
+    border: 1px solid #d1d3e2;
+    color: #5a5c69;
+}
+
+.rooms-ext-24 {
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+    background: #e74a3b;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 4px;
+}
+
+.rooms-ext-25 {
+    width: 28px;
+    height: 14px;
+    border-radius: 3px;
+    background: #e83e8c;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 4px;
+}
+
+.rooms-ext-26 {
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+    background: #fff;
+    border: 1px dashed #b7b9cc;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 4px;
+}
+
+.rooms-ext-27 {
+    display: flex;
+    gap: 8px;
+}
+
+.rooms-ext-28 {
+    background: #fff;
+    border: 1px solid #4e73df;
+    color: #4e73df;
+}
+
+.rooms-ext-29 {
+    font-size: 12px;
+    color: #8a8f9b;
+    margin-top: 8px;
+    font-style: italic;
+}

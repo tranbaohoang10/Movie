@@ -1,0 +1,58 @@
+.tickets-ext-1 {
+    color: #1cc88a;
+}
+
+.tickets-ext-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.tickets-ext-3 {
+    margin-bottom: 10px;
+    color: var(--primary);
+}
+
+.tickets-ext-4 {
+    margin: 20px 0;
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tickets-ext-5 {
+    margin-bottom: 12px;
+    color: var(--primary);
+}
+
+.tickets-ext-6 {
+    width: 100%;
+}
+
+.tickets-ext-7 {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.tickets-ext-8 {
+    padding: 10px 0;
+}
+
+.tickets-ext-9 {
+    text-align: right;
+    font-weight: bold;
+}
+
+.tickets-ext-10 {
+    padding: 12px 0;
+    font-size: 1.1rem;
+    color: var(--primary);
+}
+
+.tickets-ext-11 {
+    text-align: right;
+    font-size: 1.1rem;
+    color: var(--primary);
+}
+
+.tickets-ext-12 {
+    margin-top: 20px;
+}
