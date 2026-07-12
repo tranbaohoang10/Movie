@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CineTicket - Đặt Vé Xem Phim</title>
+    <link rel="stylesheet" href="../assets/css/user/style.css">
+    <link rel="stylesheet" href="../assets/css/user/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <a href="index.html" class="logo">CineTicket</a>
+        <ul class="nav-links">
+            <li><a href="index.html" class="text-primary">Trang Chủ</a></li>
+            <li><a href="phim.html">Phim Đang Chiếu</a></li>
+            <li><a href="lich-chieu.html">Lịch Chiếu</a></li>
+            <li><a href="khuyen-mai.html">Khuyến Mãi</a></li>
+        </ul>
+        <div class="nav-right d-flex-center">
+            <form action="phim.html" method="GET" class="search-form">
+                <input type="text" name="q" placeholder="Tìm kiếm phim...">
+                <button type="submit"><i class="fas fa-search"></i></button>
+            </form>
+            <div class="nav-buttons">
+                <a href="login.html" class="btn btn-login">Đăng Nhập</a>
+                <a href="register.html" class="btn btn-primary">Đăng Ký</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content">
+            <span class="hero-tag">Phim Bom Tấn Độc Quyền</span>
+            <h1 class="hero-title">SIÊU PHẨM HÀNH ĐỘNG 2026</h1>
+            <p class="hero-desc">Đắm chìm vào thế giới điện ảnh đỉnh cao với hệ thống âm thanh vòm Dolby Atmos và màn
+                hình IMAX siêu thực. Đặt vé ngay hôm nay để nhận ưu đãi đặc biệt 30% cho cặp đôi.</p>
+            <button class="btn btn-primary" onclick="window.location.href='booking-seat.html'">Mua Vé Ngay</button>
+        </div>
+    </header>
+
+    <main class="movies">
+        <h2 class="section-title">Phim Thịnh Hành</h2>
+        <div class="movie-grid">
+            <div class="movie-card">
+                <img class="user-ext-47" onclick="window.location.href='detail.html'" src="../assets/images/poster1.png"
+                    alt="Action Movie">
+                <div class="movie-info">
+                    <h3 class="movie-title user-ext-48" onmouseover="this.style.color='var(--primary-red)'"
+                        onmouseout="this.style.color=''" onclick="window.location.href='detail.html'">Nhiệm Vụ Đỏ</h3>
+                    <div class="movie-meta">
+                        <span>Hành Động, Kịch Tính</span>
+                        <span>120 phút</span>
+                    </div>
+                </div>
+            </div>
+            <div class="movie-card">
+                <img class="user-ext-47" onclick="window.location.href='detail.html'" src="../assets/images/poster2.png"
+                    alt="Horror Movie">
+                <div class="movie-info">
+                    <h3 class="movie-title user-ext-48" onmouseover="this.style.color='var(--primary-red)'"
+                        onmouseout="this.style.color=''" onclick="window.location.href='detail.html'">Ám Ảnh Đêm Thâu
+                    </h3>
+                    <div class="movie-meta">
+                        <span>Kinh Dị, Giật Gân</span>
+                        <span>105 phút</span>
+                    </div>
+                </div>
+            </div>
+            <div class="movie-card">
+                <img class="user-ext-47" onclick="window.location.href='detail.html'" src="../assets/images/poster3.png"
+                    alt="Sci-Fi Movie">
+                <div class="movie-info">
+                    <h3 class="movie-title user-ext-48" onmouseover="this.style.color='var(--primary-red)'"
+                        onmouseout="this.style.color=''" onclick="window.location.href='detail.html'">Vực Thẳm Không
+                        Gian</h3>
+                    <div class="movie-meta">
+                        <span>Viễn Tưởng</span>
+                        <span>140 phút</span>
+                    </div>
+                </div>
+            </div>
+            <div class="movie-card">
+                <img class="user-ext-47" onclick="window.location.href='detail.html'" src="../assets/images/poster4.png"
+                    alt="Thỏ">
+                <div class="movie-info">
+                    <h3 class="movie-title user-ext-48" onmouseover="this.style.color='var(--primary-red)'"
+                        onmouseout="this.style.color=''" onclick="window.location.href='detail.html'">Thỏ Ơi Chạy Đi!
+                    </h3>
+                    <div class="movie-meta">
+                        <span>Hoạt Hình, Hài Hước</span>
+                        <span>95 phút</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <main class="movies user-ext-49">
+        <h2 class="section-title">Phim Sắp Chiếu</h2>
+        <div class="movie-grid">
+            <div class="movie-card">
+                <img class="user-ext-47" onclick="window.location.href='detail.html'" src="../assets/images/poster9.png"
+                    alt="Movie 5">
+                <div class="movie-info">
+                    <h3 class="movie-title user-ext-48" onmouseover="this.style.color='var(--primary-red)'"
+                        onmouseout="this.style.color=''" onclick="window.location.href='detail.html'">Mèo Bí Ẩn</h3>
+                    <div class="movie-meta">
+                        <span>Tình Cảm, Tâm Lý</span>
+                        <span>110 phút</span>
+                    </div>
+                </div>
+            </div>
+            <div class="movie-card">
+                <img class="user-ext-47" onclick="window.location.href='detail.html'" src="../assets/images/poster6.png"
+                    alt="Movie 6">
+                <div class="movie-info">
+                    <h3 class="movie-title user-ext-48" onmouseover="this.style.color='var(--primary-red)'"
+                        onmouseout="this.style.color=''" onclick="window.location.href='detail.html'">Vùng Đất Thiêng
+                    </h3>
+                    <div class="movie-meta">
+                        <span>Tâm Lý, Hành Động</span>
+                        <span>125 phút</span>
+                    </div>
+                </div>
+            </div>
+            <div class="movie-card">
+                <img class="user-ext-47" onclick="window.location.href='detail.html'" src="../assets/images/poster7.png"
+                    alt="Movie 7">
+                <div class="movie-info">
+                    <h3 class="movie-title user-ext-48" onmouseover="this.style.color='var(--primary-red)'"
+                        onmouseout="this.style.color=''" onclick="window.location.href='detail.html'">Truy Tìm Sát Thủ
+                    </h3>
+                    <div class="movie-meta">
+                        <span>Hành Động, Hình Sự</span>
+                        <span>130 phút</span>
+                    </div>
+                </div>
+            </div>
+            <div class="movie-card">
+                <img class="user-ext-47" onclick="window.location.href='detail.html'" src="../assets/images/poster8.png"
+                    alt="Movie 8">
+                <div class="movie-info">
+                    <h3 class="movie-title user-ext-48" onmouseover="this.style.color='var(--primary-red)'"
+                        onmouseout="this.style.color=''" onclick="window.location.href='detail.html'">Ký Ức Đánh Rơi
+                    </h3>
+                    <div class="movie-meta">
+                        <span>Tình Cảm, Lãng Mạn</span>
+                        <span>115 phút</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <section class="promotions">
+        <h2 class="section-title">Khuyến Mãi & Sự Kiện</h2>
+        <div class="promo-grid">
+            <div class="promo-card">
+                <img src="../assets/images/promo1.png" alt="Promo 1">
+                <div class="promo-content">
+                    <h3>Giảm 30% Đặt Vé Sớm</h3>
+                    <p>Dành riêng cho 100 khách hàng đầu tiên đặt vé siêu phẩm mới.</p>
+                </div>
+            </div>
+            <div class="promo-card">
+                <img src="../assets/images/promo2.png" alt="Promo 2">
+                <div class="promo-content">
+                    <h3>Combo Bắp Nước 99K</h3>
+                    <p>Thưởng thức trọn vẹn bộ phim với combo tiết kiệm nhất.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-col">
+                <h3 class="logo user-ext-50">CineTicket</h3>
+                <p class="user-ext-51">Hệ thống đặt vé xem phim trực tuyến hàng đầu, mang đến trải nghiệm điện ảnh
+                    tuyệt vời nhất cho bạn.</p>
+            </div>
+            <div class="footer-col">
+                <h4 class="user-ext-52">Liên Kết</h4>
+                <ul class="user-ext-53">
+                    <li><a href="#" class="user-ext-54">Về Chúng Tôi</a></li>
+                    <li><a href="#" class="user-ext-54">Thỏa Thuận Sử Dụng</a></li>
+                    <li><a href="#" class="user-ext-54">Quy Chế Hoạt Động</a></li>
+                    <li><a href="#" class="user-ext-54">Chính Sách Bảo Mật</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4 class="user-ext-52">Hỗ Trợ</h4>
+                <ul class="user-ext-53">
+                    <li><a href="#" class="user-ext-54">Góp Ý</a></li>
+                    <li><a href="#" class="user-ext-54">Sale & Services</a></li>
+                    <li><a href="#" class="user-ext-54">Rạp / Giá Vé</a></li>
+                    <li><a href="#" class="user-ext-54">Tuyển Dụng</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4 class="user-ext-52">Kết Nối</h4>
+                <div class="user-ext-55">
+                    <div class="user-ext-56">FB</div>
+                    <div class="user-ext-56">YT</div>
+                    <div class="user-ext-56">IG</div>
+                </div>
+            </div>
+        </div>
+        <div class="user-ext-57">
+            &copy; 2026 CineTicket. All rights reserved.
+        </div>
+    </footer>
+    <script src="../assets/js/app.js"></script>
+</body>
+
+</html>
