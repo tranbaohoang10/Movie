@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Phim - CineTicket Admin</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/admin/style.css">
+    <link rel="stylesheet" href="../assets/css/admin/movies.css">
+</head>
+
+<body>
+<div class="sidebar"></div>
+<div class="main-wrapper">
+    <div class="topbar">
+        <div class="user-info">
+            <span class="inline-style-3">Admin</span>
+            <img src="https://ui-avatars.com/api/?name=Admin&background=4e73df&color=fff" alt="Admin">
+        </div>
+    </div>
+
+    <div class="content">
+        <div id="movies" class="section active">
+
+            <!-- Header -->
+            <div class="shared-ext-2">
+                <h1 class="page-title shared-ext-3">
+                    <i class="fas fa-film shared-ext-9"></i>Quản Lý Phim
+                </h1>
+                <button class="btn btn-primary" onclick="openModal('addMovieModal')">
+                    <i class="fas fa-plus fa-sm"></i> Thêm Phim Mới
+                </button>
+            </div>
+
+            <!-- Stat Cards -->
+            <div class="stat-grid">
+                <div class="card stat-card-wrapper">
+                    <div class="card-body stat-card-body">
+                        <div class="stat-icon" style="background:rgba(78,115,223,0.15);color:#4e73df;">
+                            <i class="fas fa-film"></i>
+                        </div>
+                        <div>
+                            <div class="stat-num" id="stat-total">5</div>
+                            <div class="stat-label">Tổng phim</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card stat-card-wrapper">
+                    <div class="card-body stat-card-body">
+                        <div class="stat-icon" style="background:rgba(28,200,138,0.15);color:#1cc88a;">
+                            <i class="fas fa-play-circle"></i>
+                        </div>
+                        <div>
+                            <div class="stat-num" id="stat-showing">3</div>
+                            <div class="stat-label">Đang chiếu</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card stat-card-wrapper">
+                    <div class="card-body stat-card-body">
+                        <div class="stat-icon" style="background:rgba(246,194,62,0.15);color:#f6c23e;">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div>
+                            <div class="stat-num" id="stat-upcoming">1</div>
+                            <div class="stat-label">Sắp chiếu</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card stat-card-wrapper">
+                    <div class="card-body stat-card-body">
+                        <div class="stat-icon" style="background:rgba(231,74,59,0.12);color:#e74a3b;">
+                            <i class="fas fa-eye-slash"></i>
+                        </div>
+                        <div>
+                            <div class="stat-num" id="stat-stopped">1</div>
+                            <div class="stat-label">Ngừng chiếu</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="card">
+                <div class="card-header">Danh sách phim đang chiếu &amp; sắp chiếu</div>
+                <div class="card-body">
+                    <div class="inline-style-13" style="flex-wrap:wrap;gap:10px;">
+                        <input type="text" id="searchInput" placeholder="Tìm kiếm tên phim..."
+                               class="inline-style-14" oninput="filterTable()">
+                        <select id="filterGenre" onchange="filterTable()">
+                            <option value="">Tất cả thể loại</option>
+                            <option value="Hành Động">Hành Động</option>
+                            <option value="Kinh Dị">Kinh Dị</option>
+                            <option value="Hoạt Hình">Hoạt Hình</option>
+                            <option value="Viễn Tưởng">Viễn Tưởng</option>
+                            <option value="Hài">Hài</option>
+                        </select>
+                        <select id="filterStatus" onchange="filterTable()">
+                            <option value="">Tất cả trạng thái</option>
+                            <option value="Đang chiếu">Đang chiếu</option>
+                            <option value="Sắp chiếu">Sắp chiếu</option>
+                            <option value="Ngừng chiếu">Ngừng chiếu</option>
+                        </select>
+                        <button class="btn btn-primary" onclick="filterTable()"><i class="fas fa-search"></i>
+                            Lọc</button>
+                    </div>
+
+                    <table id="movieTable">
+                        <thead>
+                        <tr>
+                            <th>Poster</th>
+                            <th>Tên Phim</th>
+                            <th>Thể Loại</th>
+                            <th>Thời Lượng</th>
+                            <th>Độ Tuổi</th>
+                            <th>Trạng Thái</th>
+                            <th>Hành Động</th>
+                        </tr>
+                        </thead>
+                        <tbody id="movieTableBody">
+                        <tr data-genre="Hành Động" data-status="Đang chiếu">
+                            <td><img src="../assets/images/poster1.png" class="inline-style-15" alt="Poster">
+                            </td>
+                            <td><strong>Nhiệm Vụ Đỏ</strong></td>
+                            <td>Hành Động</td>
+                            <td>120 phút</td>
+                            <td><span class="badge badge-danger">T18</span></td>
+                            <td><span class="badge badge-success">Đang chiếu</span></td>
+                            <td>
+                                <button class="btn btn-sm btn-info" onclick="openModal('movieDetailModal')"
+                                        title="Xem chi tiết"><i class="fas fa-eye"></i></button>
+                                <button class="btn btn-sm btn-primary" onclick="openModal('editMovieModal')"
+                                        title="Sửa"><i class="fas fa-edit"></i></button>
+                                <button class="btn btn-sm btn-warning"
+                                        onclick="toggleStatus(this,'Ngừng chiếu')" title="Ngừng chiếu"><i
+                                        class="fas fa-eye-slash"></i></button>
+                                <button class="btn btn-sm btn-danger" onclick="openDeleteModal(1,'Nhiệm Vụ Đỏ')"
+                                        title="Xóa"><i class="fas fa-trash"></i></button>
+                            </td>
+                        </tr>
+                        <tr data-genre="Kinh Dị" data-status="Đang chiếu">
+                            <td><img src="../assets/images/poster2.png" class="inline-style-15" alt="Poster">
+                            </td>
+                            <td><strong>Ám Ảnh Đêm Thâu</strong></td>
+                            <td>Kinh Dị</td>
+                            <td>105 phút</td>
+                            <td><span class="badge badge-danger">T18</span></td>
+                            <td><span class="badge badge-success">Đang chiếu</span></td>
+                            <td>
+                                <button class="btn btn-sm btn-info" onclick="openModal('movieDetailModal')"
+                                        title="Xem chi tiết"><i class="fas fa-eye"></i></button>
+                                <button class="btn btn-sm btn-primary" onclick="openModal('editMovieModal')"
+                                        title="Sửa"><i class="fas fa-edit"></i></button>
+                                <button class="btn btn-sm btn-warning"
+                                        onclick="toggleStatus(this,'Ngừng chiếu')" title="Ngừng chiếu"><i
+                                        class="fas fa-eye-slash"></i></button>
+                                <button class="btn btn-sm btn-danger"
+                                        onclick="openDeleteModal(2,'Ám Ảnh Đêm Thâu')" title="Xóa"><i
+                                        class="fas fa-trash"></i></button>
+                            </td>
+                        </tr>
+                        <tr data-genre="Hoạt Hình" data-status="Sắp chiếu">
+                            <td><img src="../assets/images/poster4.png" class="inline-style-15" alt="Poster">
+                            </td>
+                            <td><strong>Thỏ Ơi Chạy Đi!</strong></td>
+                            <td>Hoạt Hình</td>
+                            <td>95 phút</td>
+                            <td><span class="badge badge-success" style="font-size:11px;">P</span></td>
+                            <td><span class="badge badge-warning text-white">Sắp chiếu</span></td>
+                            <td>
+                                <button class="btn btn-sm btn-info" onclick="openModal('movieDetailModal')"
+                                        title="Xem chi tiết"><i class="fas fa-eye"></i></button>
+                                <button class="btn btn-sm btn-primary" onclick="openModal('editMovieModal')"
+                                        title="Sửa"><i class="fas fa-edit"></i></button>
+                                <button class="btn btn-sm btn-warning"
+                                        onclick="toggleStatus(this,'Ngừng chiếu')" title="Ngừng chiếu"><i
+                                        class="fas fa-eye-slash"></i></button>
+                                <button class="btn btn-sm btn-danger"
+                                        onclick="openDeleteModal(3,'Thỏ Ơi Chạy Đi!')" title="Xóa"><i
+                                        class="fas fa-trash"></i></button>
+                            </td>
+                        </tr>
+                        <tr data-genre="Viễn Tưởng" data-status="Đang chiếu">
+                            <td><img src="../assets/images/poster3.png" class="inline-style-15" alt="Poster">
+                            </td>
+                            <td><strong>Đại Chiến Hành Tinh</strong></td>
+                            <td>Viễn Tưởng</td>
+                            <td>135 phút</td>
+                            <td><span class="badge badge-warning">T16</span></td>
+                            <td><span class="badge badge-success">Đang chiếu</span></td>
+                            <td>
+                                <button class="btn btn-sm btn-info" onclick="openModal('movieDetailModal')"
+                                        title="Xem chi tiết"><i class="fas fa-eye"></i></button>
+                                <button class="btn btn-sm btn-primary" onclick="openModal('editMovieModal')"
+                                        title="Sửa"><i class="fas fa-edit"></i></button>
+                                <button class="btn btn-sm btn-warning"
+                                        onclick="toggleStatus(this,'Ngừng chiếu')" title="Ngừng chiếu"><i
+                                        class="fas fa-eye-slash"></i></button>
+                                <button class="btn btn-sm btn-danger"
+                                        onclick="openDeleteModal(4,'Đại Chiến Hành Tinh')" title="Xóa"><i
+                                        class="fas fa-trash"></i></button>
+                            </td>
+                        </tr>
+                        <tr data-genre="Hành Động" data-status="Ngừng chiếu">
+                            <td><img src="../assets/images/poster5.png" class="inline-style-15" alt="Poster">
+                            </td>
+                            <td><strong>Mật Vụ Kingsman</strong></td>
+                            <td>Hành Động, Hài</td>
+                            <td>110 phút</td>
+                            <td><span class="badge badge-danger">T18</span></td>
+                            <td><span class="badge badge-secondary"
+                                      style="background:rgba(133,135,150,0.15);color:#858796;">Ngừng chiếu</span>
+                            </td>
+                            <td>
+                                <button class="btn btn-sm btn-info" onclick="openModal('movieDetailModal')"
+                                        title="Xem chi tiết"><i class="fas fa-eye"></i></button>
+                                <button class="btn btn-sm btn-primary" onclick="openModal('editMovieModal')"
+                                        title="Sửa"><i class="fas fa-edit"></i></button>
+                                <button class="btn btn-sm btn-success" onclick="toggleStatus(this,'Đang chiếu')"
+                                        title="Chiếu lại"><i class="fas fa-play"></i></button>
+                                <button class="btn btn-sm btn-danger"
+                                        onclick="openDeleteModal(5,'Mật Vụ Kingsman')" title="Xóa"><i
+                                        class="fas fa-trash"></i></button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===== MODAL THÊM PHIM ===== -->
+<div class="modal-overlay" id="addMovieModal">
+    <div class="modal modal-lg">
+        <div class="modal-header">
+            <h2><i class="fas fa-plus-circle" style="margin-right:8px;color:#1cc88a;"></i>Thêm Phim Mới</h2>
+            <button class="modal-close" onclick="closeModal('addMovieModal')"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="modal-body">
+            <form onsubmit="handleAdd(event)">
+                <div class="form-group">
+                    <label>Tên Phim (*)</label>
+                    <input type="text" placeholder="Nhập tên phim..." required>
+                </div>
+                <div class="inline-style-17">
+                    <div class="form-group inline-style-18">
+                        <label>Thể Loại</label>
+                        <input type="text" placeholder="Hành động, Hài hước...">
+                    </div>
+                    <div class="form-group inline-style-18">
+                        <label>Thời Lượng (Phút)</label>
+                        <input type="number" min="1" placeholder="VD: 120" required>
+                    </div>
+                </div>
+                <div class="inline-style-17">
+                    <div class="form-group inline-style-18">
+                        <label>Độ Tuổi (*)</label>
+                        <select required>
+                            <option value="">-- Chọn phân loại --</option>
+                            <option>P (Mọi lứa tuổi)</option>
+                            <option>T13 (Trên 13 tuổi)</option>
+                            <option>T16 (Trên 16 tuổi)</option>
+                            <option>T18 (Trên 18 tuổi)</option>
+                        </select>
+                    </div>
+                    <div class="form-group inline-style-18">
+                        <label>Trạng Thái (*)</label>
+                        <select required>
+                            <option>Sắp chiếu</option>
+                            <option>Đang chiếu</option>
+                            <option>Ngừng chiếu</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Hình Ảnh (Poster)</label>
+                    <input type="file" accept="image/*">
+                </div>
+                <div class="form-group">
+                    <label>Trailer URL (Youtube)</label>
+                    <input type="url" placeholder="https://youtube.com/...">
+                </div>
+                <div class="form-group">
+                    <label>Mô Tả Phim</label>
+                    <textarea rows="4" placeholder="Nhập nội dung tóm tắt..."></textarea>
+                </div>
+                <div class="modal-footer inline-style-12">
+                    <button type="button" class="btn btn-danger" onclick="closeModal('addMovieModal')">Hủy</button>
+                    <button type="submit" class="btn btn-success"><i class="fas fa-save"
+                                                                     style="margin-right:6px;"></i>Lưu Phim</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- ===== MODAL SỬA PHIM ===== -->
+<div class="modal-overlay" id="editMovieModal">
+    <div class="modal modal-lg">
+        <div class="modal-header">
+            <h2><i class="fas fa-edit" style="margin-right:8px;color:#4e73df;"></i>Sửa Thông Tin Phim</h2>
+            <button class="modal-close" onclick="closeModal('editMovieModal')"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="modal-body">
+            <form onsubmit="handleEdit(event)">
+                <div class="form-group">
+                    <label>Tên Phim (*)</label>
+                    <input type="text" id="editTitle" placeholder="Nhập tên phim..." value="Nhiệm Vụ Đỏ" required>
+                </div>
+                <div class="inline-style-17">
+                    <div class="form-group inline-style-18">
+                        <label>Thể Loại</label>
+                        <input type="text" id="editGenre" placeholder="Hành động, Hài hước..."
+                               value="Hành Động, Kịch Tính">
+                    </div>
+                    <div class="form-group inline-style-18">
+                        <label>Thời Lượng (Phút)</label>
+                        <input type="number" id="editDuration" min="1" placeholder="VD: 120" value="120" required>
+                    </div>
+                </div>
+                <div class="inline-style-17">
+                    <div class="form-group inline-style-18">
+                        <label>Độ Tuổi (*)</label>
+                        <select id="editAge" required>
+                            <option>P (Mọi lứa tuổi)</option>
+                            <option>T13 (Trên 13 tuổi)</option>
+                            <option>T16 (Trên 16 tuổi)</option>
+                            <option selected>T18 (Trên 18 tuổi)</option>
+                        </select>
+                    </div>
+                    <div class="form-group inline-style-18">
+                        <label>Trạng Thái (*)</label>
+                        <select id="editStatus" required>
+                            <option>Sắp chiếu</option>
+                            <option selected>Đang chiếu</option>
+                            <option>Ngừng chiếu</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Hình Ảnh (Poster) - Hiện tại: poster1.png</label>
+                    <div style="display:flex; gap:12px; align-items:center;">
+                        <img src="../assets/images/poster1.png"
+                             style="width:40px; height:56px; object-fit:cover; border-radius:4px; border:1px solid #e3e6f0;">
+                        <input type="file" accept="image/*" style="flex:1;">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Trailer URL (Youtube)</label>
+                    <input type="url" placeholder="https://youtube.com/..."
+                           value="https://www.youtube.com/watch?v=123456789">
+                </div>
+                <div class="form-group">
+                    <label>Mô Tả Phim</label>
+                    <textarea id="editDesc" rows="4"
+                              placeholder="Nhập nội dung tóm tắt...">Một đặc vụ xuất sắc phải thực hiện một nhiệm vụ tưởng chừng như không thể: xâm nhập vào sào huyệt của tổ chức ngầm nguy hiểm nhất thế giới để giải cứu con tin quan trọng. Với những pha hành động nghẹt thở và kỹ xảo đỉnh cao, Nhiệm Vụ Đỏ hứa hẹn mang đến một trải nghiệm điện ảnh bùng nổ.</textarea>
+                </div>
+                <div class="modal-footer inline-style-12">
+                    <button type="button" class="btn btn-danger" onclick="closeModal('editMovieModal')">Hủy</button>
+                    <button type="submit" class="btn btn-success"><i class="fas fa-save"
+                                                                     style="margin-right:6px;"></i>Lưu Thay Đổi</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- ===== MODAL CHI TIẾT PHIM ===== -->
+<div class="modal-overlay" id="movieDetailModal">
+    <div class="modal modal-lg">
+        <div class="modal-header">
+            <h2><i class="fas fa-film" style="margin-right:8px;color:#4e73df;"></i>Chi Tiết Phim</h2>
+            <button class="modal-close" onclick="closeModal('movieDetailModal')"><i
+                    class="fas fa-times"></i></button>
+        </div>
+        <div class="modal-body">
+            <div style="display:flex; gap:24px; align-items:flex-start;">
+                <img id="detailPoster" src="../assets/images/poster1.png"
+                     style="width:160px;border-radius:12px;box-shadow: 0 4px 15px rgba(0,0,0,0.1);object-fit:cover;"
+                     alt="Poster">
+                <div style="flex:1;">
+                    <h3 id="detailTitle"
+                        style="color:#2d3748;font-size:24px;font-weight:700;margin-bottom:16px;margin-top:0;">Nhiệm
+                        Vụ Đỏ</h3>
+
+                    <div
+                            style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;color:#5a5c69;font-size:15px;">
+                        <p style="margin:0;"><i class="fas fa-tags" style="color:#4e73df;width:20px;"></i>
+                            <strong>Thể loại:</strong> <span id="detailGenre">Hành Động, Kịch Tính</span>
+                        </p>
+                        <p style="margin:0;"><i class="fas fa-clock" style="color:#f6c23e;width:20px;"></i>
+                            <strong>Thời lượng:</strong> <span id="detailDuration">120 phút</span>
+                        </p>
+                        <p style="margin:0;"><i class="fas fa-user-shield" style="color:#e74a3b;width:20px;"></i>
+                            <strong>Độ tuổi:</strong> <span id="detailAgeContainer"><span
+                                    class="badge badge-danger">T18</span></span>
+                        </p>
+                        <p style="margin:0;"><i class="fas fa-info-circle" style="color:#1cc88a;width:20px;"></i>
+                            <strong>Trạng thái:</strong> <span id="detailStatusContainer"><span
+                                    class="badge badge-success">Đang chiếu</span></span>
+                        </p>
+                    </div>
+
+                    <div style="background:#f8f9fc;padding:16px;border-radius:8px;border-left:4px solid #4e73df;">
+                        <h4 style="color:#2d3748;font-size:16px;font-weight:700;margin-bottom:8px;margin-top:0;">Nội
+                            dung phim</h4>
+                        <p id="detailDesc" style="color:#5a5c69;line-height:1.6;font-size:14px;margin:0;">Một đặc vụ
+                            xuất sắc phải thực hiện một nhiệm vụ tưởng chừng như không thể: xâm nhập vào sào huyệt
+                            của tổ chức ngầm nguy hiểm nhất thế giới để giải cứu con tin quan trọng. Với những pha
+                            hành động nghẹt thở và kỹ xảo đỉnh cao, Nhiệm Vụ Đỏ hứa hẹn mang đến một trải nghiệm
+                            điện ảnh bùng nổ.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer inline-style-12"
+                 style="margin-top:24px;border-top:1px solid #e3e6f0;padding-top:16px;">
+                <button type="button" class="btn"
+                        style="background:#eaecf4;color:#5a5c69;border:none;font-weight:600;"
+                        onclick="closeModal('movieDetailModal')">Đóng</button>
+                <a href="https://youtube.com" target="_blank" class="btn btn-primary"
+                   style="box-shadow: 0 4px 10px rgba(78, 115, 223, 0.3);font-weight:600;text-decoration:none;"><i
+                        class="fas fa-play" style="margin-right:6px;"></i>Xem Trailer</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===== MODAL XÁC NHẬN XÓA ===== -->
+<div class="modal-overlay" id="deleteModal">
+    <div class="modal" style="max-width:420px;">
+        <div class="modal-header">
+            <h2>Xác Nhận Xóa</h2>
+            <button class="modal-close" onclick="closeModal('deleteModal')"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="modal-body" style="text-align:center;padding:24px 32px 32px;">
+            <div class="delete-icon-wrap"><i class="fas fa-trash-alt"></i></div>
+            <h3 style="font-size:18px;font-weight:700;margin-bottom:8px;">Xóa phim này?</h3>
+            <p style="color:#8a8f9b;font-size:14px;margin-bottom:24px;">Bạn sắp xóa <strong
+                    id="deleteMovieName"></strong>.<br>Hành động này không thể hoàn tác.</p>
+            <div style="display:flex;gap:12px;justify-content:center;">
+                <button class="btn btn-danger" onclick="confirmDelete()"><i class="fas fa-trash"
+                                                                            style="margin-right:6px;"></i>Xóa ngay</button>
+                <button class="btn shared-ext-22" onclick="closeModal('deleteModal')">Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../assets/js/app.js"></script>
+<script>
+    function openModal(id) { document.getElementById(id).classList.add('active'); }
+    function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+
+    let pendingDeleteRow = null;
+    function openDeleteModal(id, name) {
+        document.getElementById('deleteMovieName').textContent = name;
+        pendingDeleteRow = document.querySelector(`#movieTableBody tr:nth-child(${id})`);
+        openModal('deleteModal');
+    }
+    function confirmDelete() {
+        if (pendingDeleteRow) {
+            pendingDeleteRow.style.transition = 'opacity .3s';
+            pendingDeleteRow.style.opacity = '0';
+            setTimeout(() => { pendingDeleteRow.remove(); updateStats(); }, 300);
+        }
+        closeModal('deleteModal');
+        showToast('Đã xóa phim thành công!', 'success');
+    }
+
+    function handleAdd(e) { e.preventDefault(); closeModal('addMovieModal'); showToast('Thêm phim mới thành công!', 'success'); }
+    function handleEdit(e) { e.preventDefault(); closeModal('editMovieModal'); showToast('Cập nhật phim thành công!', 'success'); }
+
+    function toggleStatus(btn, newStatus) {
+        const row = btn.closest('tr');
+        const badge = row.cells[5].querySelector('.badge');
+        row.dataset.status = newStatus;
+
+        if (newStatus === 'Ngừng chiếu') {
+            badge.textContent = 'Ngừng chiếu';
+            badge.className = 'badge badge-secondary';
+            badge.style.cssText = 'background:rgba(133,135,150,0.15);color:#858796;';
+            btn.className = 'btn btn-sm btn-success';
+            btn.title = 'Chiếu lại';
+            btn.innerHTML = '<i class="fas fa-play"></i>';
+            btn.onclick = () => toggleStatus(btn, 'Đang chiếu');
+        } else {
+            badge.textContent = 'Đang chiếu';
+            badge.className = 'badge badge-success';
+            badge.style.cssText = '';
+            btn.className = 'btn btn-sm btn-warning';
+            btn.title = 'Ngừng chiếu';
+            btn.innerHTML = '<i class="fas fa-eye-slash"></i>';
+            btn.onclick = () => toggleStatus(btn, 'Ngừng chiếu');
+        }
+        updateStats();
+        showToast('Cập nhật trạng thái thành công!', 'success');
+    }
+
+    function filterTable() {
+        const search = document.getElementById('searchInput').value.toLowerCase();
+        const genre = document.getElementById('filterGenre').value;
+        const status = document.getElementById('filterStatus').value;
+        document.querySelectorAll('#movieTableBody tr').forEach(row => {
+            const name = row.cells[1].querySelector('strong')?.textContent.toLowerCase() || '';
+            const rowG = row.dataset.genre || '';
+            const rowS = row.dataset.status || '';
+            const ok = (!search || name.includes(search)) && (!genre || rowG.includes(genre)) && (!status || rowS === status);
+            row.style.display = ok ? '' : 'none';
+        });
+    }
+
+    function updateStats() {
+        const rows = document.querySelectorAll('#movieTableBody tr');
+        let total = 0, showing = 0, upcoming = 0, stopped = 0;
+        rows.forEach(r => {
+            total++;
+            const s = r.dataset.status;
+            if (s === 'Đang chiếu') showing++;
+            else if (s === 'Sắp chiếu') upcoming++;
+            else stopped++;
+        });
+        document.getElementById('stat-total').textContent = total;
+        document.getElementById('stat-showing').textContent = showing;
+        document.getElementById('stat-upcoming').textContent = upcoming;
+        document.getElementById('stat-stopped').textContent = stopped;
+    }
+
+    function showToast(message, type = 'success') {
+        let c = document.getElementById('_tc');
+        if (!c) { c = document.createElement('div'); c.id = '_tc'; c.style.cssText = 'position:fixed;top:20px;right:24px;z-index:99999;display:flex;flex-direction:column;gap:10px;'; document.body.appendChild(c); }
+        const colors = { success: '#1cc88a', warning: '#f6c23e', danger: '#e74a3b' };
+        const icons = { success: 'check-circle', warning: 'exclamation-triangle', danger: 'times-circle' };
+        const t = document.createElement('div');
+        t.style.cssText = `display:flex;align-items:center;gap:10px;background:#2d3748;border-left:4px solid ${colors[type]};color:#fff;padding:12px 18px;border-radius:8px;box-shadow:0 4px 20px rgba(0,0,0,.4);min-width:260px;font-size:14px;font-weight:600;animation:_tIn .3s ease;`;
+        t.innerHTML = `<i class="fas fa-${icons[type]}" style="color:${colors[type]};font-size:18px;"></i>${message}`;
+        if (!document.getElementById('_tkf')) { const s = document.createElement('style'); s.id = '_tkf'; s.textContent = '@keyframes _tIn{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:translateX(0)}}'; document.head.appendChild(s); }
+        c.appendChild(t);
+        setTimeout(() => { t.style.opacity = '0'; t.style.transition = 'opacity .3s'; setTimeout(() => t.remove(), 300); }, 3500);
+    }
+</script>
+</body>
+
+</html>
