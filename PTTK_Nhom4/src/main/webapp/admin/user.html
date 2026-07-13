@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - CineTicket</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/admin/style.css">
+    <link rel="stylesheet" href="../assets/css/inline-extracted.css">
+</head>
+<body>
+<div class="sidebar"></div>
+<div class="main-wrapper">
+    <div class="topbar">
+        <div class="user-info">
+            <span  class="inline-style-3" >Admin</span>
+            <img src="https://ui-avatars.com/api/?name=Admin&background=4e73df&color=fff" alt="Admin">
+        </div>
+    </div>
+
+    <div class="content">
+        <div id="users" class="section active">
+            <div  class="inline-style-5" >
+                <h1 class="page-title inline-style-6" >Quản Lý Người Dùng</h1>
+                <button class="btn btn-primary" onclick="openModal('addUsermodal')"><i class="fas fa-user-plus fa-sm"></i> Cấp tài khoản mới</button>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    Danh sách tài khoản hệ thống
+                </div>
+                <div class="card-body">
+                    <div  class="inline-style-13" >
+                        <input type="text" placeholder="Tìm kiếm theo tên, SĐT hoặc Email..."  class="inline-style-14" >
+                        <select>
+                            <option>Tất cả vai trò</option>
+                            <option>Khách hàng</option>
+                            <option>Quản trị viên</option>
+                            <option>Nhân viên</option>
+                        </select>
+                        <select>
+                            <option>Tất cả trạng thái</option>
+                            <option>Đang hoạt động</option>
+                            <option>Bị khóa</option>
+                        </select>
+                        <button class="btn btn-primary"><i class="fas fa-search"></i> Lọc</button>
+                    </div>
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Khách Hàng</th>
+                            <th>Thông Tin Liên Hệ</th>
+                            <th>Vai Trò</th>
+                            <th>Ngày Đăng Ký</th>
+                            <th>Trạng Thái</th>
+                            <th>Hành Động</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td><strong>Nguyễn Văn A</strong></td>
+                            <td>nguyenvana@gmail.com<br><small  class="text-muted" >0901234567</small></td>
+                            <td>Khách hàng</td>
+                            <td>15/08/2026</td>
+                            <td><span class="badge badge-success">Hoạt động</span></td>
+                            <td>
+                                <button class="btn btn-sm btn-primary" onclick="openModal('editUsermodal')"><i class="fas fa-edit"></i> Sửa</button>
+                                <button class="btn btn-sm btn-danger" onclick="alert('Xác nhận khóa tài khoản này?')"><i class="fas fa-lock"></i> Khóa</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Trần Thị B</strong></td>
+                            <td>tranthib@gmail.com<br><small  class="text-muted" >0987654321</small></td>
+                            <td>Khách hàng</td>
+                            <td>10/08/2026</td>
+                            <td><span class="badge badge-danger">Bị khóa</span></td>
+                            <td>
+                                <button class="btn btn-sm btn-primary" onclick="openModal('editUsermodal')"><i class="fas fa-edit"></i> Sửa</button>
+                                <button class="btn btn-sm btn-success" onclick="alert('Xác nhận mở khóa tài khoản này?')"><i class="fas fa-unlock"></i> Mở khóa</button>
+                            </td>
+                        </tr>
+                        <tr  class="inline-style-36" >
+                            <td><strong>Admin Trưởng</strong></td>
+                            <td>admin@cineticket.com<br><small  class="text-muted" >0999999999</small></td>
+                            <td>Quản trị viên</td>
+                            <td>01/01/2026</td>
+                            <td><span class="badge badge-success">Hoạt động</span></td>
+                            <td>
+                                <button class="btn btn-sm btn-primary" onclick="openModal('editUsermodal')"><i class="fas fa-edit"></i> Sửa</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Lê Hoàng C</strong></td>
+                            <td>lehoangc@gmail.com<br><small  class="text-muted" >0933333333</small></td>
+                            <td>Khách hàng</td>
+                            <td>20/08/2026</td>
+                            <td><span class="badge badge-success">Hoạt động</span></td>
+                            <td>
+                                <button class="btn btn-sm btn-primary" onclick="openModal('editUsermodal')"><i class="fas fa-edit"></i> Sửa</button>
+                                <button class="btn btn-sm btn-danger" onclick="alert('Xác nhận khóa tài khoản này?')"><i class="fas fa-lock"></i> Khóa</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Phạm Thị D</strong></td>
+                            <td>phamthid@gmail.com<br><small  class="text-muted" >0977777777</small></td>
+                            <td>Khách hàng</td>
+                            <td>25/08/2026</td>
+                            <td><span class="badge badge-success">Hoạt động</span></td>
+                            <td>
+                                <button class="btn btn-sm btn-primary" onclick="openModal('editUsermodal')"><i class="fas fa-edit"></i> Sửa</button>
+                                <button class="btn btn-sm btn-danger" onclick="alert('Xác nhận khóa tài khoản này?')"><i class="fas fa-lock"></i> Khóa</button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+        <!-- User Modal -->
+        <div class="modal-overlay" id="addUsermodal">
+            <div class="modal">
+                <div class="modal-header">
+                    <h2>Thêm Người Dùng</h2>
+                    <button class="modal-close" onclick="closeModal('addUsermodal')"><i class="fas fa-times"></i></button>
+                </div>
+                <div class="modal-body">
+                    <form id="userForm" onsubmit="event.preventDefault(); showSuccess('Lưu thông tin người dùng thành công!');">
+                        <div class="form-group">
+                            <label>Họ và Tên (*)</label>
+                            <input type="text" placeholder="Nhập họ tên đầy đủ..." required>
+                        </div>
+                        <div class="form-group">
+                            <label>Email (*)</label>
+                            <input type="email" placeholder="example@email.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Số điện thoại</label>
+                            <input type="tel" placeholder="09xxxxxxx">
+                        </div>
+                        <div class="form-group">
+                            <label>Mật khẩu (Để trống nếu không đổi)</label>
+                            <input type="password" placeholder="********">
+                        </div>
+                        <div  class="inline-style-17" >
+                            <div class="form-group inline-style-18" >
+                                <label>Vai Trò (*)</label>
+                                <select required>
+                                    <option>Khách hàng</option>
+                                    <option>Nhân viên bán vé</option>
+                                    <option>Quản trị viên</option>
+                                </select>
+                            </div>
+                            <div class="form-group inline-style-18" >
+                                <label>Trạng Thái (*)</label>
+                                <select required>
+                                    <option>Đang hoạt động</option>
+                                    <option>Bị khóa</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="modal-footer inline-style-12" >
+                            <button type="button" class="btn btn-danger" onclick="closeModal('addUsermodal')">Hủy</button>
+                            <button type="submit" class="btn btn-success">Lưu Thông Tin</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-overlay" id="editUsermodal">
+            <div class="modal">
+                <div class="modal-header">
+                    <h2>Sửa Người Dùng</h2>
+                    <button class="modal-close" onclick="closeModal('editUsermodal')"><i class="fas fa-times"></i></button>
+                </div>
+                <div class="modal-body">
+                    <form id="userForm" onsubmit="event.preventDefault(); showSuccess('Lưu thông tin người dùng thành công!');">
+                        <div class="form-group">
+                            <label>Họ và Tên (*)</label>
+                            <input type="text" value="Trần Văn Bình"  placeholder="Nhập họ tên đầy đủ..." required>
+                        </div>
+                        <div class="form-group">
+                            <label>Email (*)</label>
+                            <input type="email" value="tranvanbinh@gmail.com"  placeholder="example@email.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Số điện thoại</label>
+                            <input type="tel" value="0912345678"  placeholder="Nhập SĐT..." required>
+                        </div>
+                        <div class="form-group">
+                            <label>Mật khẩu (Để trống nếu không đổi)</label>
+                            <input type="password" placeholder="********">
+                        </div>
+                        <div  class="inline-style-17" >
+                            <div class="form-group inline-style-18" >
+                                <label>Vai Trò (*)</label>
+                                <select required>
+                                    <option selected>Khách hàng</option>
+                                    <option>Nhân viên bán vé</option>
+                                    <option>Quản trị viên</option>
+                                </select>
+                            </div>
+                            <div class="form-group inline-style-18" >
+                                <label>Trạng Thái (*)</label>
+                                <select required>
+                                    <option selected>Đang hoạt động</option>
+                                    <option>Bị khóa</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="modal-footer inline-style-12" >
+                            <button type="button" class="btn btn-danger" onclick="closeModal('editUsermodal')">Hủy</button>
+                            <button type="submit" class="btn btn-success">Lưu Thông Tin</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            function openModal(id) { document.getElementById(id).classList.add('active'); }
+            function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+            function showSuccess(msg) { alert(msg); document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('active')); }
+        </script>
+        <script src="../assets/js/app.js"></script>
+</body>
+</html>
