@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Phòng Chiếu - CineTicket Admin</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/admin/style.css">
+    <link rel="stylesheet" href="../assets/css/admin/rooms.css">
+
+</head>
+
+<body>
+<div class="sidebar"></div>
+<div class="main-wrapper">
+    <div class="topbar">
+        <div class="user-info">
+            <span class="shared-ext-1">Admin</span>
+            <img src="https://ui-avatars.com/api/?name=Admin&background=4e73df&color=fff" alt="Admin">
+        </div>
+    </div>
+    <div class="content">
+        <div id="rooms" class="section active">
+
+            <div class="shared-ext-2">
+                <h1 class="page-title shared-ext-3">
+                    <i class="fas fa-door-open shared-ext-9"></i>Quản Lý Phòng Chiếu
+                </h1>
+                <button class="btn btn-primary" onclick="openModal('addRoomModal')">
+                    <i class="fas fa-plus fa-sm"></i> Thêm Phòng Mới
+                </button>
+            </div>
+
+            <!-- Stat Cards -->
+            <div class="stat-grid">
+                <div class="card stat-card-wrapper">
+                    <div class="card-body stat-card-body">
+                        <div class="stat-icon shared-ext-10"><i class="fas fa-door-open"></i></div>
+                        <div>
+                            <div class="stat-num" id="stat-total">4</div>
+                            <div class="stat-label">Tổng phòng</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card stat-card-wrapper">
+                    <div class="card-body stat-card-body">
+                        <div class="stat-icon shared-ext-11"><i class="fas fa-check-circle"></i></div>
+                        <div>
+                            <div class="stat-num" id="stat-active">3</div>
+                            <div class="stat-label">Hoạt động</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card stat-card-wrapper">
+                    <div class="card-body stat-card-body">
+                        <div class="stat-icon shared-ext-12"><i class="fas fa-tools"></i></div>
+                        <div>
+                            <div class="stat-num" id="stat-maintenance">1</div>
+                            <div class="stat-label">Đang bảo trì</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card stat-card-wrapper">
+                    <div class="card-body stat-card-body">
+                        <div class="stat-icon shared-ext-27"><i class="fas fa-chair"></i></div>
+                        <div>
+                            <div class="stat-num">570</div>
+                            <div class="stat-label">Tổng ghế</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">Danh sách phòng chiếu</div>
+                <div class="card-body">
+                    <div class="shared-ext-4 shared-ext-14">
+                        <input type="text" id="searchInput" placeholder="Tìm theo tên phòng..." class="shared-ext-5"
+                               oninput="filterTable()">
+                        <select id="filterType" onchange="filterTable()">
+                            <option value="">Tất cả loại phòng</option>
+                            <option value="IMAX">IMAX 3D</option>
+                            <option value="Tiêu chuẩn">Tiêu chuẩn</option>
+                            <option value="VIP">Phòng VIP</option>
+                        </select>
+                        <select id="filterStatus" onchange="filterTable()">
+                            <option value="">Tất cả tình trạng</option>
+                            <option value="Hoạt động">Hoạt động</option>
+                            <option value="Đang bảo trì">Đang bảo trì</option>
+                            <option value="Đóng cửa">Đóng cửa</option>
+                        </select>
+                        <button class="btn btn-primary" onclick="filterTable()"><i class="fas fa-search"></i>
+                            Lọc</button>
+                    </div>
+                    <table id="roomTable">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Tên Phòng</th>
+                            <th>Loại Phòng</th>
+                            <th>Sức Chứa (Ghế)</th>
+                            <th>Tình Trạng</th>
+                            <th>Hành Động</th>
+                        </tr>
+                        </thead>
+                        <tbody id="roomTableBody">
+                        <tr data-type="IMAX" data-status="Hoạt động">
+                            <td>1</td>
+                            <td><strong>Phòng 1</strong></td>
+                            <td><span class="badge badge-primary">IMAX 3D</span></td>
+                            <td>250 <small class="shared-ext-24">(Có VIP &amp; Sweetbox)</small></td>
+                            <td><span class="badge badge-success">Hoạt động</span></td>
+                            <td>
+                                <button class="btn btn-sm btn-info" onclick="openModal('seatingModal')"
+                                        title="Sơ đồ ghế"><i class="fas fa-th"></i> Sơ đồ</button>
+                                <button class="btn btn-sm btn-primary" onclick="openModal('editRoomModal')"
+                                        title="Sửa"><i class="fas fa-edit"></i></button>
+                                <button class="btn btn-sm btn-danger" onclick="openDeleteModal(1,'Phòng 1')"
+                                        title="Xóa"><i class="fas fa-trash"></i></button>
+                            </td>
+                        </tr>
+                        <tr data-type="Tiêu chuẩn" data-status="Đang bảo trì">
+                            <td>2</td>
+                            <td><strong>Phòng 2</strong></td>
+                            <td><span class="badge badge-info">Tiêu chuẩn 2D</span></td>
+                            <td>150</td>
+                            <td><span class="badge badge-warning">Đang bảo trì</span></td>
+                            <td>
+                                <button class="btn btn-sm btn-info" onclick="openModal('seatingModal')"
+                                        title="Sơ đồ ghế"><i class="fas fa-th"></i> Sơ đồ</button>
+                                <button class="btn btn-sm btn-primary" onclick="openModal('editRoomModal')"
+                                        title="Sửa"><i class="fas fa-edit"></i></button>
+                                <button class="btn btn-sm btn-danger" onclick="openDeleteModal(2,'Phòng 2')"
+                                        title="Xóa"><i class="fas fa-trash"></i></button>
+                            </td>
+                        </tr>
+                        <tr data-type="VIP" data-status="Hoạt động">
+                            <td>3</td>
+                            <td><strong>Phòng 3</strong></td>
+                            <td><span class="badge badge-warning text-dark">Phòng VIP</span></td>
+                            <td>50</td>
+                            <td><span class="badge badge-success">Hoạt động tốt</span></td>
+                            <td>
+                                <button class="btn btn-sm btn-info" onclick="openModal('seatingModal')"
+                                        title="Sơ đồ ghế"><i class="fas fa-th"></i> Sơ đồ</button>
+                                <button class="btn btn-sm btn-primary" onclick="openModal('editRoomModal')"
+                                        title="Sửa"><i class="fas fa-edit"></i></button>
+                                <button class="btn btn-sm btn-danger" onclick="openDeleteModal(3,'Phòng 3')"
+                                        title="Xóa"><i class="fas fa-trash"></i></button>
+                            </td>
+                        </tr>
+                        <tr data-type="Tiêu chuẩn" data-status="Hoạt động">
+                            <td>4</td>
+                            <td><strong>Phòng 4</strong></td>
+                            <td><span class="badge badge-info">Tiêu chuẩn 3D</span></td>
+                            <td>120</td>
+                            <td><span class="badge badge-success">Hoạt động tốt</span></td>
+                            <td>
+                                <button class="btn btn-sm btn-info" onclick="openModal('seatingModal')"
+                                        title="Sơ đồ ghế"><i class="fas fa-th"></i> Sơ đồ</button>
+                                <button class="btn btn-sm btn-primary" onclick="openModal('editRoomModal')"
+                                        title="Sửa"><i class="fas fa-edit"></i></button>
+                                <button class="btn btn-sm btn-danger" onclick="openDeleteModal(4,'Phòng 4')"
+                                        title="Xóa"><i class="fas fa-trash"></i></button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL THÊM PHÒNG -->
+<div class="modal-overlay" id="addRoomModal">
+    <div class="modal">
+        <div class="modal-header">
+            <h2><i class="fas fa-plus-circle shared-ext-15"></i>Thêm Phòng Chiếu</h2>
+            <button class="modal-close" onclick="closeModal('addRoomModal')"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="modal-body">
+            <form onsubmit="handleAdd(event)">
+                <div class="form-group"><label>Tên Phòng (*)</label><input type="text" placeholder="Ví dụ: Phòng 5"
+                                                                           required></div>
+                <div class="form-group"><label>Loại Phòng (*)</label>
+                    <select required>
+                        <option>Tiêu chuẩn 2D</option>
+                        <option>Tiêu chuẩn 3D</option>
+                        <option>IMAX 3D</option>
+                        <option>Phòng VIP / Sweetbox</option>
+                    </select>
+                </div>
+                <div class="form-group"><label>Sơ Đồ Ghế</label>
+                    <button type="button" class="btn btn-info rooms-ext-1" onclick="openModal('newSeatingModal')"><i
+                            class="fas fa-th"></i> Thiết lập sơ đồ ghế</button>
+                </div>
+                <div class="form-group"><label>Sức Chứa (tự tính)</label><input type="number" min="10"
+                                                                                placeholder="Tự động tính từ sơ đồ" readonly></div>
+                <div class="form-group"><label>Tình Trạng</label>
+                    <select>
+                        <option>Hoạt động</option>
+                        <option>Đang bảo trì</option>
+                        <option>Đóng cửa</option>
+                    </select>
+                </div>
+                <div class="modal-footer shared-ext-8">
+                    <button type="button" class="btn btn-danger" onclick="closeModal('addRoomModal')">Hủy</button>
+                    <button type="submit" class="btn btn-success"><i class="fas fa-save shared-ext-16"></i>Lưu
+                        Phòng</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL SỬA PHÒNG -->
+<div class="modal-overlay" id="editRoomModal">
+    <div class="modal">
+        <div class="modal-header">
+            <h2><i class="fas fa-edit shared-ext-9"></i>Sửa Phòng Chiếu</h2>
+            <button class="modal-close" onclick="closeModal('editRoomModal')"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="modal-body">
+            <form onsubmit="handleEdit(event)">
+                <div class="form-group"><label>Tên Phòng (*)</label><input type="text" id="editName" value="Phòng 1"
+                                                                           required></div>
+                <div class="form-group"><label>Loại Phòng (*)</label>
+                    <select id="editType" required>
+                        <option>Tiêu chuẩn 2D</option>
+                        <option>Tiêu chuẩn 3D</option>
+                        <option selected>IMAX 3D</option>
+                        <option>Phòng VIP / Sweetbox</option>
+                    </select>
+                </div>
+                <div class="form-group"><label>Sơ Đồ Ghế</label>
+                    <button type="button" class="btn btn-info rooms-ext-1"
+                            onclick="openModal('editSeatingModal')"><i class="fas fa-th"></i> Chỉnh sửa sơ đồ
+                        ghế</button>
+                </div>
+                <div class="form-group"><label>Sức Chứa</label><input type="number" id="editCapacity" value="250"
+                                                                      min="10" readonly></div>
+                <div class="form-group"><label>Tình Trạng</label>
+                    <select id="editStatus">
+                        <option selected>Hoạt động</option>
+                        <option>Đang bảo trì</option>
+                        <option>Đóng cửa</option>
+                    </select>
+                </div>
+                <div class="modal-footer shared-ext-8">
+                    <button type="button" class="btn btn-danger" onclick="closeModal('editRoomModal')">Hủy</button>
+                    <button type="submit" class="btn btn-success"><i class="fas fa-save shared-ext-16"></i>Lưu Thay
+                        Đổi</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL XEM CHI TIẾT SƠ ĐỒ GHẾ -->
+<div class="modal-overlay" id="seatingModal">
+    <div class="modal modal-lg">
+        <div class="modal-header">
+            <h2><i class="fas fa-eye rooms-ext-2"></i>Sơ Đồ Ghế</h2>
+            <button class="modal-close" onclick="closeModal('seatingModal')"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="modal-body">
+            <div class="rooms-ext-3">
+                <div class="rooms-ext-4">MÀN HÌNH</div>
+                <div class="rooms-ext-5">
+                    <div class="rooms-ext-6" title="Ghế Thường"></div>
+                    <div class="rooms-ext-6"></div>
+                    <div class="rooms-ext-6"></div>
+                    <div class="rooms-ext-6"></div>
+                    <div class="rooms-ext-7"></div>
+                    <div class="rooms-ext-6"></div>
+                    <div class="rooms-ext-6"></div>
+                    <div class="rooms-ext-6"></div>
+                    <div class="rooms-ext-6"></div>
+                </div>
+                <div class="rooms-ext-5">
+                    <div class="rooms-ext-8" title="Ghế VIP"></div>
+                    <div class="rooms-ext-8"></div>
+                    <div class="rooms-ext-8"></div>
+                    <div class="rooms-ext-8"></div>
+                    <div class="rooms-ext-7"></div>
+                    <div class="rooms-ext-8"></div>
+                    <div class="rooms-ext-8"></div>
+                    <div class="rooms-ext-8"></div>
+                    <div class="rooms-ext-8"></div>
+                </div>
+                <div class="rooms-ext-5">
+                    <div class="rooms-ext-9" title="Ghế Đôi"></div>
+                    <div class="rooms-ext-9"></div>
+                    <div class="rooms-ext-7"></div>
+                    <div class="rooms-ext-9"></div>
+                    <div class="rooms-ext-9"></div>
+                </div>
+            </div>
+            <div class="rooms-ext-10">
+                <div class="rooms-ext-11">
+                    <div class="rooms-ext-12"></div> Ghế Thường (75,000đ)
+                </div>
+                <div class="rooms-ext-11">
+                    <div class="rooms-ext-13"></div> Ghế VIP (90,000đ)
+                </div>
+                <div class="rooms-ext-11">
+                    <div class="rooms-ext-14"></div> Ghế Đôi (180,000đ)
+                </div>
+            </div>
+            <div class="modal-footer shared-ext-8 rooms-ext-15">
+                <button type="button" class="btn btn-secondary rooms-ext-16"
+                        onclick="closeModal('seatingModal')">Đóng Sơ Đồ</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL SỬA SƠ ĐỒ GHẾ -->
+<div class="modal-overlay" id="editSeatingModal">
+    <div class="modal modal-lg">
+        <div class="modal-header">
+            <h2><i class="fas fa-th shared-ext-9"></i>Chỉnh Sửa Sơ Đồ Ghế</h2>
+            <button class="modal-close" onclick="closeModal('editSeatingModal')"><i
+                    class="fas fa-times"></i></button>
+        </div>
+        <div class="modal-body">
+            <div class="rooms-ext-17">
+                <div class="rooms-ext-18">
+                    <div class="rooms-ext-19">
+                        <span class="rooms-ext-20"><i class="fas fa-mouse-pointer"></i> Công cụ:</span>
+                        <button type="button" class="btn btn-sm rooms-ext-21" title="Chọn Ghế Thường">
+                            <div class="rooms-ext-22"></div> Ghế Thường
+                        </button>
+                        <button type="button" class="btn btn-sm rooms-ext-23" title="Chọn Ghế VIP">
+                            <div class="rooms-ext-24"></div> Ghế VIP
+                        </button>
+                        <button type="button" class="btn btn-sm rooms-ext-23" title="Chọn Ghế Đôi">
+                            <div class="rooms-ext-25"></div> Ghế Đôi
+                        </button>
+                        <button type="button" class="btn btn-sm rooms-ext-23" title="Tạo Lối Đi">
+                            <div class="rooms-ext-26"></div> Lối Đi
+                        </button>
+                    </div>
+                    <div class="rooms-ext-27">
+                        <button type="button" class="btn btn-sm rooms-ext-28"><i class="fas fa-plus"></i>
+                            Hàng</button>
+                        <button type="button" class="btn btn-sm rooms-ext-28"><i class="fas fa-plus"></i>
+                            Cột</button>
+                    </div>
+                </div>
+                <div class="rooms-ext-29"><i class="fas fa-info-circle"></i> Chọn công cụ ở trên sau đó click vào
+                    các vị trí bên dưới để vẽ sơ đồ ghế.</div>
+            </div>
+            <div class="rooms-ext-3">
+                <div class="rooms-ext-4">MÀN HÌNH</div>
+                <div class="rooms-ext-5">
+                    <div class="rooms-ext-6" title="Ghế Thường"></div>
+                    <div class="rooms-ext-6"></div>
+                    <div class="rooms-ext-6"></div>
+                    <div class="rooms-ext-6"></div>
+                    <div class="rooms-ext-7"></div>
+                    <div class="rooms-ext-6"></div>
+                    <div class="rooms-ext-6"></div>
+                    <div class="rooms-ext-6"></div>
+                    <div class="rooms-ext-6"></div>
+                </div>
+                <div class="rooms-ext-5">
+                    <div class="rooms-ext-8" title="Ghế VIP"></div>
+                    <div class="rooms-ext-8"></div>
+                    <div class="rooms-ext-8"></div>
+                    <div class="rooms-ext-8"></div>
+                    <div class="rooms-ext-7"></div>
+                    <div class="rooms-ext-8"></div>
+                    <div class="rooms-ext-8"></div>
+                    <div class="rooms-ext-8"></div>
+                    <div class="rooms-ext-8"></div>
+                </div>
+                <div class="rooms-ext-5">
+                    <div class="rooms-ext-9" title="Ghế Đôi"></div>
+                    <div class="rooms-ext-9"></div>
+                    <div class="rooms-ext-7"></div>
+                    <div class="rooms-ext-9"></div>
+                    <div class="rooms-ext-9"></div>
+                </div>
+            </div>
+            <div class="rooms-ext-10">
+                <div class="rooms-ext-11">
+                    <div class="rooms-ext-12"></div> Ghế Thường (75,000đ)
+                </div>
+                <div class="rooms-ext-11">
+                    <div class="rooms-ext-13"></div> Ghế VIP (90,000đ)
+                </div>
+                <div class="rooms-ext-11">
+                    <div class="rooms-ext-14"></div> Ghế Đôi (180,000đ)
+                </div>
+            </div>
+            <div class="modal-footer shared-ext-8">
+                <button type="button" class="btn btn-danger" onclick="closeModal('editSeatingModal')">Đóng</button>
+                <button type="button" class="btn btn-success"
+                        onclick="closeModal('editSeatingModal');showToast('Cập nhật sơ đồ ghế thành công!','success');">Lưu
+                    Sơ Đồ</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL SƠ ĐỒ GHẾ MỚI (CHO THÊM PHÒNG) -->
+<div class="modal-overlay" id="newSeatingModal">
+    <div class="modal modal-lg">
+        <div class="modal-header">
+            <h2><i class="fas fa-th shared-ext-15"></i>Thiết Lập Sơ Đồ Ghế (Mới)</h2>
+            <button class="modal-close" onclick="closeModal('newSeatingModal')"><i
+                    class="fas fa-times"></i></button>
+        </div>
+        <div class="modal-body">
+            <div class="rooms-ext-17">
+                <div class="rooms-ext-18">
+                    <div class="rooms-ext-19">
+                        <span class="rooms-ext-20"><i class="fas fa-mouse-pointer"></i> Công cụ:</span>
+                        <button type="button" class="btn btn-sm rooms-ext-21" title="Chọn Ghế Thường">
+                            <div class="rooms-ext-22"></div> Ghế Thường
+                        </button>
+                        <button type="button" class="btn btn-sm rooms-ext-23" title="Chọn Ghế VIP">
+                            <div class="rooms-ext-24"></div> Ghế VIP
+                        </button>
+                        <button type="button" class="btn btn-sm rooms-ext-23" title="Chọn Ghế Đôi">
+                            <div class="rooms-ext-25"></div> Ghế Đôi
+                        </button>
+                        <button type="button" class="btn btn-sm rooms-ext-23" title="Tạo Lối Đi">
+                            <div class="rooms-ext-26"></div> Lối Đi
+                        </button>
+                    </div>
+                    <div class="rooms-ext-27">
+                        <button type="button" class="btn btn-sm rooms-ext-28"><i class="fas fa-plus"></i>
+                            Hàng</button>
+                        <button type="button" class="btn btn-sm rooms-ext-28"><i class="fas fa-plus"></i>
+                            Cột</button>
+                    </div>
+                </div>
+                <div class="rooms-ext-29"><i class="fas fa-info-circle"></i> Chọn công cụ ở trên sau đó click vào
+                    các vị trí bên dưới để vẽ sơ đồ ghế.</div>
+            </div>
+            <div class="rooms-ext-3">
+                <div class="rooms-ext-4">MÀN HÌNH</div>
+                <div class="rooms-ext-5">
+                    <div class="rooms-ext-6" title="Ghế Thường"></div>
+                    <div class="rooms-ext-6"></div>
+                    <div class="rooms-ext-6"></div>
+                    <div class="rooms-ext-6"></div>
+                    <div class="rooms-ext-7"></div>
+                    <div class="rooms-ext-6"></div>
+                    <div class="rooms-ext-6"></div>
+                    <div class="rooms-ext-6"></div>
+                    <div class="rooms-ext-6"></div>
+                </div>
+                <div class="rooms-ext-5">
+                    <div class="rooms-ext-6" title="Ghế Thường"></div>
+                    <div class="rooms-ext-6"></div>
+                    <div class="rooms-ext-6"></div>
+                    <div class="rooms-ext-6"></div>
+                    <div class="rooms-ext-7"></div>
+                    <div class="rooms-ext-6"></div>
+                    <div class="rooms-ext-6"></div>
+                    <div class="rooms-ext-6"></div>
+                    <div class="rooms-ext-6"></div>
+                </div>
+                <div class="rooms-ext-5">
+                    <div class="rooms-ext-6" title="Ghế Thường"></div>
+                    <div class="rooms-ext-6"></div>
+                    <div class="rooms-ext-7"></div>
+                    <div class="rooms-ext-6"></div>
+                    <div class="rooms-ext-6"></div>
+                </div>
+            </div>
+            <div class="rooms-ext-10">
+                <div class="rooms-ext-11">
+                    <div class="rooms-ext-12"></div> Ghế Thường (75,000đ)
+                </div>
+                <div class="rooms-ext-11">
+                    <div class="rooms-ext-13"></div> Ghế VIP (90,000đ)
+                </div>
+                <div class="rooms-ext-11">
+                    <div class="rooms-ext-14"></div> Ghế Đôi (180,000đ)
+                </div>
+            </div>
+            <div class="modal-footer shared-ext-8">
+                <button type="button" class="btn btn-danger" onclick="closeModal('newSeatingModal')">Đóng</button>
+                <button type="button" class="btn btn-success"
+                        onclick="closeModal('newSeatingModal');showToast('Lưu sơ đồ ghế thành công!','success');">Lưu Sơ
+                    Đồ</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL XÁC NHẬN XÓA -->
+<div class="modal-overlay" id="deleteModal">
+    <div class="modal shared-ext-17">
+        <div class="modal-header">
+            <h2>Xác Nhận Xóa</h2><button class="modal-close" onclick="closeModal('deleteModal')"><i
+                class="fas fa-times"></i></button>
+        </div>
+        <div class="modal-body shared-ext-18">
+            <div class="delete-icon-wrap"><i class="fas fa-trash-alt"></i></div>
+            <h3 class="shared-ext-19">Xóa phòng này?</h3>
+            <p class="shared-ext-20">Bạn sắp xóa <strong id="deleteRoomName"></strong>.<br>Hành động này không thể
+                hoàn tác.</p>
+            <div class="shared-ext-21">
+                <button class="btn btn-danger" onclick="confirmDelete()"><i
+                        class="fas fa-trash shared-ext-16"></i>Xóa ngay</button>
+                <button class="btn shared-ext-22" onclick="closeModal('deleteModal')">Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../assets/js/app.js"></script>
+<script>
+    function openModal(id) { document.getElementById(id).classList.add('active'); }
+    function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+    let pendingDeleteRow = null;
+    function openDeleteModal(id, name) {
+        document.getElementById('deleteRoomName').textContent = name;
+        pendingDeleteRow = document.querySelector(`#roomTableBody tr:nth-child(${id})`);
+        openModal('deleteModal');
+    }
+    function confirmDelete() {
+        if (pendingDeleteRow) { pendingDeleteRow.style.transition = 'opacity .3s'; pendingDeleteRow.style.opacity = '0'; setTimeout(() => { pendingDeleteRow.remove(); updateStats(); }, 300); }
+        closeModal('deleteModal'); showToast('Đã xóa phòng thành công!', 'success');
+    }
+    function handleAdd(e) { e.preventDefault(); closeModal('addRoomModal'); showToast('Thêm phòng mới thành công!', 'success'); }
+    function handleEdit(e) { e.preventDefault(); closeModal('editRoomModal'); showToast('Cập nhật phòng thành công!', 'success'); }
+    function filterTable() {
+        const search = document.getElementById('searchInput').value.toLowerCase();
+        const type = document.getElementById('filterType').value;
+        const status = document.getElementById('filterStatus').value;
+        document.querySelectorAll('#roomTableBody tr').forEach(row => {
+            const name = row.cells[1].querySelector('strong')?.textContent.toLowerCase() || '';
+            const ok = (!search || name.includes(search)) && (!type || row.dataset.type.includes(type)) && (!status || row.dataset.status === status);
+            row.style.display = ok ? '' : 'none';
+        });
+    }
+    function updateStats() {
+        const rows = document.querySelectorAll('#roomTableBody tr');
+        let total = 0, active = 0, maint = 0;
+        rows.forEach(r => { total++; const s = r.dataset.status; if (s === 'Hoạt động' || s === 'Hoạt động tốt') active++; else if (s === 'Đang bảo trì') maint++; });
+        document.getElementById('stat-total').textContent = total;
+        document.getElementById('stat-active').textContent = active;
+        document.getElementById('stat-maintenance').textContent = maint;
+    }
+    function showToast(message, type = 'success') {
+        let c = document.getElementById('_tc'); if (!c) { c = document.createElement('div'); c.id = '_tc'; c.style.cssText = 'position:fixed;top:20px;right:24px;z-index:99999;display:flex;flex-direction:column;gap:10px;'; document.body.appendChild(c); }
+        const colors = { success: '#1cc88a', warning: '#f6c23e', danger: '#e74a3b' }; const icons = { success: 'check-circle', warning: 'exclamation-triangle', danger: 'times-circle' };
+        const t = document.createElement('div'); t.style.cssText = `display:flex;align-items:center;gap:10px;background:#2d3748;border-left:4px solid ${colors[type]};color:#fff;padding:12px 18px;border-radius:8px;box-shadow:0 4px 20px rgba(0,0,0,.4);min-width:260px;font-size:14px;font-weight:600;`;
+        t.innerHTML = `<i class="fas fa-${icons[type]}" style="color:${colors[type]};font-size:18px;"></i>${message}`;
+        c.appendChild(t); setTimeout(() => { t.style.opacity = '0'; t.style.transition = 'opacity .3s'; setTimeout(() => t.remove(), 300); }, 3500);
+    }
+</script>
+</body>
+
+</html>
