@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - CineTicket</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/admin/style.css?v=2.0">
+    <link rel="stylesheet" href="../assets/css/admin/index.css">
+</head>
+
+<body>
+    <div class="sidebar"></div>
+    <div class="main-wrapper">
+        <div class="topbar">
+            <div class="user-info">
+                <span class="shared-ext-1">Admin</span>
+                <img src="https://ui-avatars.com/api/?name=Admin&background=4e73df&color=fff" alt="Admin">
+            </div>
+        </div>
+
+        <div class="content">
+            <div id="dashboard" class="section active">
+                <div class="shared-ext-2">
+                    <h1 class="page-title shared-ext-3"><i class="fas fa-chart-line"
+                            style="margin-right:8px;color:#4e73df;"></i>Quản Lý Doanh Thu</h1>
+                    <button class="btn btn-primary" onclick="openModal('exportModal')"><i
+                            class="fas fa-download fa-sm"></i> Xuất Báo Cáo</button>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div>
+                            <div class="stat-title">Tổng doanh thu</div>
+                            <div class="stat-value">2.450.000.000đ</div>
+                        </div>
+                        <i class="fas fa-calendar fa-2x index-ext-1"></i>
+                    </div>
+                    <div class="stat-card success">
+                        <div>
+                            <div class="stat-title index-ext-2">Tổng vé đã bán</div>
+                            <div class="stat-value">24,500</div>
+                        </div>
+                        <i class="fas fa-ticket-alt fa-2x index-ext-1"></i>
+                    </div>
+                    <div class="stat-card info">
+                        <div>
+                            <div class="stat-title index-ext-3">Tổng combo bắp nước bán được</div>
+                            <div class="stat-value">8,420</div>
+                        </div>
+                        <i class="fas fa-popcorn fa-2x index-ext-1"></i>
+                    </div>
+                    <div class="stat-card warning">
+                        <div>
+                            <div class="stat-title index-ext-4">Phim đang chiếu</div>
+                            <div class="stat-value">18</div>
+                        </div>
+                        <i class="fas fa-film fa-2x index-ext-1"></i>
+                    </div>
+                </div>
+
+                <div class="card" style="margin-bottom: 30px;">
+                    <div class="card-header revenue-card-header">
+                        <div class="chart-title-container">
+                            <span id="chartTitle" class="chart-title-text">Biểu đồ doanh thu tuần này</span>
+                            <span id="filteredTotal" class="filtered-total-badge"><i class="fas fa-coins"></i> Tổng:
+                                <span id="filteredTotalValue">210.000.000đ</span></span>
+                        </div>
+                        <div class="date-filter date-filter-container">
+                            <label for="startDate" style="margin:0;">Từ:</label>
+                            <input type="date" id="startDate" class="form-control date-filter-input">
+                            <label for="endDate" style="margin:0;">Đến:</label>
+                            <input type="date" id="endDate" class="form-control date-filter-input">
+                            <button class="btn btn-primary btn-filter" onclick="filterChart()"><i
+                                    class="fas fa-filter"></i> Lọc</button>
+                            <button class="btn btn-secondary btn-reset" onclick="resetChart()"><i
+                                    class="fas fa-sync-alt"></i> Đặt lại</button>
+                        </div>
+                    </div>
+                    <div class="card-body chart-body-container">
+                        <canvas id="revenueChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header revenue-card-header">
+                        <div class="chart-title-container">
+                            <span id="movieTableTitle" class="chart-title-text">Phim có doanh thu cao nhất</span>
+                        </div>
+                        <div class="date-filter date-filter-container">
+                            <label for="movieStartDate" style="margin:0;">Từ:</label>
+                            <input type="date" id="movieStartDate" class="form-control date-filter-input">
+                            <label for="movieEndDate" style="margin:0;">Đến:</label>
+                            <input type="date" id="movieEndDate" class="form-control date-filter-input">
+                            <button class="btn btn-primary btn-filter" onclick="filterMovieTable()"><i
+                                    class="fas fa-filter"></i> Lọc</button>
+                            <button class="btn btn-secondary btn-reset" onclick="resetMovieTable()"><i
+                                    class="fas fa-sync-alt"></i> Đặt lại</button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Tên Phim</th>
+                                    <th>Doanh Thu</th>
+                                    <th>Số Vé</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td><strong>Nhiệm Vụ Đỏ</strong></td>
+                                    <td id="movieRevenue1" class="index-ext-5">850.000.000đ</td>
+                                    <td>8,500</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Ám Ảnh Đêm Thâu</td>
+                                    <td id="movieRevenue2" class="index-ext-5">420.000.000đ</td>
+                                    <td>4,200</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Vực Thẳm Không Gian</td>
+                                    <td id="movieRevenue3" class="index-ext-5">310.000.000đ</td>
+                                    <td>3,100</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card" style="margin-top: 30px;">
+                    <div class="card-header revenue-card-header">
+                        <div class="chart-title-container">
+                            <span id="comboTableTitle" class="chart-title-text">Combo bắp nước bán chạy nhất</span>
+                        </div>
+                        <div class="date-filter date-filter-container">
+                            <label for="comboStartDate" style="margin:0;">Từ:</label>
+                            <input type="date" id="comboStartDate" class="form-control date-filter-input">
+                            <label for="comboEndDate" style="margin:0;">Đến:</label>
+                            <input type="date" id="comboEndDate" class="form-control date-filter-input">
+                            <button class="btn btn-primary btn-filter" onclick="filterComboTable()"><i
+                                    class="fas fa-filter"></i> Lọc</button>
+                            <button class="btn btn-secondary btn-reset" onclick="resetComboTable()"><i
+                                    class="fas fa-sync-alt"></i> Đặt lại</button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Tên Combo</th>
+                                    <th>Số Lượng Bán</th>
+                                    <th>Doanh Thu</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td><strong>Combo Bắp + Coca Lớn</strong></td>
+                                    <td>1,820</td>
+                                    <td id="comboRevenue1" class="index-ext-5">182.000.000đ</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Combo Bắp Caramel + Pepsi</td>
+                                    <td>1,460</td>
+                                    <td id="comboRevenue2" class="index-ext-5">146.000.000đ</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Combo Bắp Phô Mai + Nước Suối</td>
+                                    <td>1,120</td>
+                                    <td id="comboRevenue3" class="index-ext-5">112.000.000đ</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- Export Report Modal -->
+            <div class="modal-overlay" id="exportModal">
+                <div class="modal">
+                    <div class="modal-header">
+                        <h2>Xuất Báo Cáo Doanh Thu</h2>
+                        <button class="modal-close" onclick="closeModal('exportModal')"><i
+                                class="fas fa-times"></i></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="exportForm"
+                            onsubmit="event.preventDefault(); closeModal('exportModal'); openModal('sampleDataModal');">
+                            <div class="form-group">
+                                <label>Định Dạng Xuất (*)</label>
+                                <select required>
+                                    <option value="">-- Chọn định dạng --</option>
+                                    <option>Microsoft Excel (.xlsx)</option>
+                                    <option>Tài liệu PDF (.pdf)</option>
+                                    <option>Dữ liệu CSV (.csv)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Khoảng Thời Gian Dữ Liệu (*)</label>
+                                <select required>
+                                    <option>Tuần này</option>
+                                    <option>Tháng này</option>
+                                    <option>Toàn thời gian</option>
+                                    <option>Tùy chỉnh (Chọn ngày)</option>
+                                </select>
+                            </div>
+                            <div class="modal-footer shared-ext-8">
+                                <button type="button" class="btn btn-danger"
+                                    onclick="closeModal('exportModal')">Hủy</button>
+                                <button type="submit" class="btn btn-primary"><i class="fas fa-download"></i> Tải
+                                    xuống</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sample Data Modal -->
+            <div class="modal-overlay" id="sampleDataModal">
+                <div class="modal" style="max-width: 800px; width: 90%;">
+                    <div class="modal-header">
+                        <h2>Bản Xem Trước</h2>
+                        <button class="modal-close" onclick="closeModal('sampleDataModal')"><i
+                                class="fas fa-times"></i></button>
+                    </div>
+                    <div class="modal-body">
+                        <p style="margin-bottom: 15px;">Dưới đây là dữ liệu doanh thu sẽ được tải xuống:</p>
+                        <div class="sample-data-table-wrapper">
+                            <table class="sample-data-table">
+                                <thead>
+                                    <tr>
+                                        <th class="border-right">Ngày</th>
+                                        <th class="text-center">Số Vé Bán</th>
+                                        <th class="border-right">Doanh Thu Bán Vé</th>
+                                        <th class="text-center">Số Combo</th>
+                                        <th class="border-right">Doanh Thu Bắp Nước</th>
+                                        <th>Tổng Doanh Thu</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="border-right">
+                                            <strong>05/07/2026</strong>
+                                        </td>
+                                        <td class="text-center">1,200</td>
+                                        <td class="border-right">120.000.000đ</td>
+                                        <td class="text-center">450</td>
+                                        <td class="border-right">30.000.000đ</td>
+                                        <td class="highlight-revenue">150.000.000đ</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border-right">
+                                            <strong>06/07/2026</strong>
+                                        </td>
+                                        <td class="text-center">850</td>
+                                        <td class="border-right">85.000.000đ</td>
+                                        <td class="text-center">300</td>
+                                        <td class="border-right">20.000.000đ</td>
+                                        <td class="highlight-revenue">105.000.000đ</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border-right">
+                                            <strong>07/07/2026</strong>
+                                        </td>
+                                        <td class="text-center">900</td>
+                                        <td class="border-right">90.000.000đ</td>
+                                        <td class="text-center">320</td>
+                                        <td class="border-right">25.000.000đ</td>
+                                        <td class="highlight-revenue">115.000.000đ</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border-right">
+                                            <strong>08/07/2026</strong>
+                                        </td>
+                                        <td class="text-center">1,500</td>
+                                        <td class="border-right">150.000.000đ</td>
+                                        <td class="text-center">550</td>
+                                        <td class="border-right">40.000.000đ</td>
+                                        <td class="highlight-revenue">190.000.000đ</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="modal-footer shared-ext-8" style="margin-top: 20px;">
+                            <button type="button" class="btn btn-danger"
+                                onclick="closeModal('sampleDataModal')">Hủy</button>
+                            <button type="button" class="btn btn-success"
+                                onclick="closeModal('sampleDataModal'); showSuccess('Đang tạo và tải xuống báo cáo...');"><i
+                                    class="fas fa-download"></i> Xác Nhận Tải Xuống</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                function openModal(id) { document.getElementById(id).classList.add('active'); }
+                function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+                function showSuccess(msg) {
+                    closeModal('exportModal');
+                    showToast(msg, 'success');
+                }
+                function showToast(message, type = 'success') {
+                    let c = document.getElementById('_tc'); if (!c) { c = document.createElement('div'); c.id = '_tc'; c.style.cssText = 'position:fixed;top:20px;right:24px;z-index:99999;display:flex;flex-direction:column;gap:10px;'; document.body.appendChild(c); }
+                    const colors = { success: '#1cc88a', warning: '#f6c23e', danger: '#e74a3b' }; const icons = { success: 'check-circle', warning: 'exclamation-triangle', danger: 'times-circle' };
+                    const t = document.createElement('div'); t.style.cssText = `display:flex;align-items:center;gap:10px;background:#2d3748;border-left:4px solid ${colors[type]};color:#fff;padding:12px 18px;border-radius:8px;box-shadow:0 4px 20px rgba(0,0,0,.4);min-width:260px;font-size:14px;font-weight:600;`;
+                    t.innerHTML = `<i class="fas fa-${icons[type]}" style="color:${colors[type]};font-size:18px;"></i>${message}`;
+                    c.appendChild(t); setTimeout(() => { t.style.opacity = '0'; t.style.transition = 'opacity .3s'; setTimeout(() => t.remove(), 300); }, 3500);
+                }
+            </script>
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <script>
+                window.revenueChartInstance = null;
+                function filterChart() {
+                    if (!window.revenueChartInstance) return;
+                    const startInput = document.getElementById('startDate').value;
+                    const endInput = document.getElementById('endDate').value;
+                    if (!startInput || !endInput) return alert('Vui lòng chọn đầy đủ ngày');
+
+                    const formatDt = (dStr) => {
+                        const parts = dStr.split('-');
+                        return `${parts[2]}/${parts[1]}/${parts[0]}`;
+                    };
+                    const startStr = formatDt(startInput);
+                    const endStr = formatDt(endInput);
+
+                    document.getElementById('chartTitle').textContent = `Biểu đồ doanh thu từ ${startStr} đến ${endStr}`;
+
+                    const newData = Array.from({ length: 7 }, () => Math.floor(Math.random() * 40) + 15);
+                    window.revenueChartInstance.data.datasets[0].data = newData;
+                    window.revenueChartInstance.update();
+
+                    const totalFiltered = newData.reduce((a, b) => a + b, 0);
+                    document.getElementById('filteredTotal').style.display = 'inline';
+                    document.getElementById('filteredTotalValue').textContent = totalFiltered + '.000.000đ';
+                }
+
+                function resetChart() {
+                    document.getElementById('startDate').value = '';
+                    document.getElementById('endDate').value = '';
+                    document.getElementById('chartTitle').textContent = 'Biểu đồ doanh thu tuần này';
+                    document.getElementById('filteredTotal').style.display = 'inline';
+                    document.getElementById('filteredTotalValue').textContent = '210.000.000đ';
+                    if (window.revenueChartInstance) {
+                        window.revenueChartInstance.data.datasets[0].data = [15, 20, 18, 22, 35, 48, 52];
+                        window.revenueChartInstance.update();
+                    }
+                }
+
+                function filterMovieTable() {
+                    const startInput = document.getElementById('movieStartDate').value;
+                    const endInput = document.getElementById('movieEndDate').value;
+                    if (!startInput || !endInput) return alert('Vui lòng chọn đầy đủ ngày');
+
+                    const formatDt = (dStr) => {
+                        const parts = dStr.split('-');
+                        return `${parts[2]}/${parts[1]}/${parts[0]}`;
+                    };
+
+                    const startStr = formatDt(startInput);
+                    const endStr = formatDt(endInput);
+                    document.getElementById('movieTableTitle').textContent = `Phim có doanh thu cao nhất từ ${startStr} đến ${endStr}`;
+                    document.getElementById('movieTableBadge').innerHTML = `<i class="fas fa-filter"></i> ${startStr} - ${endStr}`;
+                }
+
+                function resetMovieTable() {
+                    document.getElementById('movieStartDate').value = '';
+                    document.getElementById('movieEndDate').value = '';
+                    document.getElementById('movieTableTitle').textContent = 'Phim có doanh thu cao nhất tuần';
+                    document.getElementById('movieTableBadge').innerHTML = '<i class="fas fa-filter"></i> Tuần này';
+                }
+
+                function filterComboTable() {
+                    const startInput = document.getElementById('comboStartDate').value;
+                    const endInput = document.getElementById('comboEndDate').value;
+                    if (!startInput || !endInput) return alert('Vui lòng chọn đầy đủ ngày');
+
+                    const formatDt = (dStr) => {
+                        const parts = dStr.split('-');
+                        return `${parts[2]}/${parts[1]}/${parts[0]}`;
+                    };
+
+                    const startStr = formatDt(startInput);
+                    const endStr = formatDt(endInput);
+                    document.getElementById('comboTableTitle').textContent = `Combo bắp nước bán chạy nhất từ ${startStr} đến ${endStr}`;
+                    document.getElementById('comboTableBadge').innerHTML = `<i class="fas fa-filter"></i> ${startStr} - ${endStr}`;
+                }
+
+                function resetComboTable() {
+                    document.getElementById('comboStartDate').value = '';
+                    document.getElementById('comboEndDate').value = '';
+                    document.getElementById('comboTableTitle').textContent = 'Combo bắp nước bán chạy nhất tuần';
+                    document.getElementById('comboTableBadge').innerHTML = '<i class="fas fa-filter"></i> Tuần này';
+                }
+
+                document.addEventListener("DOMContentLoaded", function () {
+                    const ctx = document.getElementById('revenueChart');
+                    if (ctx) {
+                        window.revenueChartInstance = new Chart(ctx, {
+                            type: 'line',
+                            data: {
+                                labels: ['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN'],
+                                datasets: [{
+                                    label: 'Doanh thu',
+                                    data: [15, 20, 18, 22, 35, 48, 52],
+                                    borderColor: '#4e73df',
+                                    backgroundColor: 'rgba(78, 115, 223, 0.1)',
+                                    borderWidth: 3,
+                                    pointBackgroundColor: '#4e73df',
+                                    pointBorderColor: '#fff',
+                                    pointHoverBackgroundColor: '#fff',
+                                    pointHoverBorderColor: '#4e73df',
+                                    pointRadius: 4,
+                                    fill: true,
+                                    tension: 0.4
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                scales: {
+                                    y: {
+                                        beginAtZero: true,
+                                        ticks: {
+                                            callback: function (value) { return value + ' Tr đ'; }
+                                        }
+                                    }
+                                },
+                                plugins: {
+                                    legend: { display: false },
+                                    tooltip: {
+                                        callbacks: {
+                                            label: function (context) { return context.parsed.y + ' Triệu VNĐ'; }
+                                        }
+                                    }
+                                }
+                            }
+                        });
+                    }
+                });
+            </script>
+            <script src="../assets/js/app.js"></script>
+</body>
+
+</html>
