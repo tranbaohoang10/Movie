@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Combo - CineTicket Admin</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/admin/style.css?v=2.6">
+    <link rel="stylesheet" href="../assets/css/admin/combos.css?v=2.6">
+</head>
+
+<body>
+<div class="sidebar"></div>
+<div class="main-wrapper">
+    <div class="topbar">
+        <div class="user-info">
+            <span class="shared-ext-1">Admin</span>
+            <img src="https://ui-avatars.com/api/?name=Admin&background=4e73df&color=fff" alt="Admin">
+        </div>
+    </div>
+
+    <div class="content">
+        <div id="combos" class="section active">
+
+            <!-- Header -->
+            <div class="shared-ext-2">
+                <h1 class="page-title shared-ext-3">
+                    <i class="fas fa-box-open" style="margin-right:8px;color:#4e73df;"></i>Quản Lý Combo Bắp Nước
+                </h1>
+                <button class="btn btn-primary" onclick="openModal('addComboModal')">
+                    <i class="fas fa-plus fa-sm"></i> Thêm Combo Mới
+                </button>
+            </div>
+
+            <!-- Stats cards -->
+            <div class="stat-grid-container">
+                <div class="card stat-card-wrapper">
+                    <div class="card-body stat-card-body">
+                        <div class="stat-icon-wrapper stat-icon-primary">
+                            <i class="fas fa-layer-group"></i>
+                        </div>
+                        <div>
+                            <div class="stat-val" id="stat-total">5</div>
+                            <div class="stat-lbl">Tổng combo</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card stat-card-wrapper">
+                    <div class="card-body stat-card-body">
+                        <div class="stat-icon-wrapper stat-icon-success">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div>
+                            <div class="stat-val" id="stat-active">4</div>
+                            <div class="stat-lbl">Đang bán</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card stat-card-wrapper">
+                    <div class="card-body stat-card-body">
+                        <div class="stat-icon-wrapper stat-icon-danger">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div>
+                            <div class="stat-val" id="stat-low">1</div>
+                            <div class="stat-lbl">Sắp hết hàng</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card stat-card-wrapper">
+                    <div class="card-body stat-card-body">
+                        <div class="stat-icon-wrapper stat-icon-warning">
+                            <i class="fas fa-eye-slash"></i>
+                        </div>
+                        <div>
+                            <div class="stat-val" id="stat-hidden">1</div>
+                            <div class="stat-lbl">Tạm ẩn</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table card -->
+            <div class="card">
+                <div class="card-header">Danh sách Combo Bắp Nước</div>
+                <div class="card-body">
+                    <!-- Filters -->
+                    <div class="shared-ext-4" style="flex-wrap:wrap;gap:10px;">
+                        <input type="text" id="searchInput" placeholder="Tìm theo tên combo..." class="shared-ext-5"
+                               oninput="filterTable()">
+
+                        <select id="filterStatus" onchange="filterTable()">
+                            <option value="">Tất cả trạng thái</option>
+                            <option value="Đang bán">Đang bán</option>
+                            <option value="Tạm ẩn">Tạm ẩn</option>
+                            <option value="Hết hàng">Hết hàng</option>
+                        </select>
+                        <button class="btn btn-primary" onclick="filterTable()"><i class="fas fa-search"></i>
+                            Lọc</button>
+                    </div>
+
+                    <table id="comboTable">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Combo</th>
+                            <th>Giá Bán</th>
+                            <th>Tồn Kho</th>
+                            <th>Trạng Thái</th>
+                            <th>Hành Động</th>
+                        </tr>
+                        </thead>
+                        <tbody id="comboTableBody">
+                        <tr data-status="Đang bán">
+                            <td>1</td>
+                            <td>
+                                <div class="combo-name-cell">
+                                    <img class="combo-img" src="../assets/images/combo_doi_co_dien.png"
+                                         alt="Combo Đôi Cổ Điển">
+                                    <div class="combo-name-info">
+                                        <strong>Combo Đôi Cổ Điển</strong>
+                                        <span>2 bắp + 2 nước vừa</span>
+                                    </div>
+                                </div>
+                            </td>
+
+                            <td><strong>89.000đ</strong></td>
+                            <td>
+                                <div class="stock-bar-wrap">
+                                    <div class="stock-bar">
+                                        <div class="stock-bar-fill full" style="width:80%"></div>
+                                    </div>
+                                    <span class="stock-num">80</span>
+                                </div>
+                            </td>
+                            <td><span class="badge badge-success">Đang bán</span></td>
+                            <td>
+                                <button class="btn btn-sm btn-primary" onclick="openModal('editComboModal')"
+                                        title="Sửa"><i class="fas fa-edit"></i></button>
+                                <button class="btn btn-sm btn-warning" onclick="toggleStatus(this)"
+                                        title="Tạm ẩn"><i class="fas fa-eye-slash"></i></button>
+                                <button class="btn btn-sm btn-danger"
+                                        onclick="openDeleteModal(1,'Combo Đôi Cổ Điển')" title="Xóa"><i
+                                        class="fas fa-trash"></i></button>
+                            </td>
+                        </tr>
+                        <tr data-status="Đang bán">
+                            <td>2</td>
+                            <td>
+                                <div class="combo-name-cell">
+                                    <img class="combo-img" src="../assets/images/combo_don_nho.png"
+                                         alt="Combo Đơn Nhỏ">
+                                    <div class="combo-name-info">
+                                        <strong>Combo Đơn Nhỏ</strong>
+                                        <span>1 bắp nhỏ + 1 nước nhỏ</span>
+                                    </div>
+                                </div>
+                            </td>
+
+                            <td><strong>49.000đ</strong></td>
+                            <td>
+                                <div class="stock-bar-wrap">
+                                    <div class="stock-bar">
+                                        <div class="stock-bar-fill full" style="width:60%"></div>
+                                    </div>
+                                    <span class="stock-num">60</span>
+                                </div>
+                            </td>
+                            <td><span class="badge badge-success">Đang bán</span></td>
+                            <td>
+                                <button class="btn btn-sm btn-primary" onclick="openModal('editComboModal')"
+                                        title="Sửa"><i class="fas fa-edit"></i></button>
+                                <button class="btn btn-sm btn-warning" onclick="toggleStatus(this)"
+                                        title="Tạm ẩn"><i class="fas fa-eye-slash"></i></button>
+                                <button class="btn btn-sm btn-danger"
+                                        onclick="openDeleteModal(2,'Combo Đơn Nhỏ')" title="Xóa"><i
+                                        class="fas fa-trash"></i></button>
+                            </td>
+                        </tr>
+                        <tr data-status="Đang bán">
+                            <td>3</td>
+                            <td>
+                                <div class="combo-name-cell">
+                                    <img class="combo-img" src="../assets/images/combo_gia_dinh.png"
+                                         alt="Combo Gia Đình Super">
+                                    <div class="combo-name-info">
+                                        <strong>Combo Gia Đình Super</strong>
+                                        <span>4 bắp lớn + 4 nước lớn + khoai tây</span>
+                                    </div>
+                                </div>
+                            </td>
+
+                            <td><strong>199.000đ</strong></td>
+                            <td>
+                                <div class="stock-bar-wrap">
+                                    <div class="stock-bar">
+                                        <div class="stock-bar-fill full" style="width:90%"></div>
+                                    </div>
+                                    <span class="stock-num">90</span>
+                                </div>
+                            </td>
+                            <td><span class="badge badge-success">Đang bán</span></td>
+                            <td>
+                                <button class="btn btn-sm btn-primary" onclick="openModal('editComboModal')"
+                                        title="Sửa"><i class="fas fa-edit"></i></button>
+                                <button class="btn btn-sm btn-warning" onclick="toggleStatus(this)"
+                                        title="Tạm ẩn"><i class="fas fa-eye-slash"></i></button>
+                                <button class="btn btn-sm btn-danger"
+                                        onclick="openDeleteModal(3,'Combo Gia Đình Super')" title="Xóa"><i
+                                        class="fas fa-trash"></i></button>
+                            </td>
+                        </tr>
+                        <tr data-status="Đang bán">
+                            <td>4</td>
+                            <td>
+                                <div class="combo-name-cell">
+                                    <img class="combo-img" src="../assets/images/nuoc_ngot_lon.png"
+                                         alt="Nước Ngọt Lớn">
+                                    <div class="combo-name-info">
+                                        <strong>Nước Ngọt Lớn</strong>
+                                        <span>Pepsi / 7Up / Mirinda cỡ L</span>
+                                    </div>
+                                </div>
+                            </td>
+
+                            <td><strong>25.000đ</strong></td>
+                            <td>
+                                <div class="stock-bar-wrap">
+                                    <div class="stock-bar">
+                                        <div class="stock-bar-fill low" style="width:18%"></div>
+                                    </div>
+                                    <span class="stock-num" style="color:#e74a3b;">18</span>
+                                </div>
+                            </td>
+                            <td><span class="badge badge-warning text-white">Sắp hết</span></td>
+                            <td>
+                                <button class="btn btn-sm btn-primary" onclick="openModal('editComboModal')"
+                                        title="Sửa"><i class="fas fa-edit"></i></button>
+                                <button class="btn btn-sm btn-warning" onclick="toggleStatus(this)"
+                                        title="Tạm ẩn"><i class="fas fa-eye-slash"></i></button>
+                                <button class="btn btn-sm btn-danger"
+                                        onclick="openDeleteModal(4,'Nước Ngọt Lớn')" title="Xóa"><i
+                                        class="fas fa-trash"></i></button>
+                            </td>
+                        </tr>
+                        <tr data-status="Tạm ẩn" class="combos-ext-1">
+                            <td>5</td>
+                            <td>
+                                <div class="combo-name-cell">
+                                    <img class="combo-img" src="../assets/images/bap_rang_bo_lon.png"
+                                         alt="Bắp Rang Bơ Cỡ Lớn">
+                                    <div class="combo-name-info">
+                                        <strong>Bắp Rang Bơ Cỡ Lớn</strong>
+                                        <span>Bắp rang bơ muối / caramel size XL</span>
+                                    </div>
+                                </div>
+                            </td>
+
+                            <td><strong>35.000đ</strong></td>
+                            <td>
+                                <div class="stock-bar-wrap">
+                                    <div class="stock-bar">
+                                        <div class="stock-bar-fill" style="width:94%"></div>
+                                    </div>
+                                    <span class="stock-num">94</span>
+                                </div>
+                            </td>
+                            <td><span class="badge badge-danger">Tạm ẩn</span></td>
+                            <td>
+                                <button class="btn btn-sm btn-primary" onclick="openModal('editComboModal')"
+                                        title="Sửa"><i class="fas fa-edit"></i></button>
+                                <button class="btn btn-sm btn-success" onclick="toggleStatus(this)"
+                                        title="Hiện lại"><i class="fas fa-eye"></i></button>
+                                <button class="btn btn-sm btn-danger"
+                                        onclick="openDeleteModal(5,'Bắp Rang Bơ Cỡ Lớn')" title="Xóa"><i
+                                        class="fas fa-trash"></i></button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===================== MODAL THÊM COMBO ===================== -->
+<div class="modal-overlay" id="addComboModal">
+    <div class="modal" style="max-width:560px;">
+        <div class="modal-header">
+            <h2><i class="fas fa-plus-circle" style="margin-right:8px;color:#1cc88a;"></i>Thêm Combo Mới</h2>
+            <button class="modal-close" onclick="closeModal('addComboModal')"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="modal-body">
+            <form id="addComboForm" onsubmit="handleAdd(event)">
+                <!-- Ảnh + Tên -->
+                <div class="form-group" style="margin-bottom:20px;">
+                    <label>Hình Ảnh (Combo)</label>
+                    <div class="img-upload-row">
+                        <div class="img-preview-box" id="addImgPreview" title="Click để chọn ảnh"
+                             style="background:#eaecf4;color:#b7b9cc;font-size:24px;" onclick="document.getElementById('addComboImage').click()"><i class="fas fa-image"></i></div>
+                        <input type="file" id="addComboImage" accept="image/*" style="flex:1;" onchange="previewComboImage(event, 'addImgPreview')">
+                    </div>
+                </div>
+
+                <div class="img-upload-row" style="margin-bottom:20px;">
+                    <div style="flex:1;">
+                        <div class="form-group" style="margin-bottom:12px;">
+                            <label>Tên Combo (*)</label>
+                            <input type="text" id="addName" placeholder="VD: Combo Đôi Cổ Điển" required>
+                        </div>
+                        <div class="form-group" style="margin-bottom:0;">
+                            <label>Mô tả ngắn</label>
+                            <input type="text" id="addDesc" placeholder="VD: 2 bắp + 2 nước vừa">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="shared-ext-6">
+
+                    <div class="form-group shared-ext-7">
+                        <label>Trạng Thái</label>
+                        <select id="addStatus">
+                            <option>Đang bán</option>
+                            <option>Tạm ẩn</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="shared-ext-6">
+                    <div class="form-group shared-ext-7">
+                        <label>Giá Bán (*)</label>
+                        <input type="number" id="addPrice" min="1000" step="1000" placeholder="VD: 89000" required>
+                    </div>
+                    <div class="form-group shared-ext-7">
+                        <label>Số Lượng Tồn Kho (*)</label>
+                        <input type="number" id="addStock" min="0" placeholder="VD: 100" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Ngưỡng Cảnh Báo Hết Hàng</label>
+                    <input type="number" id="addLowStock" min="1" placeholder="VD: 20 (cảnh báo khi còn ≤ 20)">
+                </div>
+
+                <div class="modal-footer shared-ext-8">
+                    <button type="button" class="btn btn-danger" onclick="closeModal('addComboModal')">Hủy</button>
+                    <button type="submit" class="btn btn-success"><i class="fas fa-save"
+                                                                     style="margin-right:6px;"></i>Lưu Combo</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- ===================== MODAL SỬA COMBO ===================== -->
+<div class="modal-overlay" id="editComboModal">
+    <div class="modal" style="max-width:560px;">
+        <div class="modal-header">
+            <h2><i class="fas fa-edit" style="margin-right:8px;color:#4e73df;"></i>Sửa Thông Tin Combo</h2>
+            <button class="modal-close" onclick="closeModal('editComboModal')"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="modal-body">
+            <form id="editComboForm" onsubmit="handleEdit(event)">
+                <div class="form-group" style="margin-bottom:20px;">
+                    <label>Hình Ảnh (Combo)</label>
+                    <div class="img-upload-row">
+                        <div class="img-preview-box" id="editImgPreview" style="padding:0;overflow:hidden;cursor:pointer;" onclick="document.getElementById('editComboImage').click()"><img
+                                src="../assets/images/combo_doi_co_dien.png"
+                                style="width:100%;height:100%;object-fit:cover;" alt="Combo"></div>
+                        <input type="file" id="editComboImage" accept="image/*" style="flex:1;" onchange="previewComboImage(event, 'editImgPreview')">
+                    </div>
+                </div>
+
+                <div class="img-upload-row" style="margin-bottom:20px;">
+                    <div style="flex:1;">
+                        <div class="form-group" style="margin-bottom:12px;">
+                            <label>Tên Combo (*)</label>
+                            <input type="text" id="editName" value="Combo Đôi Cổ Điển"
+                                   placeholder="VD: Combo Đôi Cổ Điển" required>
+                        </div>
+                        <div class="form-group" style="margin-bottom:0;">
+                            <label>Mô tả ngắn</label>
+                            <input type="text" id="editDesc" value="2 bắp + 2 nước vừa"
+                                   placeholder="VD: 2 bắp + 2 nước vừa">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="shared-ext-6">
+
+                    <div class="form-group shared-ext-7">
+                        <label>Trạng Thái</label>
+                        <select id="editStatus">
+                            <option selected>Đang bán</option>
+                            <option>Tạm ẩn</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="shared-ext-6">
+                    <div class="form-group shared-ext-7">
+                        <label>Giá Bán (*)</label>
+                        <input type="number" id="editPrice" value="89000" min="1000" step="1000" required>
+                    </div>
+                    <div class="form-group shared-ext-7">
+                        <label>Số Lượng Tồn Kho (*)</label>
+                        <input type="number" id="editStock" value="80" min="0" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Ngưỡng Cảnh Báo Hết Hàng</label>
+                    <input type="number" id="editLowStock" value="20" min="1" placeholder="VD: 20">
+                </div>
+
+                <div class="modal-footer shared-ext-8">
+                    <button type="button" class="btn btn-danger" onclick="closeModal('editComboModal')">Hủy</button>
+                    <button type="submit" class="btn btn-success"><i class="fas fa-save"
+                                                                     style="margin-right:6px;"></i>Lưu Thay Đổi</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- ===================== MODAL XÁC NHẬN XÓA ===================== -->
+<div class="modal-overlay" id="deleteModal">
+    <div class="modal" style="max-width:420px;">
+        <div class="modal-header">
+            <h2>Xác Nhận Xóa</h2>
+            <button class="modal-close" onclick="closeModal('deleteModal')"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="modal-body" style="text-align:center;padding:24px 32px 32px;">
+            <div class="delete-icon"><i class="fas fa-trash-alt"></i></div>
+            <h3>Xóa combo này?</h3>
+            <p>Bạn sắp xóa <strong id="deleteComboName"></strong>.<br>Hành động này không thể hoàn tác.</p>
+            <div class="delete-actions">
+                <button class="btn btn-danger" onclick="confirmDelete()"><i class="fas fa-trash"
+                                                                            style="margin-right:6px;"></i>Xóa ngay</button>
+                <button class="btn shared-ext-22" onclick="closeModal('deleteModal')">Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../assets/js/app.js"></script>
+<script>
+    function openModal(id) { document.getElementById(id).classList.add('active'); }
+    function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+
+    let pendingDeleteId = null;
+    let pendingDeleteRow = null;
+
+    function openDeleteModal(id, name) {
+        pendingDeleteId = id;
+        document.getElementById('deleteComboName').textContent = name;
+        pendingDeleteRow = document.querySelector(`#comboTableBody tr:nth-child(${id})`);
+        openModal('deleteModal');
+    }
+
+    function confirmDelete() {
+        if (pendingDeleteRow) {
+            pendingDeleteRow.style.transition = 'opacity 0.3s';
+            pendingDeleteRow.style.opacity = '0';
+            setTimeout(() => {
+                pendingDeleteRow.remove();
+                renumberRows();
+                updateStats();
+            }, 300);
+        }
+        closeModal('deleteModal');
+        showToast('Đã xóa combo thành công!', 'success');
+    }
+
+    function toggleStatus(btn) {
+        const row = btn.closest('tr');
+        const statusCell = row.cells[4];
+        const badge = statusCell.querySelector('.badge');
+        const isHidden = badge.textContent.trim() === 'Tạm ẩn';
+
+        if (isHidden) {
+            badge.textContent = 'Đang bán';
+            badge.className = 'badge badge-success';
+            btn.className = 'btn btn-sm btn-warning';
+            btn.innerHTML = '<i class="fas fa-eye-slash"></i>';
+            btn.title = 'Tạm ẩn';
+            row.removeAttribute('class');
+            row.dataset.status = 'Đang bán';
+            showToast('Combo đã được hiện lại!', 'success');
+        } else {
+            badge.textContent = 'Tạm ẩn';
+            badge.className = 'badge badge-danger';
+            btn.className = 'btn btn-sm btn-success';
+            btn.innerHTML = '<i class="fas fa-eye"></i>';
+            btn.title = 'Hiện lại';
+            row.className = 'inline-style-19';
+            row.dataset.status = 'Tạm ẩn';
+            showToast('Combo đã bị tạm ẩn!', 'warning');
+        }
+        updateStats();
+    }
+
+    function handleAdd(e) {
+        e.preventDefault();
+        closeModal('addComboModal');
+        showToast('Thêm combo mới thành công!', 'success');
+        document.getElementById('addComboForm').reset();
+        resetComboPreview('addImgPreview');
+        resetComboPreview('editImgPreview');
+    }
+
+    function handleEdit(e) {
+        e.preventDefault();
+        closeModal('editComboModal');
+        showToast('Cập nhật combo thành công!', 'success');
+    }
+
+    function filterTable() {
+        const search = document.getElementById('searchInput').value.toLowerCase();
+
+        const status = document.getElementById('filterStatus').value;
+        const rows = document.querySelectorAll('#comboTableBody tr');
+
+        rows.forEach(row => {
+            const name = row.querySelector('.combo-name-info strong')?.textContent.toLowerCase() || '';
+
+            const rowStat = row.dataset.status || '';
+
+            const matchSearch = !search || name.includes(search);
+
+            const matchStatus = !status || rowStat === status;
+
+            row.style.display = (matchSearch && matchStatus) ? '' : 'none';
+        });
+    }
+
+    // ── Stats update ───────────────────────────────────────────
+    function updateStats() {
+        const rows = document.querySelectorAll('#comboTableBody tr');
+        let total = 0, active = 0, low = 0;
+        rows.forEach(row => {
+            total++;
+            const badge = row.cells[4]?.querySelector('.badge');
+            if (badge?.textContent.trim() === 'Đang bán') active++;
+            if (badge?.textContent.trim() === 'Sắp hết') low++;
+        });
+        document.getElementById('stat-total').textContent = total;
+        document.getElementById('stat-active').textContent = active;
+        document.getElementById('stat-low').textContent = low;
+    }
+
+    function renumberRows() {
+        document.querySelectorAll('#comboTableBody tr').forEach((row, i) => {
+            row.cells[0].textContent = i + 1;
+        });
+    }
+
+    function showToast(message, type = 'success') {
+        let container = document.getElementById('adminToastContainer');
+        if (!container) {
+            container = document.createElement('div');
+            container.id = 'adminToastContainer';
+            container.style.cssText = 'position:fixed;top:20px;right:24px;z-index:99999;display:flex;flex-direction:column;gap:10px;';
+            document.body.appendChild(container);
+        }
+        const colors = { success: '#1cc88a', warning: '#f6c23e', danger: '#e74a3b' };
+        const icons = { success: 'check-circle', warning: 'exclamation-triangle', danger: 'times-circle' };
+        const toast = document.createElement('div');
+        toast.style.cssText = `
+                display:flex;align-items:center;gap:10px;
+                background:#2d3748;border-left:4px solid ${colors[type]};
+                color:#fff;padding:12px 18px;border-radius:8px;
+                box-shadow:0 4px 20px rgba(0,0,0,0.4);
+                animation:slideIn .3s ease;min-width:260px;font-size:14px;font-weight:600;
+            `;
+        toast.innerHTML = `<i class="fas fa-${icons[type]}" style="color:${colors[type]};font-size:18px;"></i>${message}`;
+        container.appendChild(toast);
+
+        const styleId = 'toastKF';
+        if (!document.getElementById(styleId)) {
+            const s = document.createElement('style');
+            s.id = styleId;
+            s.textContent = '@keyframes slideIn{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:translateX(0)}}';
+            document.head.appendChild(s);
+        }
+        setTimeout(() => { toast.style.opacity = '0'; toast.style.transition = 'opacity .3s'; setTimeout(() => toast.remove(), 300); }, 3500);
+    }
+
+    function previewComboImage(event, previewId) {
+        const preview = document.getElementById(previewId);
+        const file = event.target.files && event.target.files[0];
+        if (!preview) return;
+
+        if (!file) {
+            resetComboPreview(previewId);
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            preview.innerHTML = `<img src="${e.target.result}" alt="Combo" style="width:100%;height:100%;object-fit:cover;">`;
+            preview.style.padding = '0';
+            preview.style.overflow = 'hidden';
+            preview.style.background = 'transparent';
+            preview.style.color = 'transparent';
+            preview.style.fontSize = '0';
+        };
+        reader.readAsDataURL(file);
+    }
+
+    function resetComboPreview(previewId) {
+        const preview = document.getElementById(previewId);
+        if (!preview) return;
+
+        if (previewId === 'editImgPreview') {
+            preview.innerHTML = '<img src="../assets/images/combo_doi_co_dien.png" alt="Combo" style="width:100%;height:100%;object-fit:cover;">';
+            preview.style.padding = '0';
+            preview.style.overflow = 'hidden';
+            preview.style.background = 'transparent';
+            preview.style.color = 'transparent';
+            preview.style.fontSize = '0';
+            return;
+        }
+
+        preview.innerHTML = '<i class="fas fa-image"></i>';
+        preview.style.background = '#eaecf4';
+        preview.style.color = '#b7b9cc';
+        preview.style.fontSize = '24px';
+        preview.style.padding = '';
+        preview.style.overflow = '';
+    }
+</script>
+</body>
+
+</html>
