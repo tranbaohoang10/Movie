@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Khuyến Mãi - CineTicket</title>
+    <link rel="stylesheet" href="../assets/css/user/style.css?v=2.7">
+    <link rel="stylesheet" href="../assets/css/user/khuyen-mai.css?v=5">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+
+<body>
+<nav class="navbar user-ext-1">
+    <a href="index.html" class="logo">CineTicket</a>
+    <ul class="nav-links">
+        <li><a href="index.html">Trang Chủ</a></li>
+        <li><a href="phim.html">Phim Đang Chiếu</a></li>
+        <li><a href="lich-chieu.html">Lịch Chiếu</a></li>
+        <li><a href="khuyen-mai.html" class="text-primary">Khuyến Mãi</a></li>
+    </ul>
+    <div class="nav-right d-flex-center">
+        <form action="phim.html" method="GET" class="search-form">
+            <input type="text" name="q" placeholder="Tìm kiếm phim...">
+            <button type="submit"><i class="fas fa-search"></i></button>
+        </form>
+        <div class="nav-buttons">
+            <a href="login.html" class="btn btn-login">Đăng Nhập</a>
+            <a href="register.html" class="btn btn-primary">Đăng Ký</a>
+        </div>
+    </div>
+</nav>
+
+<header class="promo-header">
+    <h1 class="user-ext-58">Ưu Đãi Đặc Quyền</h1>
+    <p class="user-ext-59">Chỉ dành cho thành viên CineTicket</p>
+</header>
+
+<main class="promo-grid">
+    <div class="promo-card">
+        <img src="../assets/images/promo1.png" alt="Promo Popcorn" class="promo-icon">
+        <h3 class="promo-title">Combo Bắp Nước Khổng Lồ</h3>
+        <p class="user-ext-60">Tặng ngay 1 ly nước siêu to khi mua bắp vị caramel phô mai. Áp dụng đến hết tháng
+            8.</p>
+        <button class="btn btn-primary user-ext-61" onclick="showPromoModal('CINETICKET-BAP')">Nhận Mã</button>
+    </div>
+    <div class="promo-card">
+        <img src="../assets/images/promo2.png" alt="Promo Sale" class="promo-icon">
+        <h3 class="promo-title">Giảm 50% Vé Đôi Thứ 3</h3>
+        <p class="user-ext-60">Áp dụng cho mọi cụm rạp trên toàn quốc vào ngày Thứ 3 hàng tuần. Cơ hội hẹn hò lý
+            tưởng.</p>
+        <button class="btn btn-primary user-ext-61" onclick="showPromoModal('COUPLE-T3')">Nhận Mã</button>
+    </div>
+    <div class="promo-card">
+        <img src="../assets/images/promo3.png" alt="Promo Member" class="promo-icon">
+        <h3 class="promo-title">Giảm 20% Cho Thành Viên Mới</h3>
+        <p class="user-ext-60">Đăng ký tài khoản CineTicket ngay hôm nay để nhận mã giảm 20% cho lần đặt vé đầu tiên.</p>
+        <button class="btn btn-primary user-ext-61" onclick="showPromoModal('NEWBIE20')">Nhận Mã</button>
+    </div>
+    <div class="promo-card">
+        <img src="../assets/images/promo4.png" alt="Promo Birthday" class="promo-icon">
+        <h3 class="promo-title">Tặng 1 Vé Miễn Phí Dịp Sinh Nhật</h3>
+        <p class="user-ext-60">Thành viên có sinh nhật trong tháng sẽ được tặng ngay 1 mã đổi vé xem phim 2D miễn phí.</p>
+        <button class="btn btn-primary user-ext-61" onclick="showPromoModal('HBD2026')">Nhận Mã</button>
+    </div>
+    <div class="promo-card">
+        <img src="../assets/images/promo5.png" alt="Promo Student" class="promo-icon">
+        <h3 class="promo-title">Ưu Đãi Học Sinh Sinh Viên</h3>
+        <p class="user-ext-60">Đồng giá vé 55k cho tất cả các suất chiếu 2D từ Thứ 2 đến Thứ 5 khi xuất trình thẻ HSSV.</p>
+        <button class="btn btn-primary user-ext-61" onclick="showPromoModal('CINE-HSSV')">Nhận Mã</button>
+    </div>
+    <div class="promo-card">
+        <img src="../assets/images/promo6.png" alt="Promo Midnight" class="promo-icon">
+        <h3 class="promo-title">Combo Cú Đêm: Mua 1 Tặng 1</h3>
+        <p class="user-ext-60">Áp dụng mua 1 tặng 1 vé đối với các suất chiếu muộn sau 23:00 tất cả các ngày trong tuần.</p>
+        <button class="btn btn-primary user-ext-61" onclick="showPromoModal('MIDNIGHT-11')">Nhận Mã</button>
+    </div>
+</main>
+
+<!-- Promo Modal -->
+<div id="promoModalOverlay" class="promo-modal-overlay" onclick="handleModalClick(event)">
+    <div class="promo-modal">
+        <button class="close-promo-modal" onclick="closePromoModal()"><i class="fas fa-times"></i></button>
+        <h2>Nhận Mã Thành Công!</h2>
+        <p>Vui lòng sao chép mã dưới đây và sử dụng ở bước thanh toán:</p>
+        <div class="code-display">
+            <span id="promoCodeText" class="code-text">XXXXXX</span>
+            <button class="copy-btn" onclick="copyPromoCode()" title="Sao chép mã"><i class="far fa-copy"></i></button>
+        </div>
+        <button class="btn btn-primary" onclick="closePromoModal()" style="width: 100%;">Đóng</button>
+    </div>
+</div>
+
+<script>
+    function showPromoModal(code) {
+        document.getElementById('promoCodeText').innerText = code;
+        document.getElementById('promoModalOverlay').classList.add('show');
+    }
+
+    function closePromoModal() {
+        document.getElementById('promoModalOverlay').classList.remove('show');
+    }
+
+    function handleModalClick(e) {
+        if (e.target.id === 'promoModalOverlay') {
+            closePromoModal();
+        }
+    }
+
+    function copyPromoCode() {
+        const codeText = document.getElementById('promoCodeText').innerText;
+        navigator.clipboard.writeText(codeText).then(() => {
+            alert('Đã sao chép mã: ' + codeText);
+        }).catch(err => {
+            const textArea = document.createElement("textarea");
+            textArea.value = codeText;
+            document.body.appendChild(textArea);
+            textArea.select();
+            try {
+                document.execCommand('copy');
+                alert('Đã sao chép mã: ' + codeText);
+            } catch (err) {
+                console.error('Không thể sao chép', err);
+            }
+            document.body.removeChild(textArea);
+        });
+    }
+</script>
+<footer class="footer">
+    <div class="footer-content">
+        <div class="footer-col">
+            <h3 class="logo user-ext-50">CineTicket</h3>
+            <p class="user-ext-51">Hệ thống đặt vé xem phim trực tuyến hàng đầu, mang đến trải nghiệm điện ảnh
+                tuyệt vời nhất cho bạn.</p>
+        </div>
+        <div class="footer-col">
+            <h4 class="user-ext-52">Liên Kết</h4>
+            <ul class="user-ext-53">
+                <li><a href="#" class="user-ext-54">Về Chúng Tôi</a></li>
+                <li><a href="#" class="user-ext-54">Thỏa Thuận Sử Dụng</a></li>
+                <li><a href="#" class="user-ext-54">Quy Chế Hoạt Động</a></li>
+                <li><a href="#" class="user-ext-54">Chính Sách Bảo Mật</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4 class="user-ext-52">Hỗ Trợ</h4>
+            <ul class="user-ext-53">
+                <li><a href="#" class="user-ext-54">Góp Ý</a></li>
+                <li><a href="#" class="user-ext-54">Sale & Services</a></li>
+                <li><a href="#" class="user-ext-54">Rạp / Giá Vé</a></li>
+                <li><a href="#" class="user-ext-54">Tuyển Dụng</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4 class="user-ext-52">Kết Nối</h4>
+            <div class="user-ext-55">
+                <div class="user-ext-56">FB</div>
+                <div class="user-ext-56">YT</div>
+                <div class="user-ext-56">IG</div>
+            </div>
+        </div>
+    </div>
+    <div class="user-ext-57">
+        &copy; 2026 CineTicket. All rights reserved.
+    </div>
+</footer>
+<script src="../assets/js/app.js"></script>
+</body>
+
+</html>
