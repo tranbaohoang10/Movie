@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tài Khoản - CineTicket</title>
+    <link rel="stylesheet" href="../assets/css/user/style.css">
+    <link rel="stylesheet" href="../assets/css/user/profile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/inline-extracted.css">
+</head>
+
+<body>
+<nav class="navbar inline-style-37" >
+    <a href="index.html" class="logo">CineTicket</a>
+    <ul class="nav-links">
+        <li><a href="index.html">Trang Chủ</a></li>
+        <li><a href="phim.html">Phim Đang Chiếu</a></li>
+        <li><a href="lich-chieu.html">Lịch Chiếu</a></li>
+        <li><a href="khuyen-mai.html">Khuyến Mãi</a></li>
+    </ul>
+    <div class="nav-right d-flex-center" >
+        <form action="phim.html" method="GET" class="search-form">
+            <input type="text" name="q" placeholder="Tìm kiếm phim...">
+            <button type="submit"><i class="fas fa-search"></i></button>
+        </form>
+        <div class="nav-buttons">
+            <a href="login.html" class="btn btn-login">Đăng Nhập</a>
+            <a href="register.html" class="btn btn-primary">Đăng Ký</a>
+        </div>
+    </div>
+</nav>
+
+<div class="profile-container">
+    <div class="profile-sidebar">
+        <div class="profile-tab active" onclick="switchTab('info')">Thông tin cá nhân</div>
+        <div class="profile-tab" onclick="switchTab('password')">Đổi mật khẩu</div>
+        <div class="profile-tab" onclick="switchTab('history')">Lịch sử đặt vé</div>
+        <div class="profile-tab inline-style-106"
+             onclick="logout()">Đăng xuất</div>
+    </div>
+
+    <div class="profile-content">
+        <!-- Thông tin cá nhân -->
+        <div id="info" class="profile-section active">
+            <h2>Cập Nhật Thông Tin</h2>
+            <form onsubmit="event.preventDefault(); alert('Cập nhật thành công!');">
+                <div class="form-group mb-20" >
+                    <label>Họ và tên</label>
+                    <input type="text" value="Nguyễn Văn A" required
+                           class="inline-style-107" >
+                </div>
+                <div class="form-group mb-20" >
+                    <label>Số điện thoại</label>
+                    <input type="tel" value="0901234567" required
+                           class="inline-style-107" >
+                </div>
+                <div class="form-group mb-20" >
+                    <label>Email</label>
+                    <input type="email" value="nguyenvana@gmail.com" disabled
+                           class="inline-style-108" >
+                </div>
+                <button class="btn btn-primary" type="submit">Lưu Thay Đổi</button>
+            </form>
+        </div>
+
+        <!-- Đổi mật khẩu -->
+        <div id="password" class="profile-section">
+            <h2>Đổi Mật Khẩu</h2>
+            <form onsubmit="event.preventDefault(); alert('Đổi mật khẩu thành công!');">
+                <div class="form-group mb-20" >
+                    <label>Mật khẩu hiện tại</label>
+                    <input type="password" required
+                           class="inline-style-107" >
+                </div>
+                <div class="form-group mb-20" >
+                    <label>Mật khẩu mới</label>
+                    <input type="password" required
+                           class="inline-style-107" >
+                </div>
+                <div class="form-group mb-20" >
+                    <label>Xác nhận mật khẩu mới</label>
+                    <input type="password" required
+                           class="inline-style-107" >
+                </div>
+                <button class="btn btn-primary" type="submit">Cập Nhật Mật Khẩu</button>
+            </form>
+        </div>
+
+        <!-- Lịch sử đặt vé -->
+        <div id="history" class="profile-section">
+            <h2>Lịch Sử Đặt Vé</h2>
+            <div class="ticket-history-card">
+                <div class="ticket-info">
+                    <h4>Nhiệm Vụ Đỏ</h4>
+                    <p  class="text-muted" >Suất chiếu: 20:00 - 15/08/2026</p>
+                    <p  class="text-muted" >Ghế: G8, G9</p>
+                    <p  class="text-muted" >Tổng tiền: 200.000đ</p>
+                </div>
+                <div  class="text-right" >
+                    <div class="ticket-status inline-style-61" >Đã thanh toán</div><br>
+                    <button class="btn inline-style-109" onclick="openReviewModal('Nhiệm Vụ Đỏ')">Đánh giá phim</button>
+                </div>
+            </div>
+
+            <div class="ticket-history-card">
+                <div class="ticket-info">
+                    <h4>Ám Ảnh Đêm Thâu</h4>
+                    <p  class="text-muted" >Suất chiếu: 18:30 - 20/08/2026</p>
+                    <p  class="text-muted" >Ghế: H10</p>
+                    <p  class="text-muted" >Tổng tiền: 100.000đ</p>
+                </div>
+                <div  class="text-right" >
+                    <div class="ticket-status cancelled inline-style-61" >Đã hủy đơn</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function switchTab(tabId) {
+        document.querySelectorAll('.profile-tab').forEach(tab => tab.classList.remove('active'));
+        document.querySelectorAll('.profile-section').forEach(sec => sec.classList.remove('active'));
+
+        document.querySelector('.profile-tab[onclick*="' + tabId + '"]').classList.add('active');
+        document.getElementById(tabId).classList.add('active');
+    }
+
+    // Review Modal Logic
+    let currentRating = 0;
+    function openReviewModal(movieName) {
+        document.getElementById('reviewMovieName').innerText = 'Đánh giá phim: ' + movieName;
+        document.getElementById('reviewModal').classList.add('active');
+        resetStars();
+        document.getElementById('reviewText').value = '';
+    }
+
+    function closeReviewModal() {
+        document.getElementById('reviewModal').classList.remove('active');
+    }
+
+    function resetStars() {
+        currentRating = 0;
+        document.querySelectorAll('.rating-stars i').forEach(star => {
+            star.className = 'far fa-star';
+        });
+    }
+
+    function rate(stars) {
+        currentRating = stars;
+        const starElements = document.querySelectorAll('.rating-stars i');
+        starElements.forEach((star, index) => {
+            if (index < stars) {
+                star.className = 'fas fa-star';
+            } else {
+                star.className = 'far fa-star';
+            }
+        });
+    }
+
+    function submitReview() {
+        if (currentRating === 0) {
+            alert('Vui lòng chọn số sao để đánh giá!');
+            return;
+        }
+        const text = document.getElementById('reviewText').value;
+        alert('Cảm ơn bạn đã đánh giá ' + currentRating + ' sao!\nNhận xét: ' + text);
+        closeReviewModal();
+    }
+</script>
+
+<!-- Review Modal -->
+<div id="reviewModal" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 id="reviewMovieName">Đánh giá phim</h3>
+            <span class="modal-close" onclick="closeReviewModal()">&times;</span>
+        </div>
+        <div class="modal-body">
+            <div class="rating-stars">
+                <i class="far fa-star" onclick="rate(1)"></i>
+                <i class="far fa-star" onclick="rate(2)"></i>
+                <i class="far fa-star" onclick="rate(3)"></i>
+                <i class="far fa-star" onclick="rate(4)"></i>
+                <i class="far fa-star" onclick="rate(5)"></i>
+            </div>
+            <textarea id="reviewText" class="review-textarea" placeholder="Nhập nhận xét của bạn về phim này..."></textarea>
+            <button class="btn btn-primary" style="width: 100%;" onclick="submitReview()">Gửi đánh giá</button>
+        </div>
+    </div>
+</div>
+<script src="../assets/js/app.js"></script>
+</body>
+
+</html>
