@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Khuyến Mãi - CineTicket Admin</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/admin/style.css">
+    <link rel="stylesheet" href="../assets/css/admin/promos.css">
+
+</head>
+
+<body>
+    <div class="sidebar"></div>
+    <div class="main-wrapper">
+        <div class="topbar">
+            <div class="user-info">
+                <span class="shared-ext-1">Admin</span>
+                <img src="https://ui-avatars.com/api/?name=Admin&background=4e73df&color=fff" alt="Admin">
+            </div>
+        </div>
+        <div class="content">
+            <div id="promos" class="section active">
+
+                <div class="shared-ext-2">
+                    <h1 class="page-title shared-ext-3">
+                        <i class="fas fa-percent shared-ext-9"></i>Quản Lý Khuyến Mãi
+                    </h1>
+                    <button class="btn btn-primary" onclick="openModal('addPromoModal')">
+                        <i class="fas fa-gift fa-sm"></i> Tạo Mã Mới
+                    </button>
+                </div>
+
+                <!-- Stat Cards -->
+                <div class="stat-grid">
+                    <div class="card stat-card-wrapper">
+                        <div class="card-body stat-card-body">
+                            <div class="stat-icon shared-ext-10"><i class="fas fa-tags"></i></div>
+                            <div>
+                                <div class="stat-num" id="stat-total">4</div>
+                                <div class="stat-label">Tổng mã</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card stat-card-wrapper">
+                        <div class="card-body stat-card-body">
+                            <div class="stat-icon shared-ext-11"><i class="fas fa-check-circle"></i></div>
+                            <div>
+                                <div class="stat-num" id="stat-active">2</div>
+                                <div class="stat-label">Đang hiệu lực</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card stat-card-wrapper">
+                        <div class="card-body stat-card-body">
+                            <div class="stat-icon shared-ext-13"><i class="fas fa-ban"></i></div>
+                            <div>
+                                <div class="stat-num" id="stat-expired">1</div>
+                                <div class="stat-label">Hết lượt / Hết hạn</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card stat-card-wrapper">
+                        <div class="card-body stat-card-body">
+                            <div class="stat-icon shared-ext-12"><i class="fas fa-power-off"></i></div>
+                            <div>
+                                <div class="stat-num" id="stat-disabled">1</div>
+                                <div class="stat-label">Đã vô hiệu hóa</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">Danh sách mã khuyến mãi (Voucher)</div>
+                    <div class="card-body">
+                        <div class="shared-ext-4 shared-ext-14">
+                            <input type="text" id="searchInput" placeholder="Tìm theo mã CODE..." class="shared-ext-5"
+                                oninput="filterTable()">
+                            <select id="filterStatus" onchange="filterTable()">
+                                <option value="">Tất cả trạng thái</option>
+                                <option value="Hiệu lực">Đang hiệu lực</option>
+                                <option value="Hết lượt">Hết lượt</option>
+                                <option value="Vô hiệu">Vô hiệu hóa</option>
+                            </select>
+                            <button class="btn btn-primary" onclick="filterTable()"><i class="fas fa-search"></i>
+                                Lọc</button>
+                        </div>
+                        <table id="promoTable">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Mã CODE</th>
+                                    <th>Giá Trị Giảm</th>
+                                    <th>Thời Gian Áp Dụng</th>
+                                    <th>Lượt Dùng</th>
+                                    <th>Trạng Thái</th>
+                                    <th>Hành Động</th>
+                                </tr>
+                            </thead>
+                            <tbody id="promoTableBody">
+                                <tr data-status="Hiệu lực" data-search="summer2026">
+                                    <td>1</td>
+                                    <td>
+                                        <strong class="promos-ext-1">SUMMER2026</strong><br>
+                                        <small class="shared-ext-24">Giảm hè 2026</small>
+                                    </td>
+                                    <td><span class="shared-ext-25">20%</span> <small class="shared-ext-24">(tối đa
+                                            50k)</small></td>
+                                    <td><small>01/07/2026 → 31/07/2026</small></td>
+                                    <td>
+                                        <div class="promos-ext-2">
+                                            <div class="promos-ext-3">
+                                                <div class="promos-ext-4"></div>
+                                            </div>
+                                            <span class="promos-ext-5">120/500</span>
+                                        </div>
+                                    </td>
+                                    <td><span class="badge badge-success">Hiệu lực</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-primary" onclick="openModal('editPromoModal')"
+                                            title="Sửa"><i class="fas fa-edit"></i></button>
+                                        <button class="btn btn-sm btn-warning" onclick="togglePromo(this)"
+                                            title="Tạm tắt"><i class="fas fa-power-off"></i></button>
+                                        <button class="btn btn-sm btn-danger" onclick="openDeleteModal(1,'SUMMER2026')"
+                                            title="Xóa"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                                <tr data-status="Hiệu lực" data-search="newuser50">
+                                    <td>2</td>
+                                    <td>
+                                        <strong class="promos-ext-6">NEWUSER50</strong><br>
+                                        <small class="shared-ext-24">Chào mừng khách mới</small>
+                                    </td>
+                                    <td><span class="shared-ext-25">50.000đ</span> <small class="shared-ext-24">(giảm
+                                            thẳng)</small></td>
+                                    <td><small>Không giới hạn</small></td>
+                                    <td>
+                                        <div class="promos-ext-2">
+                                            <div class="promos-ext-3">
+                                                <div class="promos-ext-7"></div>
+                                            </div>
+                                            <span class="promos-ext-5">850/∞</span>
+                                        </div>
+                                    </td>
+                                    <td><span class="badge badge-success">Hiệu lực</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-primary" onclick="openModal('editPromoModal')"
+                                            title="Sửa"><i class="fas fa-edit"></i></button>
+                                        <button class="btn btn-sm btn-warning" onclick="togglePromo(this)"
+                                            title="Tạm tắt"><i class="fas fa-power-off"></i></button>
+                                        <button class="btn btn-sm btn-danger" onclick="openDeleteModal(2,'NEWUSER50')"
+                                            title="Xóa"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                                <tr data-status="Hết lượt" data-search="flash10">
+                                    <td>3</td>
+                                    <td>
+                                        <strong class="promos-ext-8">FLASH10</strong><br>
+                                        <small class="shared-ext-24">Flash sale cuối tuần</small>
+                                    </td>
+                                    <td><span class="shared-ext-26">10%</span></td>
+                                    <td><small>05/07 → 06/07/2026</small></td>
+                                    <td>
+                                        <div class="promos-ext-2">
+                                            <div class="promos-ext-3">
+                                                <div class="promos-ext-9"></div>
+                                            </div>
+                                            <span class="promos-ext-10">100/100</span>
+                                        </div>
+                                    </td>
+                                    <td><span class="badge badge-danger">Hết lượt</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-primary" onclick="openModal('editPromoModal')"
+                                            title="Sửa"><i class="fas fa-edit"></i></button>
+                                        <button class="btn btn-sm btn-danger" onclick="openDeleteModal(3,'FLASH10')"
+                                            title="Xóa"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                                <tr data-status="Vô hiệu" data-search="vip30">
+                                    <td>4</td>
+                                    <td>
+                                        <strong class="promos-ext-11">VIP30</strong><br>
+                                        <small class="shared-ext-24">Ưu đãi VIP</small>
+                                    </td>
+                                    <td><span class="promos-ext-12">30%</span></td>
+                                    <td><small>01/06 → 30/06/2026</small></td>
+                                    <td>
+                                        <div class="promos-ext-2">
+                                            <div class="promos-ext-3">
+                                                <div class="promos-ext-13"></div>
+                                            </div>
+                                            <span class="promos-ext-5">45/100</span>
+                                        </div>
+                                    </td>
+                                    <td><span class="badge badge-secondary">Vô hiệu</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-primary" onclick="openModal('editPromoModal')"
+                                            title="Sửa"><i class="fas fa-edit"></i></button>
+                                        <button class="btn btn-sm btn-success" onclick="togglePromo(this)"
+                                            title="Kích hoạt lại"><i class="fas fa-power-off"></i></button>
+                                        <button class="btn btn-sm btn-danger" onclick="openDeleteModal(4,'VIP30')"
+                                            title="Xóa"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL TẠO MÃ -->
+    <div class="modal-overlay" id="addPromoModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2><i class="fas fa-gift shared-ext-15"></i>Tạo Mã Khuyến Mãi</h2>
+                <button class="modal-close" onclick="closeModal('addPromoModal')"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <form onsubmit="handleAdd(event)">
+                    <div class="form-group"><label>Mã CODE (*)</label><input type="text" placeholder="VD: SUMMER2026"
+                            required class="promos-ext-14"></div>
+                    <div class="form-group"><label>Mô tả</label><input type="text" placeholder="VD: Giảm giá hè 2026">
+                    </div>
+                    <div class="shared-ext-6">
+                        <div class="form-group shared-ext-7"><label>Loại Giảm Giá</label>
+                            <select id="discountType">
+                                <option value="percent">Phần trăm (%)</option>
+                                <option value="fixed">Số tiền cố định (đ)</option>
+                            </select>
+                        </div>
+                        <div class="form-group shared-ext-7"><label>Giá Trị Giảm (*)</label><input type="number" min="1"
+                                placeholder="VD: 20" required></div>
+                    </div>
+                    <div class="form-group"><label>Giá Trị Tối Đa (áp dụng cho %)</label><input type="number"
+                            placeholder="VD: 50000 (để trống = không giới hạn)"></div>
+                    <div class="shared-ext-6">
+                        <div class="form-group shared-ext-7"><label>Ngày Bắt Đầu</label><input type="date"></div>
+                        <div class="form-group shared-ext-7"><label>Ngày Kết Thúc</label><input type="date"></div>
+                    </div>
+                    <div class="form-group"><label>Số Lượt Dùng Tối Đa</label><input type="number" min="1"
+                            placeholder="Để trống = không giới hạn"></div>
+                    <div class="modal-footer shared-ext-8">
+                        <button type="button" class="btn btn-danger" onclick="closeModal('addPromoModal')">Hủy</button>
+                        <button type="submit" class="btn btn-success"><i class="fas fa-save shared-ext-16"></i>Tạo
+                            Mã</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL SỬA MÃ -->
+    <div class="modal-overlay" id="editPromoModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2><i class="fas fa-edit shared-ext-9"></i>Sửa Mã Khuyến Mãi <span id="editPromoCode"></span></h2>
+                <button class="modal-close" onclick="closeModal('editPromoModal')"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <form onsubmit="handleEdit(event)">
+                    <div class="form-group"><label>Mã CODE (*)</label><input type="text" id="editCode"
+                            value="SUMMER2026" required class="promos-ext-14"></div>
+                    <div class="form-group"><label>Mô tả</label><input type="text" id="editDesc" value="Giảm hè 2026">
+                    </div>
+                    <div class="shared-ext-6">
+                        <div class="form-group shared-ext-7"><label>Loại Giảm Giá</label>
+                            <select>
+                                <option selected>Phần trăm (%)</option>
+                                <option>Số tiền cố định (đ)</option>
+                            </select>
+                        </div>
+                        <div class="form-group shared-ext-7"><label>Giá Trị Giảm (*)</label><input type="number"
+                                id="editValue" value="20" min="1" required></div>
+                    </div>
+                    <div class="shared-ext-6">
+                        <div class="form-group shared-ext-7"><label>Ngày Bắt Đầu</label><input type="date"
+                            id="editStart" value="2026-07-01"></div>
+                        <div class="form-group shared-ext-7"><label>Ngày Kết Thúc</label><input type="date" id="editEnd"
+                            value="2026-07-31"></div>
+                    </div>
+                    <div class="form-group"><label>Số Lượt Tối Đa</label><input type="number" id="editLimit" value="500"
+                            min="1"></div>
+                    <div class="modal-footer shared-ext-8">
+                        <button type="button" class="btn btn-danger" onclick="closeModal('editPromoModal')">Hủy</button>
+                        <button type="submit" class="btn btn-success"><i class="fas fa-save shared-ext-16"></i>Lưu Thay
+                            Đổi</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL XÁC NHẬN XÓA -->
+    <div class="modal-overlay" id="deleteModal">
+        <div class="modal shared-ext-17">
+            <div class="modal-header">
+                <h2>Xác Nhận Xóa</h2><button class="modal-close" onclick="closeModal('deleteModal')"><i
+                        class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body shared-ext-18">
+                <div class="delete-icon-wrap"><i class="fas fa-trash-alt"></i></div>
+                <h3 class="shared-ext-19">Xóa mã này?</h3>
+                <p class="shared-ext-20">Bạn sắp xóa mã <strong id="deletePromoCode"></strong>.<br>Hành động này không
+                    thể hoàn tác.</p>
+                <div class="shared-ext-21">
+                    <button class="btn btn-danger" onclick="confirmDelete()"><i
+                            class="fas fa-trash shared-ext-16"></i>Xóa ngay</button>
+                    <button class="btn shared-ext-22" onclick="closeModal('deleteModal')">Hủy</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../assets/js/app.js"></script>
+    <script>
+        function openModal(id) { document.getElementById(id).classList.add('active'); }
+        function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+        let pendingDeleteRow = null;
+        function openDeleteModal(id, code) {
+            document.getElementById('deletePromoCode').textContent = code;
+            pendingDeleteRow = document.querySelector(`#promoTableBody tr:nth-child(${id})`);
+            openModal('deleteModal');
+        }
+        function confirmDelete() {
+            if (pendingDeleteRow) { pendingDeleteRow.style.opacity = '0'; pendingDeleteRow.style.transition = 'opacity .3s'; setTimeout(() => { pendingDeleteRow.remove(); updateStats(); }, 300); }
+            closeModal('deleteModal'); showToast('Đã xóa mã khuyến mãi!', 'success');
+        }
+        function togglePromo(btn) {
+            const row = btn.closest('tr');
+            const badge = row.cells[5].querySelector('.badge');
+            const isActive = row.dataset.status === 'Hiệu lực';
+            if (isActive) {
+                badge.textContent = 'Vô hiệu'; badge.className = 'badge badge-secondary';
+                row.dataset.status = 'Vô hiệu'; btn.title = 'Kích hoạt lại'; btn.className = 'btn btn-sm btn-success';
+                showToast('Đã vô hiệu hóa mã!', 'warning');
+            } else {
+                badge.textContent = 'Hiệu lực'; badge.className = 'badge badge-success';
+                row.dataset.status = 'Hiệu lực'; btn.title = 'Tạm tắt'; btn.className = 'btn btn-sm btn-warning';
+                showToast('Đã kích hoạt mã!', 'success');
+            }
+            updateStats();
+        }
+        function handleAdd(e) { e.preventDefault(); closeModal('addPromoModal'); showToast('Tạo mã khuyến mãi thành công!', 'success'); }
+        function handleEdit(e) { e.preventDefault(); closeModal('editPromoModal'); showToast('Cập nhật mã khuyến mãi thành công!', 'success'); }
+        function filterTable() {
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            const status = document.getElementById('filterStatus').value;
+            document.querySelectorAll('#promoTableBody tr').forEach(row => {
+                const s = row.dataset.search || '';
+                const ok = (!search || s.includes(search)) && (!status || row.dataset.status === status);
+                row.style.display = ok ? '' : 'none';
+            });
+        }
+        function updateStats() {
+            const rows = document.querySelectorAll('#promoTableBody tr');
+            let total = 0, active = 0, expired = 0, disabled = 0;
+            rows.forEach(r => { total++; const s = r.dataset.status; if (s === 'Hiệu lực') active++; else if (s === 'Hết lượt') expired++; else if (s === 'Vô hiệu') disabled++; });
+            document.getElementById('stat-total').textContent = total;
+            document.getElementById('stat-active').textContent = active;
+            document.getElementById('stat-expired').textContent = expired;
+            document.getElementById('stat-disabled').textContent = disabled;
+        }
+        function showToast(message, type = 'success') {
+            let c = document.getElementById('_tc'); if (!c) { c = document.createElement('div'); c.id = '_tc'; c.style.cssText = 'position:fixed;top:20px;right:24px;z-index:99999;display:flex;flex-direction:column;gap:10px;'; document.body.appendChild(c); }
+            const colors = { success: '#1cc88a', warning: '#f6c23e', danger: '#e74a3b' }; const icons = { success: 'check-circle', warning: 'exclamation-triangle', danger: 'times-circle' };
+            const t = document.createElement('div'); t.style.cssText = `display:flex;align-items:center;gap:10px;background:#2d3748;border-left:4px solid ${colors[type]};color:#fff;padding:12px 18px;border-radius:8px;box-shadow:0 4px 20px rgba(0,0,0,.4);min-width:260px;font-size:14px;font-weight:600;`;
+            t.innerHTML = `<i class="fas fa-${icons[type]}" style="color:${colors[type]};font-size:18px;"></i>${message}`;
+            c.appendChild(t); setTimeout(() => { t.style.opacity = '0'; t.style.transition = 'opacity .3s'; setTimeout(() => t.remove(), 300); }, 3500);
+        }
+    </script>
+</body>
+
+</html>
