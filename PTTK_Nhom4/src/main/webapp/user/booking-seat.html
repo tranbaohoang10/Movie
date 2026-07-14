@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chọn Ghế - CineTicket</title>
+    <link rel="stylesheet" href="../assets/css/user/style.css?v=2.7">
+    <link rel="stylesheet" href="../assets/css/user/booking-seat.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/user/booking-seat-login.css">
+</head>
+
+<body>
+<nav class="navbar user-ext-1">
+    <a href="index.html" class="logo">CineTicket</a>
+    <ul class="nav-links">
+        <li><a href="index.html">Trang Chủ</a></li>
+        <li><a href="phim.html">Phim Đang Chiếu</a></li>
+        <li><a href="lich-chieu.html">Lịch Chiếu</a></li>
+        <li><a href="khuyen-mai.html">Khuyến Mãi</a></li>
+    </ul>
+    <div class="nav-right d-flex-center">
+        <form action="phim.html" method="GET" class="search-form">
+            <input type="text" name="q" placeholder="Tìm kiếm phim...">
+            <button type="submit"><i class="fas fa-search"></i></button>
+        </form>
+        <div class="nav-buttons">
+            <a href="login.html" class="btn btn-login">Đăng Nhập</a>
+            <a href="register.html" class="btn btn-primary">Đăng Ký</a>
+        </div>
+    </div>
+</nav>
+
+<div class="booking-container" style="position: relative;">
+    <a href="detail.html"
+       style="position: absolute; left: 20px; top: 0; background: transparent; color: #a0a3b1; text-decoration: none; font-size: 15px; transition: 0.3s;"
+       onmouseover="this.style.color='#fff';" onmouseout="this.style.color='#a0a3b1';"><i
+            class="fas fa-arrow-left"></i> Quay lại </a>
+    <h2 class="user-ext-25" style="margin-top: 0;">Nhiệm Vụ Đỏ</h2>
+    <p class="user-ext-29">Suất chiếu: 20:00 | Hôm nay 15/08 | Rạp 1</p>
+
+    <div class="screen"></div>
+
+    <!-- Ghế Thường -->
+    <div class="seat-row">
+        <div class="seat sold">A1</div>
+        <div class="seat sold">A2</div>
+        <div class="seat">A3</div>
+        <div class="seat">A4</div>
+        <div class="seat">A5</div>
+        <div class="seat">A6</div>
+        <div class="seat">A7</div>
+        <div class="seat">A8</div>
+    </div>
+    <div class="seat-row">
+        <div class="seat">B1</div>
+        <div class="seat">B2</div>
+        <div class="seat">B3</div>
+        <div class="seat">B4</div>
+        <div class="seat">B5</div>
+        <div class="seat sold">B6</div>
+        <div class="seat sold">B7</div>
+        <div class="seat">B8</div>
+    </div>
+
+    <!-- Ghế VIP -->
+    <div class="seat-row user-ext-30">
+        <div class="seat vip">C1</div>
+        <div class="seat vip">C2</div>
+        <div class="seat vip sold">C3</div>
+        <div class="seat vip sold">C4</div>
+        <div class="seat vip">C5</div>
+        <div class="seat vip">C6</div>
+        <div class="seat vip">C7</div>
+        <div class="seat vip">C8</div>
+    </div>
+    <div class="seat-row">
+        <div class="seat vip">D1</div>
+        <div class="seat vip">D2</div>
+        <div class="seat vip">D3</div>
+        <div class="seat vip">D4</div>
+        <div class="seat vip">D5</div>
+        <div class="seat vip">D6</div>
+        <div class="seat vip sold">D7</div>
+        <div class="seat vip sold">D8</div>
+    </div>
+
+    <!-- Ghế Đôi -->
+    <div class="seat-row user-ext-30">
+        <div class="seat couple">E1-E2</div>
+        <div class="seat couple sold">E3-E4</div>
+        <div class="seat couple">E5-E6</div>
+        <div class="seat couple">E7-E8</div>
+    </div>
+
+    <div class="legend">
+        <div class="legend-item">
+            <div class="legend-seat user-ext-31"></div> Ghế trống
+        </div>
+        <div class="legend-item">
+            <div class="legend-seat user-ext-32"></div> Đã bán
+        </div>
+        <div class="legend-item">
+            <div class="legend-seat user-ext-33"></div> Đang chọn
+        </div>
+        <div class="legend-item">
+            <div class="legend-seat user-ext-34"></div> VIP
+        </div>
+        <div class="legend-item">
+            <div class="legend-seat user-ext-35"></div> Sweetbox
+        </div>
+    </div>
+
+    <div class="booking-footer user-ext-36">
+        <div class="user-ext-37"><i class="far fa-clock"></i> 05:00 Giữ ghế</div>
+        <div class="text-left">
+            <p class="user-ext-2">Ghế đang chọn</p>
+            <h3 class="text-primary" id="selected-seats">Chưa chọn</h3>
+        </div>
+        <div class="text-right">
+            <p class="user-ext-2">Tạm tính</p>
+            <h2 class="text-white" id="total-price">0đ</h2>
+        </div>
+        <button class="btn btn-primary user-ext-8" id="btn-continue" onclick="handleContinue()">Tiếp Tục</button>
+    </div>
+</div>
+
+<!-- Toast Container -->
+<div id="toast-container"></div>
+
+<!-- Modal yêu cầu đăng nhập -->
+<div id="login-modal-overlay" onclick="closeLoginModal(event)">
+    <div id="login-modal">
+        <div class="modal-icon-wrap">
+            <i class="fas fa-user-lock"></i>
+        </div>
+        <h3>Yêu cầu đăng nhập</h3>
+        <p>Vui lòng đăng nhập để tiếp tục đặt vé.<br>Bạn cần có tài khoản để hoàn tất giao dịch.</p>
+        <div class="modal-actions">
+            <a href="login.html" class="modal-btn-login"><i class="fas fa-sign-in-alt"
+                                                            style="margin-right:6px"></i>Đăng Nhập</a>
+            <button class="modal-btn-cancel" onclick="closeLoginModal()">Để sau</button>
+        </div>
+    </div>
+</div>
+
+<script src="../assets/js/app.js"></script>
+<script>
+    function showToast(title, desc) {
+        const container = document.getElementById('toast-container');
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.innerHTML = `
+            <span class="toast-icon"><i class="fas fa-exclamation-circle"></i></span>
+            <div class="toast-text">
+                <div class="toast-title">${title}</div>
+                <div class="toast-desc">${desc}</div>
+            </div>
+            <button class="toast-close" onclick="dismissToast(this.parentElement)"><i class="fas fa-times"></i></button>
+        `;
+        container.appendChild(toast);
+        setTimeout(() => dismissToast(toast), 4000);
+    }
+
+    function dismissToast(toast) {
+        if (!toast || toast.classList.contains('hide')) return;
+        toast.classList.add('hide');
+        setTimeout(() => toast && toast.remove(), 300);
+    }
+
+    function openLoginModal() {
+        document.getElementById('login-modal-overlay').classList.add('show');
+    }
+
+    function closeLoginModal(event) {
+        if (!event || event.target === document.getElementById('login-modal-overlay')) {
+            document.getElementById('login-modal-overlay').classList.remove('show');
+        }
+    }
+
+    function handleContinue() {
+        const selectedSeats = document.querySelectorAll('.seat.selected');
+        if (selectedSeats.length === 0) {
+            showToast('Chưa chọn ghế', 'Vui lòng chọn ít nhất 1 ghế để tiếp tục!');
+            return;
+        }
+
+        const seatNames = [];
+        let seatTotal = 0;
+        const PRICES = { standard: 80000, vip: 100000, couple: 180000 };
+        selectedSeats.forEach(seat => {
+            seatNames.push(seat.textContent);
+            if (seat.classList.contains('couple')) seatTotal += PRICES.couple;
+            else if (seat.classList.contains('vip')) seatTotal += PRICES.vip;
+            else seatTotal += PRICES.standard;
+        });
+        localStorage.setItem('bookingSeatTotal', seatTotal);
+        localStorage.setItem('bookingSeatNames', seatNames.join(', '));
+
+        const isLoggedIn = localStorage.getItem('isLoggedIn');
+        if (isLoggedIn === 'true') {
+            localStorage.removeItem('bookingEndTime');
+            window.location.href = 'booking-combo.html';
+        } else {
+            showToast('Chưa đăng nhập', 'Vui lòng đăng nhập để đặt vé!');
+            setTimeout(() => openLoginModal(), 400);
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const seats = document.querySelectorAll('.seat:not(.sold)');
+        const selectedSeatsText = document.getElementById('selected-seats');
+        const totalPriceText = document.getElementById('total-price');
+
+        const PRICES = {
+            standard: 80000,
+            vip: 100000,
+            couple: 180000
+        };
+
+        seats.forEach(seat => {
+            seat.addEventListener('click', () => {
+                seat.classList.toggle('selected');
+                updateBookingInfo();
+            });
+        });
+
+        function updateBookingInfo() {
+            const selectedSeats = document.querySelectorAll('.seat.selected');
+            const seatNames = [];
+            let total = 0;
+
+            selectedSeats.forEach(seat => {
+                seatNames.push(seat.textContent);
+
+                if (seat.classList.contains('couple')) {
+                    total += PRICES.couple;
+                } else if (seat.classList.contains('vip')) {
+                    total += PRICES.vip;
+                } else {
+                    total += PRICES.standard;
+                }
+            });
+
+            if (seatNames.length > 0) {
+                selectedSeatsText.textContent = seatNames.join(', ');
+                totalPriceText.textContent = new Intl.NumberFormat('vi-VN').format(total) + 'đ';
+            } else {
+                selectedSeatsText.textContent = 'Chưa chọn';
+                totalPriceText.textContent = '0đ';
+            }
+        }
+    });
+</script>
+</body>
+
+</html>
