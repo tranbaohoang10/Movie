@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nhiệm Vụ Đỏ - CineTicket</title>
-    <link rel="stylesheet" href="../assets/css/user/style.css">
+    <link rel="stylesheet" href="../assets/css/user/style.css?v=2.7">
     <link rel="stylesheet" href="../assets/css/user/detail.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="stylesheet" href="../assets/css/inline-extracted.css">
 </head>
+
 <body>
-<nav class="navbar inline-style-37" >
+<nav class="navbar user-ext-1">
     <a href="index.html" class="logo">CineTicket</a>
     <ul class="nav-links">
         <li><a href="index.html">Trang Chủ</a></li>
@@ -18,7 +19,7 @@
         <li><a href="lich-chieu.html">Lịch Chiếu</a></li>
         <li><a href="khuyen-mai.html">Khuyến Mãi</a></li>
     </ul>
-    <div class="nav-right d-flex-center" >
+    <div class="nav-right d-flex-center">
         <form action="phim.html" method="GET" class="search-form">
             <input type="text" name="q" placeholder="Tìm kiếm phim...">
             <button type="submit"><i class="fas fa-search"></i></button>
@@ -39,20 +40,23 @@
             <li><i class="far fa-clock"></i> 120'</li>
             <li><i class="fas fa-globe-americas"></i> Hoa Kỳ</li>
             <li><i class="far fa-comment-dots"></i> Phụ Đề</li>
-            <li><i class="fas fa-user-shield"></i> <span class="age-rating-badge">T18: Phim dành cho khán giả từ đủ 18 tuổi trở lên (18+)</span></li>
+            <li><i class="fas fa-user-shield"></i> <span class="age-rating-badge">T18: Phim dành cho khán giả từ đủ
+                        18 tuổi trở lên (18+)</span></li>
         </ul>
 
         <div class="movie-meta-details">
             <h3 class="section-heading">Mô tả</h3>
             <div><strong>Đạo diễn:</strong> Christopher McQuarrie</div>
             <div><strong>Diễn viên:</strong> Tom Cruise, Rebecca Ferguson, Simon Pegg, Ving Rhames</div>
-            <div><strong>Khởi chiếu:</strong> Thứ Sáu, 15/08/2026</div>
+            <div><strong>Khởi chiếu:</strong> Thứ Tư, 01/07/2026</div>
         </div>
 
         <div class="movie-desc-section">
             <h3 class="section-heading">Nội dung phim</h3>
             <p class="movie-desc">
-                Một đặc vụ xuất sắc phải thực hiện một nhiệm vụ tưởng chừng như không thể: xâm nhập vào sào huyệt của tổ chức ngầm nguy hiểm nhất thế giới để giải cứu con tin quan trọng. Với những pha hành động nghẹt thở và kỹ xảo đỉnh cao, Nhiệm Vụ Đỏ hứa hẹn mang đến một trải nghiệm điện ảnh bùng nổ.
+                Một đặc vụ xuất sắc phải thực hiện một nhiệm vụ tưởng chừng như không thể: xâm nhập vào sào huyệt
+                của tổ chức ngầm nguy hiểm nhất thế giới để giải cứu con tin quan trọng. Với những pha hành động
+                nghẹt thở và kỹ xảo đỉnh cao, Nhiệm Vụ Đỏ hứa hẹn mang đến một trải nghiệm điện ảnh bùng nổ.
             </p>
         </div>
 
@@ -64,43 +68,113 @@
 </div>
 
 <div class="showtime-section">
-    <h3  class="inline-style-75" >Chọn Ngày Chiếu</h3>
+    <h3 class="user-ext-38">Chọn Ngày Chiếu</h3>
     <div class="showtime-dates">
-        <button class="date-btn active">Hôm nay<br>15/08</button>
-        <button class="date-btn">Ngày mai<br>16/08</button>
-        <button class="date-btn">Thứ Bảy<br>17/08</button>
+        <button class="date-btn active">Hôm nay<br>01/07</button>
+        <button class="date-btn">Ngày mai<br>02/07</button>
+        <button class="date-btn">Thứ Sáu<br>03/07</button>
     </div>
 
-    <h3  class="inline-style-76" >Chọn Suất Chiếu</h3>
-    <div class="showtime-times">
+    <h3 class="user-ext-39">Chọn Suất Chiếu</h3>
+
+    <div class="showtime-times" data-date="01/07">
         <button class="time-btn" onclick="window.location.href='booking-seat.html'">09:30</button>
         <button class="time-btn" onclick="window.location.href='booking-seat.html'">13:15</button>
         <button class="time-btn" onclick="window.location.href='booking-seat.html'">18:45</button>
         <button class="time-btn" onclick="window.location.href='booking-seat.html'">21:00</button>
     </div>
+
+    <div class="showtime-times" data-date="02/07" style="display: none;">
+        <button class="time-btn" onclick="window.location.href='booking-seat.html'">08:00</button>
+        <button class="time-btn" onclick="window.location.href='booking-seat.html'">11:30</button>
+        <button class="time-btn" onclick="window.location.href='booking-seat.html'">14:45</button>
+        <button class="time-btn" onclick="window.location.href='booking-seat.html'">20:15</button>
+    </div>
+
+    <div class="showtime-times" data-date="03/07" style="display: none;">
+        <button class="time-btn" onclick="window.location.href='booking-seat.html'">10:00</button>
+        <button class="time-btn" onclick="window.location.href='booking-seat.html'">15:20</button>
+        <button class="time-btn" onclick="window.location.href='booking-seat.html'">19:10</button>
+        <button class="time-btn" onclick="window.location.href='booking-seat.html'">22:30</button>
+    </div>
 </div>
 
 <div class="reviews-section">
-    <h3  class="inline-style-77" >Đánh Giá Từ Khán Giả</h3>
+    <h3 class="user-ext-40">Đánh Giá Từ Khán Giả</h3>
 
-    <!-- Form đánh giá -->
-    <div class="review-card inline-style-78" >
-        <h4  class="text-white" >Viết đánh giá của bạn</h4>
-        <textarea  class="inline-style-79"  placeholder="Chia sẻ cảm nhận của bạn về bộ phim này..."></textarea>
-        <button class="btn btn-primary">Gửi Đánh Giá</button>
+    <div class="review-card">
+        <h4>Nguyễn Minh Anh ⭐⭐⭐⭐⭐</h4>
+        <p class="user-ext-43">15/08/2026</p>
+        <p>Tuyệt vời! Từ diễn xuất đến âm nhạc đều hoàn hảo. Bộ phim mang lại nhiều cảm xúc.</p>
     </div>
 
     <div class="review-card">
         <h4>Trần Văn Bình ⭐⭐⭐⭐⭐</h4>
-        <p  class="inline-style-80" >14/08/2026</p>
+        <p class="user-ext-43">14/08/2026</p>
         <p>Phim hành động quá đã mắt. Âm thanh rạp cực kỳ sống động. Rất đáng tiền vé!</p>
     </div>
     <div class="review-card">
         <h4>Lê Thị Thu ⭐⭐⭐⭐</h4>
-        <p  class="inline-style-80" >13/08/2026</p>
+        <p class="user-ext-43">13/08/2026</p>
         <p>Kịch bản hơi dễ đoán nhưng bù lại kỹ xảo rất đẹp. Nên xem nha mọi người.</p>
     </div>
 </div>
+
+<!-- Trailer Modal -->
+<div id="trailerModal" class="trailer-modal">
+    <div class="trailer-modal-content">
+        <button id="closeTrailerBtn" class="close-modal-btn"><i class="fas fa-times"></i></button>
+        <iframe id="trailerIframe" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const btnTrailer = document.querySelector('.btn-trailer');
+        const modal = document.getElementById('trailerModal');
+        const closeBtn = document.getElementById('closeTrailerBtn');
+        const iframe = document.getElementById('trailerIframe');
+        const trailerUrl = "https://www.youtube.com/embed/gOW_azQbOjw?autoplay=1";
+
+        btnTrailer.addEventListener('click', function () {
+            iframe.src = trailerUrl;
+            modal.classList.add('show');
+        });
+
+        closeBtn.addEventListener('click', function () {
+            modal.classList.remove('show');
+            iframe.src = "";
+        });
+
+        modal.addEventListener('click', function (e) {
+            if (e.target === modal) {
+                modal.classList.remove('show');
+                iframe.src = "";
+            }
+        });
+
+        const dateBtns = document.querySelectorAll('.date-btn');
+        const showtimeBlocks = document.querySelectorAll('.showtime-times');
+
+        dateBtns.forEach(btn => {
+            btn.addEventListener('click', function () {
+                dateBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+
+                const dateText = this.innerHTML.split('<br>')[1] || this.textContent.slice(-5);
+
+                showtimeBlocks.forEach(block => {
+                    if (block.getAttribute('data-date') === dateText) {
+                        block.style.display = 'flex';
+                    } else {
+                        block.style.display = 'none';
+                    }
+                });
+            });
+        });
+    });
+</script>
 <script src="../assets/js/app.js"></script>
 </body>
+
 </html>
