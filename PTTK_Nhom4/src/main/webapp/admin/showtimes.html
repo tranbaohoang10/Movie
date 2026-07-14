@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Suất Chiếu - CineTicket Admin</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/admin/style.css">
+    <link rel="stylesheet" href="../assets/css/admin/showtimes.css">
+
+</head>
+
+<body>
+    <div class="sidebar"></div>
+    <div class="main-wrapper">
+        <div class="topbar">
+            <div class="user-info">
+                <span class="shared-ext-1">Admin</span>
+                <img src="https://ui-avatars.com/api/?name=Admin&background=4e73df&color=fff" alt="Admin">
+            </div>
+        </div>
+        <div class="content">
+            <div id="showtimes" class="section active">
+
+                <div class="shared-ext-2">
+                    <h1 class="page-title shared-ext-3">
+                        <i class="fas fa-calendar-alt shared-ext-9"></i>Quản Lý Suất Chiếu
+                    </h1>
+                    <button class="btn btn-primary" onclick="openModal('addShowtimeModal')">
+                        <i class="fas fa-plus fa-sm"></i> Thêm Suất Chiếu
+                    </button>
+                </div>
+
+                <!-- Stat Cards -->
+                <div class="stat-grid">
+                    <div class="card stat-card-wrapper">
+                        <div class="card-body stat-card-body">
+                            <div class="stat-icon shared-ext-10"><i class="fas fa-calendar-day"></i></div>
+                            <div>
+                                <div class="stat-num" id="stat-total">4</div>
+                                <div class="stat-label">Suất hôm nay</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card stat-card-wrapper">
+                        <div class="card-body stat-card-body">
+                            <div class="stat-icon shared-ext-11"><i class="fas fa-ticket-alt"></i></div>
+                            <div>
+                                <div class="stat-num" id="stat-open">2</div>
+                                <div class="stat-label">Đang mở bán</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card stat-card-wrapper">
+                        <div class="card-body stat-card-body">
+                            <div class="stat-icon shared-ext-12"><i class="fas fa-hourglass-half"></i></div>
+                            <div>
+                                <div class="stat-num" id="stat-upcoming">1</div>
+                                <div class="stat-label">Sắp chiếu</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card stat-card-wrapper">
+                        <div class="card-body stat-card-body">
+                            <div class="stat-icon shared-ext-13"><i class="fas fa-flag-checkered"></i></div>
+                            <div>
+                                <div class="stat-num" id="stat-ended">1</div>
+                                <div class="stat-label">Đã kết thúc</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">Lịch chiếu phim các phòng</div>
+                    <div class="card-body">
+                        <div class="shared-ext-4 shared-ext-14">
+                            <input type="date" id="filterDate" value="2026-07-01" onchange="filterTable()">
+                            <select id="filterRoom" onchange="filterTable()">
+                                <option value="">Tất cả Phòng</option>
+                                <option value="Phòng 1">Phòng 1 (IMAX)</option>
+                                <option value="Phòng 2">Phòng 2 (3D)</option>
+                                <option value="Phòng 3">Phòng 3 (VIP)</option>
+                                <option value="Phòng 4">Phòng 4</option>
+                            </select>
+                            <select id="filterMovie" onchange="filterTable()">
+                                <option value="">Tất cả Phim</option>
+                                <option value="Nhiệm Vụ Đỏ">Nhiệm Vụ Đỏ</option>
+                                <option value="Ám Ảnh Đêm Thâu">Ám Ảnh Đêm Thâu</option>
+                                <option value="Đại Chiến Hành Tinh">Đại Chiến Hành Tinh</option>
+                                <option value="Thỏ Ơi Chạy Đi!">Thỏ Ơi Chạy Đi!</option>
+                            </select>
+                            <button class="btn btn-primary" onclick="filterTable()"><i class="fas fa-filter"></i>
+                                Lọc</button>
+                        </div>
+                        <table id="showtimeTable">
+                            <thead>
+                                <tr>
+                                    <th>Giờ Chiếu</th>
+                                    <th>Phòng Chiếu</th>
+                                    <th>Tên Phim</th>
+                                    <th>Định Dạng</th>
+                                    <th>Ghế còn / Tổng</th>
+                                    <th>Trạng Thái</th>
+                                    <th>Hành Động</th>
+                                </tr>
+                            </thead>
+                            <tbody id="showtimeTableBody">
+                                <tr data-room="Phòng 1" data-movie="Nhiệm Vụ Đỏ" data-status="Đang mở bán">
+                                    <td><strong>08:00 - 10:00</strong></td>
+                                    <td>Phòng 1 (IMAX)</td>
+                                    <td>Nhiệm Vụ Đỏ</td>
+                                    <td><span class="badge badge-secondary">2D Lồng Tiếng</span></td>
+                                    <td><span class="shared-ext-25">187</span> / 250</td>
+                                    <td><span class="badge badge-success">Đang mở bán</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-primary" onclick="openModal('editShowtimeModal')"
+                                            title="Sửa"><i class="fas fa-edit"></i></button>
+                                    </td>
+                                </tr>
+                                <tr data-room="Phòng 2" data-movie="Ám Ảnh Đêm Thâu" data-status="Sắp chiếu">
+                                    <td><strong>10:15 - 12:00</strong></td>
+                                    <td>Phòng 2 (3D)</td>
+                                    <td>Ám Ảnh Đêm Thâu</td>
+                                    <td><span class="badge badge-primary">3D Phụ Đề</span></td>
+                                    <td><span class="shared-ext-25">150</span> / 150</td>
+                                    <td><span class="badge badge-warning">Sắp chiếu</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-primary" onclick="openModal('editShowtimeModal')"
+                                            title="Sửa"><i class="fas fa-edit"></i></button>
+                                        <button class="btn btn-sm btn-danger"
+                                            onclick="openCancelModal(2,'10:15 - Ám Ảnh Đêm Thâu')" title="Hủy suất"><i
+                                                class="fas fa-times"></i> Hủy</button>
+                                    </td>
+                                </tr>
+                                <tr data-room="Phòng 3" data-movie="Đại Chiến Hành Tinh" data-status="Đang mở bán">
+                                    <td><strong>13:30 - 15:45</strong></td>
+                                    <td>Phòng 3 (VIP)</td>
+                                    <td>Đại Chiến Hành Tinh</td>
+                                    <td><span class="badge badge-secondary">2D Phụ Đề</span></td>
+                                    <td><span class="shared-ext-26">12</span> / 50</td>
+                                    <td><span class="badge badge-success">Đang mở bán</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-primary" onclick="openModal('editShowtimeModal')"
+                                            title="Sửa"><i class="fas fa-edit"></i></button>
+                                    </td>
+                                </tr>
+                                <tr data-room="Phòng 4" data-movie="Thỏ Ơi Chạy Đi!" data-status="Đã kết thúc">
+                                    <td><strong>16:00 - 18:00</strong></td>
+                                    <td>Phòng 4</td>
+                                    <td>Thỏ Ơi Chạy Đi!</td>
+                                    <td><span class="badge badge-secondary">2D Lồng Tiếng</span></td>
+                                    <td><span class="showtimes-ext-1">0</span> / 120</td>
+                                    <td><span class="badge badge-secondary">Đã kết thúc</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-primary" onclick="openModal('editShowtimeModal')"
+                                            title="Sửa"><i class="fas fa-edit"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL THÊM SUẤT -->
+    <div class="modal-overlay" id="addShowtimeModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2><i class="fas fa-plus-circle shared-ext-15"></i>Thêm Suất Chiếu</h2>
+                <button class="modal-close" onclick="closeModal('addShowtimeModal')"><i
+                        class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <form onsubmit="handleAdd(event)">
+                    <div class="form-group"><label>Chọn Phim (*)</label>
+                        <select required>
+                            <option value="">-- Chọn phim --</option>
+                            <option>Nhiệm Vụ Đỏ</option>
+                            <option>Ám Ảnh Đêm Thâu</option>
+                            <option>Thỏ Ơi Chạy Đi!</option>
+                        </select>
+                    </div>
+                    <div class="shared-ext-6">
+                        <div class="form-group shared-ext-7"><label>Ngày Chiếu (*)</label><input type="date" required>
+                        </div>
+                        <div class="form-group shared-ext-7"><label>Giờ Chiếu (*)</label><input type="time" required>
+                        </div>
+                    </div>
+                    <div class="form-group"><label>Phòng Chiếu (*)</label>
+                        <select required>
+                            <option value="">-- Chọn phòng --</option>
+                            <option>Phòng 1 (IMAX 3D)</option>
+                            <option>Phòng 2 (2D)</option>
+                            <option>Phòng 3 (VIP)</option>
+                            <option>Phòng 4 (3D)</option>
+                        </select>
+                    </div>
+                    <div class="form-group"><label>Định Dạng</label>
+                        <select>
+                            <option>2D Lồng Tiếng</option>
+                            <option>2D Phụ Đề</option>
+                            <option>3D Phụ Đề</option>
+                            <option>IMAX 3D</option>
+                        </select>
+                    </div>
+                    <div class="modal-footer shared-ext-8">
+                        <button type="button" class="btn btn-danger"
+                            onclick="closeModal('addShowtimeModal')">Hủy</button>
+                        <button type="submit" class="btn btn-success"><i class="fas fa-save shared-ext-16"></i>Lưu Suất
+                            Chiếu</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL SỬA SUẤT -->
+    <div class="modal-overlay" id="editShowtimeModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2><i class="fas fa-edit shared-ext-9"></i>Sửa Suất Chiếu</h2>
+                <button class="modal-close" onclick="closeModal('editShowtimeModal')"><i
+                        class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <form onsubmit="handleEdit(event)">
+                    <div class="form-group"><label>Chọn Phim (*)</label>
+                        <select id="editMovie" required>
+                            <option selected>Nhiệm Vụ Đỏ</option>
+                            <option>Ám Ảnh Đêm Thâu</option>
+                            <option>Thỏ Ơi Chạy Đi!</option>
+                        </select>
+                    </div>
+                    <div class="shared-ext-6">
+                        <div class="form-group shared-ext-7"><label>Ngày Chiếu (*)</label><input type="date"
+                                id="editDate" value="2026-07-01" required></div>
+                        <div class="form-group shared-ext-7"><label>Giờ Chiếu (*)</label><input type="time"
+                                id="editTime" value="08:00" required></div>
+                    </div>
+                    <div class="form-group"><label>Phòng Chiếu (*)</label>
+                        <select id="editRoom" required>
+                            <option selected>Phòng 1 (IMAX 3D)</option>
+                            <option>Phòng 2 (2D)</option>
+                            <option>Phòng 3 (VIP)</option>
+                            <option>Phòng 4 (3D)</option>
+                        </select>
+                    </div>
+                    <div class="form-group"><label>Định Dạng</label>
+                        <select id="editFormat">
+                            <option>2D Lồng Tiếng</option>
+                            <option selected>2D Phụ Đề</option>
+                            <option>3D Phụ Đề</option>
+                            <option>IMAX 3D</option>
+                        </select>
+                    </div>
+                    <div class="modal-footer shared-ext-8">
+                        <button type="button" class="btn btn-danger"
+                            onclick="closeModal('editShowtimeModal')">Hủy</button>
+                        <button type="submit" class="btn btn-success"><i class="fas fa-save shared-ext-16"></i>Lưu Thay
+                            Đổi</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL HỦY SUẤT -->
+    <div class="modal-overlay" id="cancelModal">
+        <div class="modal shared-ext-17">
+            <div class="modal-header">
+                <h2>Xác Nhận Hủy Suất</h2><button class="modal-close" onclick="closeModal('cancelModal')"><i
+                        class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body shared-ext-18">
+                <div class="action-icon-wrap shared-ext-23"><i class="fas fa-ban"></i></div>
+                <h3 class="shared-ext-19">Hủy suất chiếu này?</h3>
+                <p class="shared-ext-20">Suất <strong id="cancelShowtimeName"></strong> sẽ bị hủy.<br>Vé đã đặt sẽ được
+                    hoàn tiền tự động.</p>
+                <div class="shared-ext-21">
+                    <button class="btn btn-danger" onclick="confirmCancel()"><i class="fas fa-ban shared-ext-16"></i>Xác
+                        nhận hủy</button>
+                    <button class="btn shared-ext-22" onclick="closeModal('cancelModal')">Giữ lại</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../assets/js/app.js"></script>
+    <script>
+        function openModal(id) { document.getElementById(id).classList.add('active'); }
+        function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+        let pendingCancelRow = null;
+        function openCancelModal(id, name) {
+            document.getElementById('cancelShowtimeName').textContent = name;
+            pendingCancelRow = document.querySelector(`#showtimeTableBody tr:nth-child(${id})`);
+            openModal('cancelModal');
+        }
+        function confirmCancel() {
+            if (pendingCancelRow) {
+                const badge = pendingCancelRow.cells[5].querySelector('.badge');
+                badge.textContent = 'Đã hủy'; badge.className = 'badge badge-danger';
+                const actions = pendingCancelRow.cells[6];
+                actions.innerHTML = '<span  class="showtimes-ext-2">Đã hủy</span>';
+                pendingCancelRow.dataset.status = 'Đã hủy';
+                updateStats();
+            }
+            closeModal('cancelModal'); showToast('Đã hủy suất chiếu thành công!', 'success');
+        }
+        function handleAdd(e) { e.preventDefault(); closeModal('addShowtimeModal'); showToast('Thêm suất chiếu thành công!', 'success'); }
+        function handleEdit(e) { e.preventDefault(); closeModal('editShowtimeModal'); showToast('Cập nhật suất chiếu thành công!', 'success'); }
+        function filterTable() {
+            const room = document.getElementById('filterRoom').value;
+            const movie = document.getElementById('filterMovie').value;
+            document.querySelectorAll('#showtimeTableBody tr').forEach(row => {
+                const ok = (!room || row.dataset.room === room) && (!movie || row.dataset.movie === movie);
+                row.style.display = ok ? '' : 'none';
+            });
+        }
+        function updateStats() {
+            const rows = document.querySelectorAll('#showtimeTableBody tr');
+            let total = 0, open = 0, upcoming = 0, ended = 0;
+            rows.forEach(r => { total++; const s = r.dataset.status; if (s === 'Đang mở bán') open++; else if (s === 'Sắp chiếu') upcoming++; else if (s === 'Đã kết thúc') ended++; });
+            document.getElementById('stat-total').textContent = total;
+            document.getElementById('stat-open').textContent = open;
+            document.getElementById('stat-upcoming').textContent = upcoming;
+            document.getElementById('stat-ended').textContent = ended;
+        }
+        function showToast(message, type = 'success') {
+            let c = document.getElementById('_tc'); if (!c) { c = document.createElement('div'); c.id = '_tc'; c.style.cssText = 'position:fixed;top:20px;right:24px;z-index:99999;display:flex;flex-direction:column;gap:10px;'; document.body.appendChild(c); }
+            const colors = { success: '#1cc88a', warning: '#f6c23e', danger: '#e74a3b' }; const icons = { success: 'check-circle', warning: 'exclamation-triangle', danger: 'times-circle' };
+            const t = document.createElement('div'); t.style.cssText = `display:flex;align-items:center;gap:10px;background:#2d3748;border-left:4px solid ${colors[type]};color:#fff;padding:12px 18px;border-radius:8px;box-shadow:0 4px 20px rgba(0,0,0,.4);min-width:260px;font-size:14px;font-weight:600;`;
+            t.innerHTML = `<i class="fas fa-${icons[type]}" style="color:${colors[type]};font-size:18px;"></i>${message}`;
+            c.appendChild(t); setTimeout(() => { t.style.opacity = '0'; t.style.transition = 'opacity .3s'; setTimeout(() => t.remove(), 300); }, 3500);
+        }
+    </script>
+</body>
+
+</html>
