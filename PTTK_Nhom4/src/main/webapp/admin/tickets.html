@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Đơn Đặt Vé - CineTicket Admin</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/admin/style.css">
+    <link rel="stylesheet" href="../assets/css/admin/tickets.css">
+
+</head>
+
+<body>
+    <div class="sidebar"></div>
+    <div class="main-wrapper">
+        <div class="topbar">
+            <div class="user-info">
+                <span class="shared-ext-1">Admin</span>
+                <img src="https://ui-avatars.com/api/?name=Admin&background=4e73df&color=fff" alt="Admin">
+            </div>
+        </div>
+        <div class="content">
+            <div id="tickets" class="section active">
+
+                <div class="shared-ext-2">
+                    <h1 class="page-title shared-ext-3">
+                        <i class="fas fa-ticket-alt shared-ext-9"></i>Quản Lý Đơn Đặt Vé
+                    </h1>
+                </div>
+
+                <!-- Stat Cards -->
+                <div class="stat-grid">
+                    <div class="card stat-card-wrapper">
+                        <div class="card-body stat-card-body">
+                            <div class="stat-icon-wrapper stat-icon-primary"><i class="fas fa-list-alt"></i></div>
+                            <div>
+                                <div class="stat-num" id="stat-total">4</div>
+                                <div class="stat-label">Tổng đơn</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card stat-card-wrapper">
+                        <div class="card-body stat-card-body">
+                            <div class="stat-icon-wrapper stat-icon-success"><i class="fas fa-check-circle"></i></div>
+                            <div>
+                                <div class="stat-num" id="stat-paid">2</div>
+                                <div class="stat-label">Đã thanh toán</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card stat-card-wrapper">
+                        <div class="card-body stat-card-body">
+                            <div class="stat-icon-wrapper stat-icon-warning"><i class="fas fa-hourglass-half"></i></div>
+                            <div>
+                                <div class="stat-num" id="stat-pending">1</div>
+                                <div class="stat-label">Chờ thanh toán</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card stat-card-wrapper">
+                        <div class="card-body stat-card-body">
+                            <div class="stat-icon-wrapper stat-icon-danger"><i class="fas fa-times-circle"></i></div>
+                            <div>
+                                <div class="stat-num" id="stat-cancelled">1</div>
+                                <div class="stat-label">Đã hủy</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">Tra cứu đơn đặt vé</div>
+                    <div class="card-body">
+                        <div class="shared-ext-4 shared-ext-14">
+                            <input type="text" id="searchInput" placeholder="Nhập mã vé hoặc tên khách hàng..."
+                                class="shared-ext-5" oninput="filterTable()">
+                            <select id="filterStatus" onchange="filterTable()">
+                                <option value="">Tất cả trạng thái</option>
+                                <option value="Đã thanh toán">Đã thanh toán</option>
+                                <option value="Chờ thanh toán">Chờ thanh toán</option>
+                                <option value="Đã hủy">Đã hủy</option>
+                            </select>
+                            <button class="btn btn-primary" onclick="filterTable()"><i class="fas fa-search"></i> Tra
+                                cứu</button>
+                        </div>
+                        <table id="ticketTable">
+                            <thead>
+                                <tr>
+                                    <th>Mã Vé</th>
+                                    <th>Khách Hàng</th>
+                                    <th>Tên Phim</th>
+                                    <th>Suất Chiếu</th>
+                                    <th>Tổng Tiền</th>
+                                    <th>Trạng Thái</th>
+                                    <th>Hành Động</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ticketTableBody">
+                                <tr data-status="Đã thanh toán" data-search="ve89123 nguyễn văn a">
+                                    <td><strong>#VE89123</strong></td>
+                                    <td>Nguyễn Văn A<br><small class="text-muted">0901234567</small></td>
+                                    <td>Nhiệm Vụ Đỏ</td>
+                                    <td><small>08:00 | 15/08/2026<br>Phòng 1</small></td>
+                                    <td><strong class="tickets-ext-1">290.000đ</strong></td>
+                                    <td><span class="badge badge-success">Đã thanh toán</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-info" onclick="openModal('ticketDetailModal')"
+                                            title="Chi tiết"><i class="fas fa-file-invoice"></i> Chi tiết</button>
+                                    </td>
+                                </tr>
+                                <tr data-status="Chờ thanh toán" data-search="ve89124 trần thị b">
+                                    <td><strong>#VE89124</strong></td>
+                                    <td>Trần Thị B<br><small class="text-muted">0987654321</small></td>
+                                    <td>Ám Ảnh Đêm Thâu</td>
+                                    <td><small>10:15 | 15/08/2026<br>Phòng 2</small></td>
+                                    <td><strong>180.000đ</strong></td>
+                                    <td><span class="badge badge-warning">Chờ thanh toán</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-info" onclick="openModal('ticketDetailModal')"
+                                            title="Chi tiết"><i class="fas fa-file-invoice"></i> Chi tiết</button>
+                                        <button class="btn btn-sm btn-primary" onclick="confirmPayment(this)"
+                                            title="Xác nhận thanh toán"><i class="fas fa-check"></i> TT</button>
+                                        <button class="btn btn-sm btn-danger" onclick="openCancelModal(2,'#VE89124')"
+                                            title="Hủy vé"><i class="fas fa-ban"></i></button>
+                                    </td>
+                                </tr>
+                                <tr data-status="Đã thanh toán" data-search="ve89125 lê hoàng c">
+                                    <td><strong>#VE89125</strong></td>
+                                    <td>Lê Hoàng C<br><small class="text-muted">0933333333</small></td>
+                                    <td>Đại Chiến Hành Tinh</td>
+                                    <td><small>13:30 | 15/08/2026<br>Phòng 3</small></td>
+                                    <td><strong class="tickets-ext-1">450.000đ</strong></td>
+                                    <td><span class="badge badge-success">Đã thanh toán</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-info" onclick="openModal('ticketDetailModal')"
+                                            title="Chi tiết"><i class="fas fa-file-invoice"></i> Chi tiết</button>
+                                    </td>
+                                </tr>
+                                <tr data-status="Đã hủy" data-search="ve89126 phạm thị d">
+                                    <td><strong>#VE89126</strong></td>
+                                    <td>Phạm Thị D<br><small class="text-muted">0977777777</small></td>
+                                    <td>Thỏ Ơi Chạy Đi!</td>
+                                    <td><small>16:00 | 15/08/2026<br>Phòng 4</small></td>
+                                    <td><strong class="shared-ext-24">150.000đ</strong></td>
+                                    <td><span class="badge badge-danger">Đã hủy</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-info" onclick="openModal('ticketDetailModal')"
+                                            title="Chi tiết"><i class="fas fa-file-invoice"></i> Chi tiết</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL CHI TIẾT VÉ -->
+    <div class="modal-overlay" id="ticketDetailModal">
+        <div class="modal modal-lg">
+            <div class="modal-header">
+                <h2><i class="fas fa-file-invoice shared-ext-9"></i>Chi Tiết Đơn Đặt Vé <span
+                        id="detailCode">#VE89123</span></h2>
+                <button class="modal-close" onclick="closeModal('ticketDetailModal')"><i
+                        class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="tickets-ext-2">
+                    <div>
+                        <h4 class="tickets-ext-3"><i class="fas fa-film shared-ext-16"></i>Thông Tin Phim</h4>
+                        <p><strong>Tên phim:</strong> Nhiệm Vụ Đỏ</p>
+                        <p><strong>Cụm rạp:</strong> CineTicket Center</p>
+                        <p><strong>Phòng chiếu:</strong> Phòng 1 (IMAX 3D)</p>
+                        <p><strong>Suất chiếu:</strong> 08:00 - 10:00 | 15/08/2026</p>
+                        <p><strong>Định dạng:</strong> 2D Lồng Tiếng</p>
+                    </div>
+                    <div>
+                        <h4 class="tickets-ext-3"><i class="fas fa-user shared-ext-16"></i>Thông Tin Khách Hàng</h4>
+                        <p><strong>Khách hàng:</strong> Nguyễn Văn A</p>
+                        <p><strong>SĐT:</strong> 0901234567</p>
+                        <p><strong>Email:</strong> nguyen.vana@email.com</p>
+                        <p><strong>Ngày đặt:</strong> 14/08/2026 15:30</p>
+                        <p><strong>Trạng thái:</strong> <span class="badge badge-success">Đã thanh toán</span></p>
+                    </div>
+                </div>
+                <hr class="tickets-ext-4">
+                <h4 class="tickets-ext-5"><i class="fas fa-receipt shared-ext-16"></i>Chi Tiết Dịch Vụ</h4>
+                <table class="tickets-ext-6">
+                    <tr class="tickets-ext-7">
+                        <td class="tickets-ext-8">Ghế ngồi (J5, J6)</td>
+                        <td class="tickets-ext-9">180.000đ</td>
+                    </tr>
+                    <tr class="tickets-ext-7">
+                        <td class="tickets-ext-8">Combo Bắp Nước x1</td>
+                        <td class="tickets-ext-9">110.000đ</td>
+                    </tr>
+                    <tr>
+                        <td class="tickets-ext-10"><strong>Tổng tiền</strong></td>
+                        <td class="tickets-ext-11"><strong>290.000đ</strong></td>
+                    </tr>
+                </table>
+                <div class="modal-footer shared-ext-8 tickets-ext-12">
+                    <button type="button" class="btn btn-danger" onclick="closeModal('ticketDetailModal')">Đóng</button>
+                    <button type="button" class="btn btn-primary" onclick="window.print()"><i
+                            class="fas fa-print shared-ext-16"></i>In Vé</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL HỦY VÉ -->
+    <div class="modal-overlay" id="cancelModal">
+        <div class="modal shared-ext-17">
+            <div class="modal-header">
+                <h2>Xác Nhận Hủy Vé</h2><button class="modal-close" onclick="closeModal('cancelModal')"><i
+                        class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body shared-ext-18">
+                <div class="action-icon-wrap shared-ext-23"><i class="fas fa-ban"></i></div>
+                <h3 class="shared-ext-19">Hủy vé này?</h3>
+                <p class="shared-ext-20">Vé <strong id="cancelTicketCode"></strong> sẽ bị hủy.<br>Đơn vé chưa thanh
+                    toán,
+                    không phát sinh hoàn tiền.</p>
+                <div class="shared-ext-21">
+                    <button class="btn btn-danger" onclick="confirmCancel()"><i class="fas fa-ban shared-ext-16"></i>Xác
+                        nhận hủy</button>
+                    <button class="btn shared-ext-22" onclick="closeModal('cancelModal')">Giữ lại</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../assets/js/app.js"></script>
+    <script>
+        function openModal(id) { document.getElementById(id).classList.add('active'); }
+        function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+
+        let pendingCancelRow = null;
+        function openCancelModal(id, code) {
+            document.getElementById('cancelTicketCode').textContent = code;
+            pendingCancelRow = document.querySelector(`#ticketTableBody tr:nth-child(${id})`);
+            openModal('cancelModal');
+        }
+        function confirmCancel() {
+            if (pendingCancelRow) {
+                const badge = pendingCancelRow.cells[5].querySelector('.badge');
+                badge.textContent = 'Đã hủy'; badge.className = 'badge badge-danger';
+                pendingCancelRow.dataset.status = 'Đã hủy';
+                const lastCell = pendingCancelRow.cells[6];
+                const detailBtn = lastCell.querySelector('.btn-info');
+                lastCell.innerHTML = '';
+                if (detailBtn) lastCell.appendChild(detailBtn);
+                updateStats();
+            }
+            closeModal('cancelModal'); showToast('Đã hủy vé thành công!', 'success');
+        }
+        function confirmPayment(btn) {
+            const row = btn.closest('tr');
+            const badge = row.cells[5].querySelector('.badge');
+            badge.textContent = 'Đã thanh toán'; badge.className = 'badge badge-success';
+            row.dataset.status = 'Đã thanh toán';
+            btn.remove();
+            const cancelBtn = row.cells[6].querySelector('.btn-danger');
+            if (cancelBtn) cancelBtn.remove();
+            updateStats();
+            showToast('Xác nhận thanh toán thành công!', 'success');
+        }
+        function filterTable() {
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            const status = document.getElementById('filterStatus').value;
+            document.querySelectorAll('#ticketTableBody tr').forEach(row => {
+                const rowSearch = row.dataset.search || '';
+                const ok = (!search || rowSearch.includes(search)) && (!status || row.dataset.status === status);
+                row.style.display = ok ? '' : 'none';
+            });
+        }
+        function updateStats() {
+            const rows = document.querySelectorAll('#ticketTableBody tr');
+            let total = 0, paid = 0, pending = 0, cancelled = 0;
+            rows.forEach(r => { total++; const s = r.dataset.status; if (s === 'Đã thanh toán') paid++; else if (s === 'Chờ thanh toán') pending++; else if (s === 'Đã hủy') cancelled++; });
+            document.getElementById('stat-total').textContent = total;
+            document.getElementById('stat-paid').textContent = paid;
+            document.getElementById('stat-pending').textContent = pending;
+            document.getElementById('stat-cancelled').textContent = cancelled;
+        }
+        function exportData() { showToast('Đang xuất dữ liệu Excel...', 'success'); }
+        function showToast(message, type = 'success') {
+            let c = document.getElementById('_tc'); if (!c) { c = document.createElement('div'); c.id = '_tc'; c.style.cssText = 'position:fixed;top:20px;right:24px;z-index:99999;display:flex;flex-direction:column;gap:10px;'; document.body.appendChild(c); }
+            const colors = { success: '#1cc88a', warning: '#f6c23e', danger: '#e74a3b' }; const icons = { success: 'check-circle', warning: 'exclamation-triangle', danger: 'times-circle' };
+            const t = document.createElement('div'); t.style.cssText = `display:flex;align-items:center;gap:10px;background:#2d3748;border-left:4px solid ${colors[type]};color:#fff;padding:12px 18px;border-radius:8px;box-shadow:0 4px 20px rgba(0,0,0,.4);min-width:260px;font-size:14px;font-weight:600;`;
+            t.innerHTML = `<i class="fas fa-${icons[type]}" style="color:${colors[type]};font-size:18px;"></i>${message}`;
+            c.appendChild(t); setTimeout(() => { t.style.opacity = '0'; t.style.transition = 'opacity .3s'; setTimeout(() => t.remove(), 300); }, 3500);
+        }
+    </script>
+</body>
+
+</html>
