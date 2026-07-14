@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bắp Nước & Khuyến Mãi - CineTicket</title>
+    <link rel="stylesheet" href="../assets/css/user/style.css?v=2.7">
+    <link rel="stylesheet" href="../assets/css/user/booking-seat.css">
+    <link rel="stylesheet" href="../assets/css/user/booking-combo.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+
+<body>
+<nav class="navbar user-ext-1">
+    <a href="index.html" class="logo">CineTicket</a>
+    <ul class="nav-links">
+        <li><a href="index.html">Trang Chủ</a></li>
+        <li><a href="phim.html">Phim Đang Chiếu</a></li>
+        <li><a href="lich-chieu.html">Lịch Chiếu</a></li>
+        <li><a href="khuyen-mai.html">Khuyến Mãi</a></li>
+    </ul>
+    <div class="nav-right d-flex-center">
+        <form action="phim.html" method="GET" class="search-form">
+            <input type="text" name="q" placeholder="Tìm kiếm phim...">
+            <button type="submit"><i class="fas fa-search"></i></button>
+        </form>
+        <div class="nav-buttons">
+            <a href="login.html" class="btn btn-login">Đăng Nhập</a>
+            <a href="register.html" class="btn btn-primary">Đăng Ký</a>
+        </div>
+    </div>
+</nav>
+
+<div class="combo-container">
+    <h2 class="mb-20">Chọn Bắp Nước</h2>
+
+    <div class="combo-item">
+        <div class="combo-info">
+            <img src="../assets/images/combo_don_nho.png" alt="Combo Đơn" class="combo-img">
+            <div>
+                <h4>Combo Đơn Nhỏ</h4>
+                <p class="user-ext-2">1 Bắp vừa + 1 Nước ngọt</p>
+                <p class="user-ext-3">65.000đ</p>
+            </div>
+        </div>
+        <div class="combo-qty" data-price="65000">
+            <button class="qty-btn minus">-</button>
+            <span class="qty-val">0</span>
+            <button class="qty-btn plus">+</button>
+        </div>
+    </div>
+
+    <div class="combo-item">
+        <div class="combo-info">
+            <img src="../assets/images/combo_doi_co_dien.png" alt="Combo Đôi" class="combo-img">
+            <div>
+                <h4>Combo Cặp Đôi</h4>
+                <p class="user-ext-2">1 Bắp lớn + 2 Nước ngọt</p>
+                <p class="user-ext-3">105.000đ</p>
+            </div>
+        </div>
+        <div class="combo-qty" data-price="105000">
+            <button class="qty-btn minus">-</button>
+            <span class="qty-val">0</span>
+            <button class="qty-btn plus">+</button>
+        </div>
+    </div>
+
+    <div class="combo-item">
+        <div class="combo-info">
+            <img src="../assets/images/combo_gia_dinh.png" alt="Combo Gia Đình" class="combo-img">
+            <div>
+                <h4>Combo Gia Đình</h4>
+                <p class="user-ext-2">2 Bắp lớn + 4 Nước ngọt</p>
+                <p class="user-ext-3">195.000đ</p>
+            </div>
+        </div>
+        <div class="combo-qty" data-price="195000">
+            <button class="qty-btn minus">-</button>
+            <span class="qty-val">0</span>
+            <button class="qty-btn plus">+</button>
+        </div>
+    </div>
+
+    <div class="promo-section">
+        <h3>Mã Khuyến Mãi</h3>
+        <div class="promo-input">
+            <input type="text" placeholder="Nhập mã ưu đãi của bạn">
+            <button class="btn user-ext-5">Áp Dụng</button>
+        </div>
+    </div>
+
+    <div class="booking-footer user-ext-6">
+        <div class="text-left" style="display: flex; flex-direction: column; justify-content: center;">
+            <p class="user-ext-2" id="summary-text" style="font-size: 14px; opacity: 0.8; margin-bottom: 5px;">Vé
+                (0K) + Combo (0K)</p>
+            <h3 class="text-primary" id="grand-total-text" style="font-size: 24px; margin: 0;">Tổng: 0đ</h3>
+        </div>
+        <button class="btn btn-primary user-ext-8" onclick="handlePayment()">Xác Nhận Đặt Vé</button>
+    </div>
+</div>
+<script src="../assets/js/app.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        // Đảm bảo không còn timer cũ từ phiên trước
+        localStorage.removeItem('bookingEndTime');
+
+        // Logic chọn bắp nước & tính tiền
+        const ticketTotal = parseInt(localStorage.getItem('bookingSeatTotal')) || 0;
+        let comboTotal = 0;
+
+        const summaryText = document.getElementById('summary-text');
+        const grandTotalText = document.getElementById('grand-total-text');
+
+        function updateTotals() {
+            comboTotal = 0;
+            document.querySelectorAll('.combo-qty').forEach(qtyDiv => {
+                const price = parseInt(qtyDiv.getAttribute('data-price'));
+                const qty = parseInt(qtyDiv.querySelector('.qty-val').textContent);
+                comboTotal += (price * qty);
+            });
+
+            const total = ticketTotal + comboTotal;
+            const ticketK = ticketTotal > 0 ? (ticketTotal / 1000) + 'K' : '0K';
+            const comboK = comboTotal > 0 ? (comboTotal / 1000) + 'K' : '0K';
+
+            summaryText.textContent = `Vé (${ticketK}) + Combo (${comboK})`;
+            grandTotalText.textContent = `Tổng: ${new Intl.NumberFormat('vi-VN').format(total)}đ`;
+        }
+
+        document.querySelectorAll('.qty-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const isPlus = e.target.classList.contains('plus');
+                const spanVal = e.target.parentElement.querySelector('.qty-val');
+                let qty = parseInt(spanVal.textContent);
+
+                if (isPlus) {
+                    qty++;
+                } else {
+                    if (qty > 0) qty--;
+                }
+
+                spanVal.textContent = qty;
+                updateTotals();
+            });
+        });
+
+        updateTotals();
+
+        window.handlePayment = function () {
+            const comboNames = [];
+            document.querySelectorAll('.combo-item').forEach(item => {
+                const name = item.querySelector('h4').textContent;
+                const qty = parseInt(item.querySelector('.qty-val').textContent);
+                if (qty > 0) {
+                    comboNames.push(`${name} (x${qty})`);
+                }
+            });
+            localStorage.setItem('bookingComboTotal', comboTotal);
+            localStorage.setItem('bookingComboNames', comboNames.join(', '));
+            window.location.href = 'booking-payment.html';
+        };
+    });
+</script>
+</body>
+
+</html>
