@@ -5,14 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tài Khoản - CineTicket</title>
-    <link rel="stylesheet" href="../assets/css/user/style.css">
+    <link rel="stylesheet" href="../assets/css/user/style.css?v=2.7">
     <link rel="stylesheet" href="../assets/css/user/profile.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="stylesheet" href="../assets/css/inline-extracted.css">
+    <link rel="stylesheet" href="../assets/css/user/forgot-password.css">
 </head>
 
 <body>
-<nav class="navbar inline-style-37" >
+<div id="toast-container"></div>
+
+<nav class="navbar user-ext-1">
     <a href="index.html" class="logo">CineTicket</a>
     <ul class="nav-links">
         <li><a href="index.html">Trang Chủ</a></li>
@@ -20,7 +22,7 @@
         <li><a href="lich-chieu.html">Lịch Chiếu</a></li>
         <li><a href="khuyen-mai.html">Khuyến Mãi</a></li>
     </ul>
-    <div class="nav-right d-flex-center" >
+    <div class="nav-right d-flex-center">
         <form action="phim.html" method="GET" class="search-form">
             <input type="text" name="q" placeholder="Tìm kiếm phim...">
             <button type="submit"><i class="fas fa-search"></i></button>
@@ -37,52 +39,90 @@
         <div class="profile-tab active" onclick="switchTab('info')">Thông tin cá nhân</div>
         <div class="profile-tab" onclick="switchTab('password')">Đổi mật khẩu</div>
         <div class="profile-tab" onclick="switchTab('history')">Lịch sử đặt vé</div>
-        <div class="profile-tab inline-style-106"
-             onclick="logout()">Đăng xuất</div>
+        <div class="profile-tab user-ext-70" onclick="logout()">Đăng xuất</div>
     </div>
 
     <div class="profile-content">
         <!-- Thông tin cá nhân -->
         <div id="info" class="profile-section active">
             <h2>Cập Nhật Thông Tin</h2>
-            <form onsubmit="event.preventDefault(); alert('Cập nhật thành công!');">
-                <div class="form-group mb-20" >
-                    <label>Họ và tên</label>
-                    <input type="text" value="Nguyễn Văn A" required
-                           class="inline-style-107" >
+
+            <div class="info-layout">
+                <!-- Card avatar bên trái -->
+                <div class="info-avatar-card">
+                    <div class="user-avatar-wrap">
+                        <img id="userAvatarPreview"
+                             src="https://ui-avatars.com/api/?name=Nguyen+Van+A&background=e50914&color=fff&size=200"
+                             alt="Avatar" class="user-avatar-img">
+                        <label class="user-avatar-cam" for="userAvatarInput" title="Đổi ảnh đại diện">
+                            <i class="fas fa-camera"></i>
+                        </label>
+                        <input type="file" id="userAvatarInput" accept="image/*">
+                    </div>
+                    <div class="info-avatar-name" id="displayUserName">Nguyễn Văn A</div>
+                    <div class="info-avatar-badge"><i class="fas fa-user"></i> Thành viên</div>
+                    <div class="info-avatar-meta">
+                        <div class="info-meta-item"><i class="fas fa-envelope"></i><span>nguyenvana@gmail.com</span>
+                        </div>
+                        <div class="info-meta-item"><i class="fas fa-phone"></i><span
+                                id="displayUserPhone">0901234567</span></div>
+                        <div class="info-meta-item"><i class="fas fa-calendar-check"></i><span>Tham gia:
+                                    01/01/2024</span></div>
+                    </div>
                 </div>
-                <div class="form-group mb-20" >
-                    <label>Số điện thoại</label>
-                    <input type="tel" value="0901234567" required
-                           class="inline-style-107" >
+
+                <!-- Form bên phải -->
+                <div class="info-form-card">
+                    <div class="info-form-header"><i class="fas fa-id-card"></i> Thông Tin Cá Nhân</div>
+                    <form onsubmit="saveUserInfo(event)" class="info-form-body">
+                        <div class="form-group mb-20">
+                            <label>Họ và tên</label>
+                            <input type="text" id="user-fullname" value="Nguyễn Văn A" required class="user-ext-71">
+                        </div>
+                        <div class="form-group mb-20">
+                            <label>Số điện thoại</label>
+                            <input type="tel" id="user-phone" value="0901234567" required class="user-ext-71">
+                        </div>
+                        <div class="form-group mb-20">
+                            <label>Email</label>
+                            <input type="email" value="nguyenvana@gmail.com" disabled class="user-ext-72">
+                        </div>
+                        <div class="info-form-actions">
+                            <button class="btn btn-primary" type="submit"><i class="fas fa-save" style="margin-right:6px;"></i>Lưu Thay Đổi</button>
+                            <button class="btn btn-cancel-info" type="button" onclick="cancelUserInfo()"><i class="fas fa-times" style="margin-right:6px;"></i>Hủy</button>
+                        </div>
+                    </form>
                 </div>
-                <div class="form-group mb-20" >
-                    <label>Email</label>
-                    <input type="email" value="nguyenvana@gmail.com" disabled
-                           class="inline-style-108" >
-                </div>
-                <button class="btn btn-primary" type="submit">Lưu Thay Đổi</button>
-            </form>
+            </div>
         </div>
 
         <!-- Đổi mật khẩu -->
         <div id="password" class="profile-section">
             <h2>Đổi Mật Khẩu</h2>
-            <form onsubmit="event.preventDefault(); alert('Đổi mật khẩu thành công!');">
-                <div class="form-group mb-20" >
+            <form id="changePasswordForm">
+                <div class="form-group mb-20">
                     <label>Mật khẩu hiện tại</label>
-                    <input type="password" required
-                           class="inline-style-107" >
+                    <div class="pw-wrapper">
+                        <input type="password" id="pw-current" required class="user-ext-71">
+                        <button type="button" class="pw-toggle" onclick="togglePw('pw-current', this)"><i
+                                class="fas fa-eye"></i></button>
+                    </div>
                 </div>
-                <div class="form-group mb-20" >
+                <div class="form-group mb-20">
                     <label>Mật khẩu mới</label>
-                    <input type="password" required
-                           class="inline-style-107" >
+                    <div class="pw-wrapper">
+                        <input type="password" id="pw-new" required class="user-ext-71">
+                        <button type="button" class="pw-toggle" onclick="togglePw('pw-new', this)"><i
+                                class="fas fa-eye"></i></button>
+                    </div>
                 </div>
-                <div class="form-group mb-20" >
+                <div class="form-group mb-20">
                     <label>Xác nhận mật khẩu mới</label>
-                    <input type="password" required
-                           class="inline-style-107" >
+                    <div class="pw-wrapper">
+                        <input type="password" id="pw-confirm" required class="user-ext-71">
+                        <button type="button" class="pw-toggle" onclick="togglePw('pw-confirm', this)"><i
+                                class="fas fa-eye"></i></button>
+                    </div>
                 </div>
                 <button class="btn btn-primary" type="submit">Cập Nhật Mật Khẩu</button>
             </form>
@@ -91,28 +131,69 @@
         <!-- Lịch sử đặt vé -->
         <div id="history" class="profile-section">
             <h2>Lịch Sử Đặt Vé</h2>
-            <div class="ticket-history-card">
+
+            <!-- Đơn có thể hủy: data-paid-time là timestamp lúc thanh toán -->
+            <div class="ticket-history-card" id="order-001" data-order-id="001" data-paid-time=""
+                 data-amount="200000">
                 <div class="ticket-info">
                     <h4>Nhiệm Vụ Đỏ</h4>
-                    <p  class="text-muted" >Suất chiếu: 20:00 - 15/08/2026</p>
-                    <p  class="text-muted" >Ghế: G8, G9</p>
-                    <p  class="text-muted" >Tổng tiền: 200.000đ</p>
+                    <p class="text-muted">Suất chiếu: 20:00 - 01/07/2026</p>
+                    <p class="text-muted">Ghế: G8, G9</p>
+                    <p class="text-muted">Tổng tiền: 200.000đ</p>
                 </div>
-                <div  class="text-right" >
-                    <div class="ticket-status inline-style-61" >Đã thanh toán</div><br>
-                    <button class="btn inline-style-109" onclick="openReviewModal('Nhiệm Vụ Đỏ')">Đánh giá phim</button>
+                <div class="text-right order-actions">
+                    <div class="ticket-status status-paid" id="status-001">Đã thanh toán</div>
+                    <div class="order-btns" id="btns-001">
+                        <button class="btn btn-cancel-order" id="cancel-btn-001"
+                                onclick="tryOpenCancelModal('001')"><i class="fas fa-times-circle"></i> Hủy đơn</button>
+                    </div>
                 </div>
             </div>
 
-            <div class="ticket-history-card">
+            <!-- Đơn mới thanh toán (trong 15 phút): data-paid-time tự động set -->
+            <div class="ticket-history-card" id="order-002" data-order-id="002" data-paid-time=""
+                 data-amount="105000">
                 <div class="ticket-info">
-                    <h4>Ám Ảnh Đêm Thâu</h4>
-                    <p  class="text-muted" >Suất chiếu: 18:30 - 20/08/2026</p>
-                    <p  class="text-muted" >Ghế: H10</p>
-                    <p  class="text-muted" >Tổng tiền: 100.000đ</p>
+                    <h4>Biệt Đội Siêu Anh Hùng</h4>
+                    <p class="text-muted">Suất chiếu: 15:00 - Hôm nay</p>
+                    <p class="text-muted">Ghế: C3 &bull; Combo Đơn (x1)</p>
+                    <p class="text-muted">Tổng tiền: 145.000đ</p>
                 </div>
-                <div  class="text-right" >
-                    <div class="ticket-status cancelled inline-style-61" >Đã hủy đơn</div>
+                <div class="text-right order-actions">
+                    <div class="ticket-status status-paid" id="status-002">Đã thanh toán</div>
+                    <div class="order-btns" id="btns-002">
+                        <button class="btn btn-cancel-order" id="cancel-btn-002"
+                                onclick="tryOpenCancelModal('002')"><i class="fas fa-times-circle"></i> Hủy đơn</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ticket-history-card" id="order-003">
+                <div class="ticket-info">
+                    <h4>Âm Ảnh Đêm Thâu</h4>
+                    <p class="text-muted">Suất chiếu: 18:30 - 05/07/2026</p>
+                    <p class="text-muted">Ghế: H10</p>
+                    <p class="text-muted">Tổng tiền: 100.000đ</p>
+                </div>
+                <div class="text-right order-actions">
+                    <div class="ticket-status cancelled" id="status-003">Đã hủy đơn</div>
+                </div>
+            </div>
+
+            <!-- Đơn đã hoàn thành: có nút Đánh giá phim -->
+            <div class="ticket-history-card" id="order-004">
+                <div class="ticket-info">
+                    <h4>Avengers: Endgame</h4>
+                    <p class="text-muted">Suất chiếu: 14:00 - 20/06/2026</p>
+                    <p class="text-muted">Ghế: D5, D6 &bull; Combo Cặp Đôi (x1)</p>
+                    <p class="text-muted">Tổng tiền: 305.000đ</p>
+                </div>
+                <div class="text-right order-actions">
+                    <div class="ticket-status status-done">Hoàn thành</div>
+                    <div class="order-btns">
+                        <button class="btn user-ext-73" onclick="openReviewModal('Avengers: Endgame')">Đánh giá
+                            phim</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -120,15 +201,176 @@
 </div>
 
 <script>
+    function showToast(message, type = 'info', duration = 3000) {
+        const container = document.getElementById('toast-container');
+        const icons = {
+            success: '<i class="fas fa-check-circle toast-icon"></i>',
+            error: '<i class="fas fa-times-circle toast-icon"></i>',
+            info: '<i class="fas fa-info-circle toast-icon"></i>',
+            warning: '<i class="fas fa-exclamation-triangle toast-icon"></i>'
+        };
+        const toast = document.createElement('div');
+        toast.className = `toast toast-${type}`;
+        toast.innerHTML = `${icons[type] || icons.info}<span>${message}</span>`;
+        container.appendChild(toast);
+        setTimeout(() => {
+            toast.classList.add('toast-out');
+            toast.addEventListener('animationend', () => toast.remove());
+        }, duration);
+    }
+
+    function saveUserInfo(e) {
+        e.preventDefault();
+        const name = document.getElementById('user-fullname').value.trim();
+        // Cập nhật avatar ui-avatars nếu chưa upload ảnh
+        const avatarEl = document.getElementById('userAvatarPreview');
+        if (avatarEl && avatarEl.src.includes('ui-avatars.com')) {
+            avatarEl.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=e50914&color=fff&size=200`;
+        }
+        // Cập nhật giá trị gốc sau khi lưu thành công
+        originalUserInfo.name = name;
+        originalUserInfo.phone = phone;
+        showToast('Cập nhật thông tin thành công!', 'success', 800);
+    }
+
+    // Lưu giá trị gốc để hủy
+    const originalUserInfo = {
+        name: document.getElementById('user-fullname') ? document.getElementById('user-fullname').value : '',
+        phone: document.getElementById('user-phone') ? document.getElementById('user-phone').value : ''
+    };
+
+    function cancelUserInfo() {
+        document.getElementById('user-fullname').value = originalUserInfo.name;
+        document.getElementById('user-phone').value = originalUserInfo.phone;
+    }
+
+    // Avatar upload preview
+    document.getElementById('userAvatarInput').addEventListener('change', function (e) {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = ev => document.getElementById('userAvatarPreview').src = ev.target.result;
+        reader.readAsDataURL(file);
+    });
+    document.getElementById('changePasswordForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const pwNew = document.getElementById('pw-new').value;
+        const pwConfirm = document.getElementById('pw-confirm').value;
+        if (pwNew !== pwConfirm) {
+            showToast('Mật khẩu xác nhận không khớp! Vui lòng nhập lại.', 'error', 2500);
+            document.getElementById('pw-confirm').focus();
+            return;
+        }
+        showToast('Đổi mật khẩu thành công!', 'success', 2500);
+    });
+
+    function togglePw(inputId, btn) {
+        const input = document.getElementById(inputId);
+        const icon = btn.querySelector('i');
+        if (input.type === 'password') {
+            input.type = 'text';
+            icon.classList.replace('fa-eye', 'fa-eye-slash');
+        } else {
+            input.type = 'password';
+            icon.classList.replace('fa-eye-slash', 'fa-eye');
+        }
+    }
+
     function switchTab(tabId) {
         document.querySelectorAll('.profile-tab').forEach(tab => tab.classList.remove('active'));
         document.querySelectorAll('.profile-section').forEach(sec => sec.classList.remove('active'));
-
         document.querySelector('.profile-tab[onclick*="' + tabId + '"]').classList.add('active');
         document.getElementById(tabId).classList.add('active');
     }
 
-    // Review Modal Logic
+    // ========================
+    // UC14: HỦY ĐƠN ĐẶT VÉ
+    // ========================
+    const CANCEL_WINDOW_MS = 15 * 60 * 1000; // 15 phút
+    let cancelTargetOrderId = null;
+
+    // Đơn order-002 được coi là vừa thanh toán (demo: đặt paid-time = bây giờ)
+    document.addEventListener('DOMContentLoaded', () => {
+        const now = Date.now();
+        document.getElementById('order-002').setAttribute('data-paid-time', now);
+        // order-001: đặt thời điểm thanh toán là 20 phút trước (quá hạn)
+        document.getElementById('order-001').setAttribute('data-paid-time', now - 20 * 60 * 1000);
+    });
+
+    function tryOpenCancelModal(orderId) {
+        const card = document.getElementById('order-' + orderId);
+        const paidTime = parseInt(card.getAttribute('data-paid-time'));
+        const amount = parseInt(card.getAttribute('data-amount'));
+        const elapsed = Date.now() - paidTime;
+
+        // A1: Quá 15 phút - lưu orderId để xóa nút sau khi đóng modal
+        if (elapsed > CANCEL_WINDOW_MS) {
+            cancelTargetOrderId = orderId;
+            openTimeLimitModal();
+            return;
+        }
+
+        // Trong hạn: mở modal xác nhận
+        cancelTargetOrderId = orderId;
+        document.getElementById('cancel-refund-amount').textContent =
+            new Intl.NumberFormat('vi-VN').format(amount) + 'đ';
+        const remaining = Math.ceil((CANCEL_WINDOW_MS - elapsed) / 60000);
+        document.getElementById('cancel-time-left').textContent = remaining;
+        document.getElementById('cancelConfirmModal').classList.add('active');
+    }
+
+    function closeCancelModal() {
+        document.getElementById('cancelConfirmModal').classList.remove('active');
+        cancelTargetOrderId = null;
+    }
+
+    function closeTimeLimitModal() {
+        document.getElementById('timeLimitModal').classList.remove('active');
+        // Xóa nút Hủy đơn của đơn hàng quá hạn
+        if (cancelTargetOrderId) {
+            const btnsEl = document.getElementById('btns-' + cancelTargetOrderId);
+            if (btnsEl) {
+                const cancelBtn = btnsEl.querySelector('.btn-cancel-order');
+                if (cancelBtn) cancelBtn.remove();
+                // Nếu không còn nút nào thì xóa luôn wrapper
+                if (btnsEl.children.length === 0) btnsEl.remove();
+            }
+            cancelTargetOrderId = null;
+        }
+    }
+
+    function openTimeLimitModal() {
+        document.getElementById('timeLimitModal').classList.add('active');
+    }
+
+    function confirmCancelOrder() {
+        const orderId = cancelTargetOrderId;
+        closeCancelModal();
+
+        // Giả lập gọi dịch vụ thanh toán (80% thành công, 20% lỗi cổng)
+        const paymentGatewaySuccess = Math.random() > 0.2;
+
+        const statusEl = document.getElementById('status-' + orderId);
+        const btnsEl = document.getElementById('btns-' + orderId);
+
+        if (paymentGatewaySuccess) {
+            // Bước 9: Cập nhật trạng thái + giải phóng ghế
+            statusEl.textContent = 'Đã hủy đơn';
+            statusEl.classList.remove('status-paid');
+            statusEl.classList.add('cancelled');
+            if (btnsEl) btnsEl.remove();
+            // Bước 10: Thông báo thành công
+            showToast('Hủy đơn và hoàn tiền thành công! Tiền sẽ về tài khoản trong 3-5 ngày làm việc.', 'success', 4000);
+        } else {
+            // A2: Lỗi cổng thanh toán
+            statusEl.textContent = 'Chờ hoàn tiền';
+            statusEl.classList.remove('status-paid');
+            statusEl.classList.add('pending-refund');
+            if (btnsEl) btnsEl.remove();
+            showToast('Lỗi cổng thanh toán! Đơn hàng đã được ghi nhận trạng thái "Chờ hoàn tiền". Vui lòng liên hệ Admin để được hỗ trợ.', 'warning', 6000);
+        }
+    }
+
     let currentRating = 0;
     function openReviewModal(movieName) {
         document.getElementById('reviewMovieName').innerText = 'Đánh giá phim: ' + movieName;
@@ -150,24 +392,18 @@
 
     function rate(stars) {
         currentRating = stars;
-        const starElements = document.querySelectorAll('.rating-stars i');
-        starElements.forEach((star, index) => {
-            if (index < stars) {
-                star.className = 'fas fa-star';
-            } else {
-                star.className = 'far fa-star';
-            }
+        document.querySelectorAll('.rating-stars i').forEach((star, index) => {
+            star.className = index < stars ? 'fas fa-star' : 'far fa-star';
         });
     }
 
     function submitReview() {
         if (currentRating === 0) {
-            alert('Vui lòng chọn số sao để đánh giá!');
+            showToast('Vui lòng chọn số sao để đánh giá!', 'error', 2500);
             return;
         }
-        const text = document.getElementById('reviewText').value;
-        alert('Cảm ơn bạn đã đánh giá ' + currentRating + ' sao!\nNhận xét: ' + text);
-        closeReviewModal();
+        showToast('Cảm ơn bạn đã đánh giá ' + currentRating + ' sao!', 'success', 2500);
+        setTimeout(() => closeReviewModal(), 800);
     }
 </script>
 
@@ -186,8 +422,58 @@
                 <i class="far fa-star" onclick="rate(4)"></i>
                 <i class="far fa-star" onclick="rate(5)"></i>
             </div>
-            <textarea id="reviewText" class="review-textarea" placeholder="Nhập nhận xét của bạn về phim này..."></textarea>
+            <textarea id="reviewText" class="review-textarea"
+                      placeholder="Nhập nhận xét của bạn về phim này..."></textarea>
             <button class="btn btn-primary" style="width: 100%;" onclick="submitReview()">Gửi đánh giá</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Xác Nhận Hủy Đơn (UC14) -->
+<div id="cancelConfirmModal" class="modal-overlay">
+    <div class="modal-content cancel-modal-content">
+        <div class="modal-header cancel-modal-header">
+            <div class="cancel-modal-icon"><i class="fas fa-exclamation-triangle"></i></div>
+            <h3>Xác Nhận Hủy Đơn</h3>
+            <span class="modal-close" onclick="closeCancelModal()">&times;</span>
+        </div>
+        <div class="modal-body">
+            <p class="cancel-notice">Bạn còn <strong id="cancel-time-left">10</strong> phút để hủy đơn hàng này.</p>
+            <div class="cancel-refund-box">
+                <i class="fas fa-undo-alt"></i>
+                <div>
+                    <div class="cancel-refund-label">Số tiền sẽ được hoàn lại</div>
+                    <div class="cancel-refund-amount" id="cancel-refund-amount">0đ</div>
+                </div>
+            </div>
+            <p class="cancel-policy"><i class="fas fa-info-circle"></i> Tiền hoàn trả sẽ được xử lý trong 3-5 ngày
+                làm việc. Ghế sẽ được giải phóng ngay lập tức.</p>
+            <div class="cancel-modal-actions">
+                <button class="btn cancel-btn-confirm" onclick="confirmCancelOrder()">
+                    <i class="fas fa-check"></i> Xác nhận hủy
+                </button>
+                <button class="btn cancel-btn-back" onclick="closeCancelModal()">
+                    <i class="fas fa-arrow-left"></i> Quay lại
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Quá Thời Gian (A1) -->
+<div id="timeLimitModal" class="modal-overlay">
+    <div class="modal-content cancel-modal-content">
+        <div class="modal-header cancel-modal-header time-limit-header">
+            <div class="cancel-modal-icon time-limit-icon"><i class="fas fa-lock"></i></div>
+            <h3>Không Thể Hủy Đơn</h3>
+            <span class="modal-close" onclick="closeTimeLimitModal()">&times;</span>
+        </div>
+        <div class="modal-body text-center">
+            <p class="time-limit-msg">Đã quá <strong>15 phút</strong> kể từ khi thanh toán.</p>
+            <p class="cancel-policy">Theo chính sách của CineTicket, chỉ có thể hủy đơn trong vòng 15 phút sau khi
+                thanh toán thành công.</p>
+            <button class="btn btn-primary" style="width:100%; margin-top:16px;" onclick="closeTimeLimitModal()">Đã
+                hiểu</button>
         </div>
     </div>
 </div>
