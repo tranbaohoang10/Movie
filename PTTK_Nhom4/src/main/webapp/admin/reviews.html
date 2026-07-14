@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Đánh Giá - CineTicket Admin</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/admin/style.css">
+    <link rel="stylesheet" href="../assets/css/admin/reviews.css">
+
+</head>
+
+<body>
+    <div class="sidebar"></div>
+    <div class="main-wrapper">
+        <div class="topbar">
+            <div class="user-info">
+                <span class="shared-ext-1">Admin</span>
+                <img src="https://ui-avatars.com/api/?name=Admin&background=4e73df&color=fff" alt="Admin">
+            </div>
+        </div>
+        <div class="content">
+            <div id="reviews" class="section active">
+
+                <div class="shared-ext-2">
+                    <h1 class="page-title shared-ext-3">
+                        <i class="fas fa-star reviews-ext-1"></i>Quản Lý Đánh Giá
+                    </h1>
+                </div>
+
+                <!-- Stat Cards -->
+                <div class="stat-grid">
+                    <div class="card stat-card-wrapper">
+                        <div class="card-body stat-card-body">
+                            <div class="stat-icon shared-ext-10"><i class="fas fa-comments"></i></div>
+                            <div>
+                                <div class="stat-num" id="stat-total">5</div>
+                                <div class="stat-label">Tổng đánh giá</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card stat-card-wrapper">
+                        <div class="card-body stat-card-body">
+                            <div class="stat-icon shared-ext-12"><i class="fas fa-clock"></i></div>
+                            <div>
+                                <div class="stat-num" id="stat-pending">2</div>
+                                <div class="stat-label">Chờ duyệt</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card stat-card-wrapper">
+                        <div class="card-body stat-card-body">
+                            <div class="stat-icon shared-ext-11"><i class="fas fa-check-circle"></i></div>
+                            <div>
+                                <div class="stat-num" id="stat-approved">2</div>
+                                <div class="stat-label">Đã duyệt</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card stat-card-wrapper">
+                        <div class="card-body stat-card-body">
+                            <div class="stat-icon shared-ext-13"><i class="fas fa-eye-slash"></i></div>
+                            <div>
+                                <div class="stat-num" id="stat-hidden">1</div>
+                                <div class="stat-label">Đã ẩn</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">Kiểm duyệt bình luận của khách hàng</div>
+                    <div class="card-body">
+                        <div class="shared-ext-4 shared-ext-14">
+                            <input type="text" id="searchInput" placeholder="Tìm kiếm nội dung, khách hàng..."
+                                class="shared-ext-5" oninput="filterTable()">
+                            <select id="filterMovie" onchange="filterTable()">
+                                <option value="">Lọc theo Phim</option>
+                                <option value="Nhiệm Vụ Đỏ">Nhiệm Vụ Đỏ</option>
+                                <option value="Ám Ảnh Đêm Thâu">Ám Ảnh Đêm Thâu</option>
+                                <option value="Thỏ Ơi Chạy Đi!">Thỏ Ơi Chạy Đi!</option>
+                                <option value="Đại Chiến Hành Tinh">Đại Chiến Hành Tinh</option>
+                            </select>
+                            <select id="filterStatus" onchange="filterTable()">
+                                <option value="">Tất cả trạng thái</option>
+                                <option value="Chờ duyệt">Chờ duyệt</option>
+                                <option value="Đã duyệt">Đã duyệt</option>
+                                <option value="Đã ẩn">Đã ẩn</option>
+                            </select>
+                            <button class="btn btn-primary" onclick="filterTable()"><i class="fas fa-search"></i>
+                                Lọc</button>
+                        </div>
+                        <table id="reviewTable">
+                            <thead>
+                                <tr>
+                                    <th>Khách Hàng</th>
+                                    <th>Phim</th>
+                                    <th>Đánh Giá</th>
+                                    <th class="reviews-ext-2">Nội Dung</th>
+                                    <th>Thời Gian</th>
+                                    <th>Trạng Thái</th>
+                                    <th>Hành Động</th>
+                                </tr>
+                            </thead>
+                            <tbody id="reviewTableBody">
+                                <tr data-movie="Nhiệm Vụ Đỏ" data-status="Chờ duyệt"
+                                    data-search="nguyễn văn a phim rất hay hành động mãn nhãn">
+                                    <td>
+                                        <div class="user-cell">
+                                            <img class="user-avatar"
+                                                src="https://ui-avatars.com/api/?name=Nguyen+Van+A&background=4e73df&color=fff"
+                                                alt="">
+                                            Nguyễn Văn A
+                                        </div>
+                                    </td>
+                                    <td>Nhiệm Vụ Đỏ</td>
+                                    <td><span class="stars">★★★★★</span></td>
+                                    <td class="review-content">"Phim rất hay, hành động mãn nhãn, rạp sạch sẽ nhân viên
+                                        nhiệt tình."</td>
+                                    <td><small class="shared-ext-24">14/08/2026<br>15:30</small></td>
+                                    <td><span class="badge badge-warning">Chờ duyệt</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-success" onclick="approveReview(this)"
+                                            title="Duyệt"><i class="fas fa-check"></i></button>
+                                        <button class="btn btn-sm btn-danger"
+                                            onclick="openDeleteModal(1,'đánh giá này')" title="Xóa"><i
+                                                class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                                <tr data-movie="Ám Ảnh Đêm Thâu" data-status="Đã duyệt"
+                                    data-search="trần thị b phim dở ẹc">
+                                    <td>
+                                        <div class="user-cell">
+                                            <img class="user-avatar"
+                                                src="https://ui-avatars.com/api/?name=Tran+Thi+B&background=e74a3b&color=fff"
+                                                alt="">
+                                            Trần Thị B
+                                        </div>
+                                    </td>
+                                    <td>Ám Ảnh Đêm Thâu</td>
+                                    <td><span class="stars">★★</span><span class="stars-empty">★★★</span></td>
+                                    <td class="review-content">"Phim dở ẹc, phí tiền mua vé. Không đáng xem tí nào =)))"
+                                    </td>
+                                    <td><small class="shared-ext-24">13/08/2026<br>20:10</small></td>
+                                    <td><span class="badge badge-success">Đã duyệt</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-warning" onclick="hideReview(this)" title="Ẩn"><i
+                                                class="fas fa-eye-slash"></i></button>
+                                        <button class="btn btn-sm btn-danger"
+                                            onclick="openDeleteModal(2,'đánh giá này')" title="Xóa"><i
+                                                class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                                <tr data-movie="Nhiệm Vụ Đỏ" data-status="Đã ẩn"
+                                    data-search="user ẩn danh nội dung vi phạm">
+                                    <td>
+                                        <div class="user-cell">
+                                            <img class="user-avatar"
+                                                src="https://ui-avatars.com/api/?name=User&background=858796&color=fff"
+                                                alt="">
+                                            <span class="shared-ext-24">User_Ẩn_Danh</span>
+                                        </div>
+                                    </td>
+                                    <td>Nhiệm Vụ Đỏ</td>
+                                    <td><span class="stars">★</span><span class="stars-empty">★★★★</span></td>
+                                    <td class="review-content reviews-ext-3">"[Nội dung vi phạm tiêu chuẩn cộng đồng]"
+                                    </td>
+                                    <td><small class="shared-ext-24">12/08/2026<br>02:45</small></td>
+                                    <td><span class="badge badge-danger">Đã ẩn</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-success" onclick="approveReview(this)"
+                                            title="Hiện lại"><i class="fas fa-eye"></i></button>
+                                        <button class="btn btn-sm btn-danger"
+                                            onclick="openDeleteModal(3,'bình luận vi phạm này')"
+                                            title="Xóa vĩnh viễn"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                                <tr data-movie="Thỏ Ơi Chạy Đi!" data-status="Chờ duyệt"
+                                    data-search="lê hoàng c hoạt hình dễ thương">
+                                    <td>
+                                        <div class="user-cell">
+                                            <img class="user-avatar"
+                                                src="https://ui-avatars.com/api/?name=Le+Hoang+C&background=1cc88a&color=fff"
+                                                alt="">
+                                            Lê Hoàng C
+                                        </div>
+                                    </td>
+                                    <td>Thỏ Ơi Chạy Đi!</td>
+                                    <td><span class="stars">★★★★</span><span class="stars-empty">★</span></td>
+                                    <td class="review-content">"Hoạt hình dễ thương, thông điệp ý nghĩa, rất hợp xem
+                                        cùng gia đình."</td>
+                                    <td><small class="shared-ext-24">11/08/2026<br>18:20</small></td>
+                                    <td><span class="badge badge-warning">Chờ duyệt</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-success" onclick="approveReview(this)"
+                                            title="Duyệt"><i class="fas fa-check"></i></button>
+                                        <button class="btn btn-sm btn-danger"
+                                            onclick="openDeleteModal(4,'đánh giá này')" title="Xóa"><i
+                                                class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                                <tr data-movie="Đại Chiến Hành Tinh" data-status="Đã duyệt"
+                                    data-search="phạm thị d kỹ xảo tạm được">
+                                    <td>
+                                        <div class="user-cell">
+                                            <img class="user-avatar"
+                                                src="https://ui-avatars.com/api/?name=Pham+Thi+D&background=36b9cc&color=fff"
+                                                alt="">
+                                            Phạm Thị D
+                                        </div>
+                                    </td>
+                                    <td>Đại Chiến Hành Tinh</td>
+                                    <td><span class="stars">★★★</span><span class="stars-empty">★★</span></td>
+                                    <td class="review-content">"Kỹ xảo tạm được, cốt truyện hơi khó hiểu."</td>
+                                    <td><small class="shared-ext-24">10/08/2026<br>21:00</small></td>
+                                    <td><span class="badge badge-success">Đã duyệt</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-warning" onclick="hideReview(this)" title="Ẩn"><i
+                                                class="fas fa-eye-slash"></i></button>
+                                        <button class="btn btn-sm btn-danger"
+                                            onclick="openDeleteModal(5,'đánh giá này')" title="Xóa"><i
+                                                class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL XÁC NHẬN XÓA -->
+    <div class="modal-overlay" id="deleteModal">
+        <div class="modal shared-ext-17">
+            <div class="modal-header">
+                <h2>Xác Nhận Xóa</h2><button class="modal-close" onclick="closeModal('deleteModal')"><i
+                        class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body shared-ext-18">
+                <div class="delete-icon-wrap"><i class="fas fa-trash-alt"></i></div>
+                <h3 class="shared-ext-19">Xóa vĩnh viễn?</h3>
+                <p class="shared-ext-20">Bạn sắp xóa <strong id="deleteTarget"></strong>.<br>Hành động này không thể
+                    hoàn tác.</p>
+                <div class="shared-ext-21">
+                    <button class="btn btn-danger" onclick="confirmDelete()"><i
+                            class="fas fa-trash shared-ext-16"></i>Xóa ngay</button>
+                    <button class="btn shared-ext-22" onclick="closeModal('deleteModal')">Hủy</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../assets/js/app.js"></script>
+    <script>
+        function openModal(id) { document.getElementById(id).classList.add('active'); }
+        function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+
+        let pendingDeleteRow = null;
+        function openDeleteModal(id, target) {
+            document.getElementById('deleteTarget').textContent = target;
+            pendingDeleteRow = document.querySelector(`#reviewTableBody tr:nth-child(${id})`);
+            openModal('deleteModal');
+        }
+        function confirmDelete() {
+            if (pendingDeleteRow) { pendingDeleteRow.style.opacity = '0'; pendingDeleteRow.style.transition = 'opacity .3s'; setTimeout(() => { pendingDeleteRow.remove(); updateStats(); }, 300); }
+            closeModal('deleteModal'); showToast('Đã xóa đánh giá thành công!', 'success');
+        }
+        function approveReview(btn) {
+            const row = btn.closest('tr');
+            row.cells[5].querySelector('.badge').textContent = 'Đã duyệt';
+            row.cells[5].querySelector('.badge').className = 'badge badge-success';
+            row.dataset.status = 'Đã duyệt';
+            const cell = row.cells[6];
+            const idx = [...row.parentNode.children].indexOf(row) + 1;
+            cell.innerHTML = `<button class="btn btn-sm btn-warning" onclick="hideReview(this)" title="Ẩn"><i class="fas fa-eye-slash"></i></button>
+                            <button class="btn btn-sm btn-danger" onclick="openDeleteModal(${idx},'đánh giá này')" title="Xóa"><i class="fas fa-trash"></i></button>`;
+            updateStats(); showToast('Đã duyệt bình luận!', 'success');
+        }
+        function hideReview(btn) {
+            const row = btn.closest('tr');
+            row.cells[5].querySelector('.badge').textContent = 'Đã ẩn';
+            row.cells[5].querySelector('.badge').className = 'badge badge-danger';
+            row.dataset.status = 'Đã ẩn';
+            const cell = row.cells[6];
+            const idx = [...row.parentNode.children].indexOf(row) + 1;
+            cell.innerHTML = `<button class="btn btn-sm btn-success" onclick="approveReview(this)" title="Hiện lại"><i class="fas fa-eye"></i></button>
+                            <button class="btn btn-sm btn-danger" onclick="openDeleteModal(${idx},'bình luận này')" title="Xóa vĩnh viễn"><i class="fas fa-trash"></i></button>`;
+            updateStats(); showToast('Đã ẩn bình luận!', 'warning');
+        }
+        function filterTable() {
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            const movie = document.getElementById('filterMovie').value;
+            const status = document.getElementById('filterStatus').value;
+            document.querySelectorAll('#reviewTableBody tr').forEach(row => {
+                const s = row.dataset.search || '';
+                const ok = (!search || s.includes(search)) && (!movie || row.dataset.movie === movie) && (!status || row.dataset.status === status);
+                row.style.display = ok ? '' : 'none';
+            });
+        }
+        function updateStats() {
+            const rows = document.querySelectorAll('#reviewTableBody tr');
+            let total = 0, pending = 0, approved = 0, hidden = 0;
+            rows.forEach(r => { total++; const s = r.dataset.status; if (s === 'Chờ duyệt') pending++; else if (s === 'Đã duyệt') approved++; else if (s === 'Đã ẩn') hidden++; });
+            document.getElementById('stat-total').textContent = total;
+            document.getElementById('stat-pending').textContent = pending;
+            document.getElementById('stat-approved').textContent = approved;
+            document.getElementById('stat-hidden').textContent = hidden;
+        }
+        function showToast(message, type = 'success') {
+            let c = document.getElementById('_tc'); if (!c) { c = document.createElement('div'); c.id = '_tc'; c.style.cssText = 'position:fixed;top:20px;right:24px;z-index:99999;display:flex;flex-direction:column;gap:10px;'; document.body.appendChild(c); }
+            const colors = { success: '#1cc88a', warning: '#f6c23e', danger: '#e74a3b' }; const icons = { success: 'check-circle', warning: 'exclamation-triangle', danger: 'times-circle' };
+            const t = document.createElement('div'); t.style.cssText = `display:flex;align-items:center;gap:10px;background:#2d3748;border-left:4px solid ${colors[type]};color:#fff;padding:12px 18px;border-radius:8px;box-shadow:0 4px 20px rgba(0,0,0,.4);min-width:260px;font-size:14px;font-weight:600;`;
+            t.innerHTML = `<i class="fas fa-${icons[type]}" style="color:${colors[type]};font-size:18px;"></i>${message}`;
+            c.appendChild(t); setTimeout(() => { t.style.opacity = '0'; t.style.transition = 'opacity .3s'; setTimeout(() => t.remove(), 300); }, 3500);
+        }
+    </script>
+</body>
+
+</html>
