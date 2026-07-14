@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thanh Toán - CineTicket</title>
+    <link rel="stylesheet" href="../assets/css/user/style.css?v=2.7">
+    <link rel="stylesheet" href="../assets/css/user/booking-payment.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+
+<body>
+    <nav class="navbar user-ext-1">
+        <a href="index.html" class="logo">CineTicket</a>
+        <ul class="nav-links">
+            <li><a href="index.html">Trang Chủ</a></li>
+            <li><a href="phim.html">Phim Đang Chiếu</a></li>
+            <li><a href="lich-chieu.html">Lịch Chiếu</a></li>
+            <li><a href="khuyen-mai.html">Khuyến Mãi</a></li>
+        </ul>
+        <div class="nav-right d-flex-center">
+            <form action="phim.html" method="GET" class="search-form">
+                <input type="text" name="q" placeholder="Tìm kiếm phim...">
+                <button type="submit"><i class="fas fa-search"></i></button>
+            </form>
+            <div class="nav-buttons">
+                <a href="login.html" class="btn btn-login">Đăng Nhập</a>
+                <a href="register.html" class="btn btn-primary">Đăng Ký</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="payment-container">
+        <div class="payment-methods">
+            <h2 class="user-ext-9">Phương Thức Thanh Toán</h2>
+
+            <label class="method-option selected">
+                <input type="radio" name="payment" value="momo" checked>
+                <div class="method-icon user-ext-10">MoMo</div>
+                <div>
+                    <h4>Ví điện tử MoMo</h4>
+                    <p class="user-ext-2">Thanh toán qua ứng dụng MoMo</p>
+                </div>
+            </label>
+
+            <label class="method-option">
+                <input type="radio" name="payment" value="vnpay">
+                <div class="method-icon user-ext-11">VNPay</div>
+                <div>
+                    <h4>VNPAY-QR</h4>
+                    <p class="user-ext-2">Quét mã QR qua ứng dụng ngân hàng</p>
+                </div>
+            </label>
+
+            <label class="method-option">
+                <input type="radio" name="payment" value="atm">
+                <div class="method-icon user-ext-12">ATM</div>
+                <div>
+                    <h4>Thẻ ATM nội địa</h4>
+                    <p class="user-ext-2">Hỗ trợ tất cả ngân hàng tại VN</p>
+                </div>
+            </label>
+
+            <label class="method-option">
+                <input type="radio" name="payment" value="visa">
+                <div class="method-icon user-ext-13">Visa</div>
+                <div>
+                    <h4>Thẻ quốc tế</h4>
+                    <p class="user-ext-2">Visa, Mastercard, JCB</p>
+                </div>
+            </label>
+
+            <p class="user-ext-14">* Bằng việc bấm thanh toán, bạn đồng ý với các điều khoản của CineTicket. Vé đã mua
+                không thể hoàn/hủy.</p>
+        </div>
+
+        <div class="payment-summary">
+            <h3 class="user-ext-15">Thông tin đơn hàng</h3>
+
+            <h4 class="user-ext-16">Nhiệm Vụ Đỏ</h4>
+            <p class="user-ext-17">20:00 | Hôm nay 15/08 | Rạp 1</p>
+
+            <div class="summary-row">
+                <span id="payment-seat-names">Ghế (B4, B5)</span>
+                <span class="text-white" id="payment-seat-total">180.000đ</span>
+            </div>
+            <div class="summary-row" id="payment-combo-row">
+                <span id="payment-combo-names">Combo Cặp Đôi (x1)</span>
+                <span class="text-white" id="payment-combo-total">110.000đ</span>
+            </div>
+            <div class="summary-row user-ext-18">
+                <span>Khuyến mãi</span>
+                <span class="text-white">0đ</span>
+            </div>
+
+            <div class="summary-row user-ext-19">
+                <span class="text-white">TỔNG CỘNG</span>
+                <span class="text-primary" id="payment-grand-total">290.000đ</span>
+            </div>
+
+            <div class="user-ext-20" id="countdown-timer">
+                <i class="far fa-clock"></i> 03:15 Giữ ghế
+            </div>
+            <button class="btn btn-primary user-ext-21" onclick="processPayment()">Thanh Toán Ngay</button>
+        </div>
+    </div>
+
+    <!-- Modal Vé Điện Tử -->
+    <div id="ticketModal" class="user-ext-22">
+        <div class="user-ext-23">
+            <div class="user-ext-24">✓</div>
+            <h2 class="user-ext-25">Thanh toán thành công!</h2>
+            <p class="user-ext-26">Vé điện tử đã được gửi về email của bạn.</p>
+            <div class="user-ext-27">
+                <p><strong>Mã vé:</strong> <span class="text-primary">CT-829310</span></p>
+                <p class="user-ext-28"><strong>Phim:</strong> Nhiệm Vụ Đỏ</p>
+                <p class="user-ext-28"><strong>Ghế:</strong> <span id="modal-seat-names">B4, B5</span></p>
+                <p class="user-ext-28" id="modal-combo-container" style="display: none;"><strong>Combo:</strong> <span
+                        id="modal-combo-names">Không</span></p>
+            </div>
+            <button class="btn btn-primary" onclick="window.location.href='profile.html'">Về Trang Quản Lý</button>
+        </div>
+    </div>
+
+    <!-- QR Modal -->
+    <div id="qrModal" class="user-ext-22">
+        <div class="modal-content-box text-center">
+            <h3 style="margin-bottom: 20px; color: white;">Quét mã QR để thanh toán</h3>
+            <div class="qr-wrapper">
+                <i class="fas fa-qrcode" style="font-size: 180px; color: #1e1f29;"></i>
+            </div>
+            <p class="modal-subtitle">Sử dụng ứng dụng ngân hàng hoặc ví điện tử để quét mã.</p>
+            <button class="btn btn-primary" onclick="confirmPayment('qrModal')" style="width: 100%;">Đã thanh toán
+                xong</button>
+            <button class="btn btn-transparent" onclick="closeModal('qrModal')">Hủy giao dịch</button>
+        </div>
+    </div>
+
+    <!-- Card Info Modal -->
+    <div id="cardModal" class="user-ext-22">
+        <div class="modal-content-box">
+            <h3 style="margin-bottom: 20px; color: white; text-align: center;">Thông tin thẻ thanh toán</h3>
+            <div class="modal-input-group">
+                <label>Số thẻ</label>
+                <input type="text" class="modal-input" placeholder="0000 0000 0000 0000">
+            </div>
+            <div class="modal-input-group">
+                <label>Tên in trên thẻ</label>
+                <input type="text" class="modal-input" placeholder="NGUYEN VAN A" style="text-transform: uppercase;">
+            </div>
+            <div class="flex-gap">
+                <div class="flex-1">
+                    <label>Ngày hết hạn</label>
+                    <input type="text" class="modal-input" placeholder="MM/YY">
+                </div>
+                <div class="flex-1">
+                    <label>CVV</label>
+                    <input type="password" class="modal-input" placeholder="•••">
+                </div>
+            </div>
+            <button class="btn btn-primary" onclick="confirmPayment('cardModal')" style="width: 100%;">Xác nhận thanh
+                toán</button>
+            <button class="btn btn-transparent" onclick="closeModal('cardModal')">Hủy giao dịch</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const seatNames = localStorage.getItem('bookingSeatNames') || 'Chưa chọn';
+            const seatTotal = parseInt(localStorage.getItem('bookingSeatTotal')) || 0;
+            const comboNames = localStorage.getItem('bookingComboNames') || '';
+            const comboTotal = parseInt(localStorage.getItem('bookingComboTotal')) || 0;
+
+            document.getElementById('payment-seat-names').textContent = `Ghế (${seatNames})`;
+            document.getElementById('payment-seat-total').textContent = new Intl.NumberFormat('vi-VN').format(seatTotal) + 'đ';
+            document.getElementById('modal-seat-names').textContent = seatNames;
+
+            const comboRow = document.getElementById('payment-combo-row');
+            if (comboTotal > 0 && comboNames) {
+                document.getElementById('payment-combo-names').textContent = comboNames;
+                document.getElementById('payment-combo-total').textContent = new Intl.NumberFormat('vi-VN').format(comboTotal) + 'đ';
+                document.getElementById('modal-combo-container').style.display = 'block';
+                document.getElementById('modal-combo-names').textContent = comboNames;
+            } else {
+                comboRow.style.display = 'none';
+            }
+
+            const grandTotal = seatTotal + comboTotal;
+            document.getElementById('payment-grand-total').textContent = new Intl.NumberFormat('vi-VN').format(grandTotal) + 'đ';
+
+            // Hiển thị tĩnh 05:00, timer sẽ bắt đầu khi bấm “Thanh Toán Ngay”
+            const timerElement = document.getElementById('countdown-timer');
+            timerElement.innerHTML = `<i class="far fa-clock"></i> 05:00 Giữ ghế`;
+        });
+
+        // Biến toàn cục để quản lý timer
+        window.paymentTimerInterval = null;
+
+        function startHoldTimer() {
+            const timerElement = document.getElementById('countdown-timer');
+            let timeLeft = 5 * 60; // 5 phút
+
+            // Ghi nhận thời điểm hết hạn
+            const endTime = new Date().getTime() + timeLeft * 1000;
+            localStorage.setItem('bookingEndTime', endTime);
+
+            function updateTimer() {
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                timerElement.innerHTML = `<i class="far fa-clock"></i> ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')} Giữ ghế`;
+
+                if (timeLeft <= 0) {
+                    clearInterval(window.paymentTimerInterval);
+                    localStorage.removeItem('bookingEndTime');
+                    // Đóng các modal đang mở nếu có
+                    closeModal('qrModal');
+                    closeModal('cardModal');
+                    alert('Thời gian giữ ghế đã hết! Hệ thống sẽ đưa bạn quay lại chọn ghế.');
+                    window.location.href = 'booking-seat.html';
+                } else {
+                    timeLeft--;
+                }
+            }
+
+            updateTimer();
+            window.paymentTimerInterval = setInterval(updateTimer, 1000);
+        }
+
+        function processPayment() {
+            const selectedMethod = document.querySelector('input[name="payment"]:checked').value;
+
+            // Bước 7 UC11: Giữ ghế tạm thời ngay khi khách hàng xác nhận thanh toán
+            // Chỉ khởi động timer nếu chưa chạy
+            if (!window.paymentTimerInterval) {
+                startHoldTimer();
+            }
+
+            if (selectedMethod === 'momo' || selectedMethod === 'vnpay') {
+                document.getElementById('qrModal').style.display = 'flex';
+            } else {
+                document.getElementById('cardModal').style.display = 'flex';
+            }
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        function confirmPayment(modalId) {
+            let btn = document.querySelector(`#${modalId} .btn-primary`);
+            let originalText = btn.innerHTML;
+            btn.innerHTML = 'Đang xử lý...';
+            btn.disabled = true;
+
+            clearInterval(window.paymentTimerInterval);
+            localStorage.removeItem('bookingEndTime');
+
+            setTimeout(() => {
+                closeModal(modalId);
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+
+                document.getElementById('ticketModal').style.display = 'flex';
+            }, 1500);
+        }
+
+        document.querySelectorAll('.method-option input').forEach(input => {
+            input.addEventListener('change', function () {
+                document.querySelectorAll('.method-option').forEach(opt => opt.classList.remove('selected'));
+                if (this.checked) {
+                    this.closest('.method-option').classList.add('selected');
+                }
+            });
+        });
+    </script>
+    <script src="../assets/js/app.js"></script>
+</body>
+
+</html>
