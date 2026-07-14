@@ -1,0 +1,72 @@
+<!-- login.html -->
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Nhập - CineTicket</title>
+    <link rel="stylesheet" href="../assets/css/user/style.css?v=2.7">
+    <link rel="stylesheet" href="../assets/css/user/login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/user/forgot-password.css">
+</head>
+<body class="auth-body">
+<div id="toast-container"></div>
+<div class="auth-container">
+    <h2>ĐĂNG NHẬP</h2>
+    <form id="loginForm">
+        <div class="form-group">
+            <input type="email" placeholder="Email của bạn" required>
+        </div>
+        <div class="form-group">
+            <input type="password" placeholder="Mật khẩu" required>
+        </div>
+        <div  class="user-ext-66" >
+            <a href="forgot-password.html"  class="user-ext-67"  onmouseover="this.style.color='var(--primary-red)'" onmouseout="this.style.color='#bbb'">Quên mật khẩu?</a>
+        </div>
+        <button type="submit" class="btn btn-primary auth-btn">Vào Rạp</button>
+    </form>
+    <div class="auth-links">
+        <p>Chưa có tài khoản? <a href="register.html">Đăng ký ngay</a></p>
+        <p  class="user-ext-46" ><a href="index.html"  class="text-muted" >← Trở về trang chủ</a></p>
+    </div>
+</div>
+<script>
+    function showToast(message, type = 'info', duration = 3000) {
+        const container = document.getElementById('toast-container');
+        const icons = {
+            success: '<i class="fas fa-check-circle toast-icon"></i>',
+            error:   '<i class="fas fa-times-circle toast-icon"></i>',
+            info:    '<i class="fas fa-info-circle toast-icon"></i>'
+        };
+        const toast = document.createElement('div');
+        toast.className = `toast toast-${type}`;
+        toast.innerHTML = `${icons[type] || icons.info}<span>${message}</span>`;
+        container.appendChild(toast);
+        setTimeout(() => {
+            toast.classList.add('toast-out');
+            toast.addEventListener('animationend', () => toast.remove());
+        }, duration);
+    }
+
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const email = document.querySelector('input[type="email"]').value;
+        const password = document.querySelector('input[type="password"]').value;
+
+        if (email.startsWith('admin') && password === '123') {
+            localStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem('userRole', 'admin');
+            showToast('Đăng nhập Quản trị viên thành công!', 'success', 800);
+            setTimeout(() => { window.location.href = '../admin/index.html'; }, 800);
+        } else {
+            localStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem('userRole', 'user');
+            showToast('Đăng nhập thành công!', 'success', 800);
+            setTimeout(() => { window.location.href = 'index.html'; }, 800);
+        }
+    });
+</script>
+<script src="../assets/js/app.js"></script>
+</body>
+</html>
