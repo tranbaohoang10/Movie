@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chỉnh Sửa Thông Tin - CineTicket Admin</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/admin/style.css">
+    <link rel="stylesheet" href="../assets/css/admin/profile.css">
+</head>
+
+<body>
+<div class="sidebar"></div>
+<div class="main-wrapper">
+    <div class="topbar">
+        <div class="user-info">
+            <span class="shared-ext-1" id="topbar-name">Admin</span>
+            <img id="topbar-avatar" src="https://ui-avatars.com/api/?name=Admin&background=4e73df&color=fff"
+                 alt="Admin">
+        </div>
+    </div>
+
+    <div class="content">
+        <div id="profile" class="section active">
+            <div class="shared-ext-2">
+                <h1 class="page-title shared-ext-3">
+                    <i class="fas fa-user-edit" style="margin-right:8px;color:#4e73df;"></i>Chỉnh Sửa Thông Tin
+                </h1>
+            </div>
+
+            <div class="profile-layout">
+                <!-- Avatar Card -->
+                <div class="profile-avatar-card">
+                    <div class="avatar-wrapper">
+                        <img id="previewAvatar"
+                             src="https://ui-avatars.com/api/?name=Admin&background=4e73df&color=fff&size=200"
+                             alt="Avatar" class="avatar-img">
+                        <label class="avatar-edit-btn" for="avatarInput" title="Đổi ảnh đại diện">
+                            <i class="fas fa-camera"></i>
+                        </label>
+                        <input type="file" id="avatarInput" accept="image/*">
+                    </div>
+                    <div class="profile-name" id="displayName">Trần Bảo Hoàng</div>
+                    <div class="profile-role-badge">
+                        <i class="fas fa-shield-alt"></i> Quản trị viên
+                    </div>
+                    <div class="profile-meta">
+                        <div class="profile-meta-item">
+                            <i class="fas fa-envelope"></i>
+                            <span id="displayEmail">admin@cineticket.vn</span>
+                        </div>
+                        <div class="profile-meta-item">
+                            <i class="fas fa-phone"></i>
+                            <span id="displayPhone">0901234567</span>
+                        </div>
+                        <div class="profile-meta-item">
+                            <i class="fas fa-calendar-check"></i>
+                            <span>Tham gia: 01/01/2024</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form Card -->
+                <div class="profile-form-card">
+                    <div class="card-header">
+                        <i class="fas fa-id-card"></i> Thông Tin Tài Khoản
+                    </div>
+                    <div class="card-body">
+                        <form id="profileForm" onsubmit="saveProfile(event)">
+                            <!-- Thông tin cơ bản -->
+                            <div class="form-row-2">
+                                <div class="form-group">
+                                    <label for="firstName"><i class="fas fa-user shared-ext-16"></i> Họ</label>
+                                    <input type="text" id="firstName" value="Trần Bảo" placeholder="Nhập họ...">
+                                </div>
+                                <div class="form-group">
+                                    <label for="lastName"><i class="fas fa-user shared-ext-16"></i> Tên</label>
+                                    <input type="text" id="lastName" value="Hoàng" placeholder="Nhập tên...">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email"><i class="fas fa-envelope shared-ext-16"></i> Email</label>
+                                <input type="email" id="email" value="admin@cineticket.vn"
+                                       placeholder="Nhập email...">
+                            </div>
+
+                            <div class="form-row-2">
+                                <div class="form-group">
+                                    <label for="phone"><i class="fas fa-phone shared-ext-16"></i> Số điện
+                                        thoại</label>
+                                    <input type="tel" id="phone" value="0901234567"
+                                           placeholder="Nhập số điện thoại...">
+                                </div>
+                                <div class="form-group">
+                                    <label for="gender"><i class="fas fa-venus-mars shared-ext-16"></i> Giới
+                                        tính</label>
+                                    <select id="gender">
+                                        <option value="male" selected>Nam</option>
+                                        <option value="female">Nữ</option>
+                                        <option value="other">Khác</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="dob"><i class="fas fa-birthday-cake shared-ext-16"></i> Ngày
+                                    sinh</label>
+                                <input type="date" id="dob" value="1990-01-15">
+                            </div>
+
+                            <!-- Đổi mật khẩu -->
+                            <div class="section-divider">
+                                <span>Đổi mật khẩu</span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="currentPassword"><i class="fas fa-lock shared-ext-16"></i> Mật khẩu hiện
+                                    tại</label>
+                                <div class="password-wrapper">
+                                    <input type="password" id="currentPassword"
+                                           placeholder="Nhập mật khẩu hiện tại...">
+                                    <button type="button" class="password-toggle"
+                                            onclick="togglePassword('currentPassword', this)">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="form-row-2">
+                                <div class="form-group">
+                                    <label for="newPassword"><i class="fas fa-key shared-ext-16"></i> Mật khẩu
+                                        mới</label>
+                                    <div class="password-wrapper">
+                                        <input type="password" id="newPassword" placeholder="Nhập mật khẩu mới..."
+                                               oninput="checkPasswordStrength(this.value)">
+                                        <button type="button" class="password-toggle"
+                                                onclick="togglePassword('newPassword', this)">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    </div>
+                                    <div class="password-strength" id="strengthContainer" style="display:none;">
+                                        <div class="strength-bars">
+                                            <div class="strength-bar" id="bar1"></div>
+                                            <div class="strength-bar" id="bar2"></div>
+                                            <div class="strength-bar" id="bar3"></div>
+                                        </div>
+                                        <span class="strength-label" id="strengthLabel"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="confirmPassword"><i class="fas fa-check-double shared-ext-16"></i>
+                                        Xác nhận mật khẩu</label>
+                                    <div class="password-wrapper">
+                                        <input type="password" id="confirmPassword"
+                                               placeholder="Nhập lại mật khẩu mới...">
+                                        <button type="button" class="password-toggle"
+                                                onclick="togglePassword('confirmPassword', this)">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-secondary" onclick="resetForm()">
+                                    <i class="fas fa-undo shared-ext-16"></i> Đặt lại
+                                </button>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save shared-ext-16"></i> Lưu thay đổi
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Toast Container -->
+<div class="toast-container" id="toastContainer"></div>
+
+<script>
+    // ===== Avatar Preview =====
+    document.getElementById('avatarInput').addEventListener('change', function (e) {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function (ev) {
+            document.getElementById('previewAvatar').src = ev.target.result;
+            document.getElementById('topbar-avatar').src = ev.target.result;
+        };
+        reader.readAsDataURL(file);
+    });
+
+    // ===== Toggle Password Visibility =====
+    function togglePassword(inputId, btn) {
+        const input = document.getElementById(inputId);
+        const icon = btn.querySelector('i');
+        if (input.type === 'password') {
+            input.type = 'text';
+            icon.classList.replace('fa-eye', 'fa-eye-slash');
+        } else {
+            input.type = 'password';
+            icon.classList.replace('fa-eye-slash', 'fa-eye');
+        }
+    }
+
+    // ===== Password Strength Checker =====
+    function checkPasswordStrength(value) {
+        const container = document.getElementById('strengthContainer');
+        const bars = [document.getElementById('bar1'), document.getElementById('bar2'), document.getElementById('bar3')];
+        const label = document.getElementById('strengthLabel');
+
+        if (!value) {
+            container.style.display = 'none';
+            bars.forEach(b => b.className = 'strength-bar');
+            return;
+        }
+        container.style.display = 'flex';
+
+        let score = 0;
+        if (value.length >= 8) score++;
+        if (/[A-Z]/.test(value) && /[0-9]/.test(value)) score++;
+        if (/[^A-Za-z0-9]/.test(value)) score++;
+
+        bars.forEach(b => b.className = 'strength-bar');
+
+        if (score === 1) {
+            bars[0].classList.add('weak');
+            label.textContent = 'Yếu';
+            label.className = 'strength-label weak';
+        } else if (score === 2) {
+            bars[0].classList.add('medium');
+            bars[1].classList.add('medium');
+            label.textContent = 'Trung bình';
+            label.className = 'strength-label medium';
+        } else if (score === 3) {
+            bars.forEach(b => b.classList.add('strong'));
+            label.textContent = 'Mạnh';
+            label.className = 'strength-label strong';
+        }
+    }
+
+    // ===== Save Profile =====
+    function saveProfile(e) {
+        e.preventDefault();
+
+        const firstName = document.getElementById('firstName').value.trim();
+        const lastName = document.getElementById('lastName').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const phone = document.getElementById('phone').value.trim();
+        const newPass = document.getElementById('newPassword').value;
+        const confirmPass = document.getElementById('confirmPassword').value;
+
+        if (!firstName || !lastName || !email) {
+            showToast('Vui lòng điền đầy đủ thông tin bắt buộc!', 'warning');
+            return;
+        }
+
+        if (newPass && newPass !== confirmPass) {
+            showToast('Mật khẩu xác nhận không khớp!', 'danger');
+            return;
+        }
+
+        if (newPass && newPass.length < 8) {
+            showToast('Mật khẩu mới phải có ít nhất 8 ký tự!', 'warning');
+            return;
+        }
+
+        // Cập nhật hiển thị trên card
+        const fullName = firstName + ' ' + lastName;
+        document.getElementById('displayName').textContent = fullName;
+        document.getElementById('displayEmail').textContent = email;
+        document.getElementById('displayPhone').textContent = phone;
+        document.getElementById('topbar-name').textContent = lastName || 'Admin';
+
+        // Cập nhật avatar ui-avatars nếu chưa upload ảnh mới
+        const previewSrc = document.getElementById('previewAvatar').src;
+        if (previewSrc.includes('ui-avatars.com')) {
+            const newAvatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(fullName)}&background=4e73df&color=fff&size=200`;
+            document.getElementById('previewAvatar').src = newAvatarUrl;
+            document.getElementById('topbar-avatar').src = newAvatarUrl;
+        }
+
+        // Xóa mật khẩu sau khi lưu
+        document.getElementById('currentPassword').value = '';
+        document.getElementById('newPassword').value = '';
+        document.getElementById('confirmPassword').value = '';
+        document.getElementById('strengthContainer').style.display = 'none';
+
+        showToast('Cập nhật thông tin thành công!', 'success');
+    }
+
+    // ===== Reset Form =====
+    function resetForm() {
+        document.getElementById('profileForm').reset();
+        document.getElementById('strengthContainer').style.display = 'none';
+    }
+
+    // ===== Toast Notification =====
+    function showToast(message, type = 'success') {
+        const container = document.getElementById('toastContainer');
+        const colors = { success: '#1cc88a', warning: '#f6c23e', danger: '#e74a3b' };
+        const icons = { success: 'check-circle', warning: 'exclamation-triangle', danger: 'times-circle' };
+
+        const toast = document.createElement('div');
+        toast.style.cssText = `
+                display:flex;align-items:center;gap:10px;
+                background:#2d3748;border-left:4px solid ${colors[type]};
+                color:#fff;padding:14px 20px;border-radius:8px;
+                box-shadow:0 4px 20px rgba(0,0,0,.35);
+                min-width:280px;font-size:14px;font-weight:600;
+                animation:slideIn 0.3s ease;
+            `;
+        toast.innerHTML = `<i class="fas fa-${icons[type]}" style="color:${colors[type]};font-size:18px;"></i>${message}`;
+        container.appendChild(toast);
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            toast.style.transition = 'opacity 0.3s';
+            setTimeout(() => toast.remove(), 300);
+        }, 3500);
+    }
+</script>
+
+<script src="../assets/js/app.js"></script>
+</body>
+
+</html>
