@@ -57,16 +57,72 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    ensureLogoutConfirmStylesheet();
+    ensureLogoutConfirmModal();
+
 });
 
-// Hàm Đăng xuất toàn cục
-function logout() {
+function ensureLogoutConfirmStylesheet() {
+    if (document.getElementById('logoutConfirmStyle')) {
+        return;
+    }
+    const link = document.createElement('link');
+    link.id = 'logoutConfirmStyle';
+    link.rel = 'stylesheet';
+    link.href = '../assets/css/user/logout-confirm.css';
+    document.head.appendChild(link);
+}
+
+function ensureLogoutConfirmModal() {
+    if (document.getElementById('logoutConfirmOverlay')) {
+        return;
+    }
+    const modal = document.createElement('div');
+    modal.id = 'logoutConfirmOverlay';
+    modal.className = 'logout-confirm-overlay';
+    modal.innerHTML = `
+        <div class="logout-confirm-modal" role="dialog" aria-modal="true" aria-labelledby="logoutConfirmTitle">
+            <div class="logout-confirm-icon"><i class="fas fa-sign-out-alt"></i></div>
+            <h2 id="logoutConfirmTitle">Xác nhận đăng xuất</h2>
+            <p>Bạn có chắc muốn đăng xuất khỏi tài khoản hiện tại không?</p>
+            <div class="logout-confirm-actions">
+                <button type="button" class="btn logout-cancel-btn" onclick="closeLogoutConfirm()">Hủy</button>
+                <button type="button" class="btn btn-primary logout-confirm-btn" onclick="confirmLogout()">Đăng xuất</button>
+            </div>
+        </div>
+    `;
+    modal.addEventListener('click', (event) => {
+        if (event.target === modal) {
+            closeLogoutConfirm();
+        }
+    });
+    document.body.appendChild(modal);
+}
+
+function openLogoutConfirm() {
+    ensureLogoutConfirmModal();
+    document.getElementById('logoutConfirmOverlay').classList.add('show');
+}
+
+function closeLogoutConfirm() {
+    const overlay = document.getElementById('logoutConfirmOverlay');
+    if (overlay) {
+        overlay.classList.remove('show');
+    }
+}
+
+function confirmLogout() {
     localStorage.removeItem("isLoggedIn");
     localStorage.removeItem("userRole");
-    alert('Đã đăng xuất thành công!');
+    closeLogoutConfirm();
     if (window.location.pathname.includes('/admin/')) {
         window.location.href = '../user/index.html';
     } else {
         window.location.href = 'index.html';
     }
+}
+
+// Hàm Đăng xuất toàn cục
+function logout() {
+    openLogoutConfirm();
 }
