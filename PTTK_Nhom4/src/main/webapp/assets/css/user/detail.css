@@ -26,15 +26,18 @@
     color: #ddd;
     font-size: 1rem;
 }
+
 .movie-meta-list li {
     margin-bottom: 12px;
 }
+
 .movie-meta-list i {
     color: var(--primary-red);
     width: 25px;
     text-align: center;
     margin-right: 10px;
 }
+
 .age-rating-badge {
     background: #f1c40f;
     color: #000;
@@ -43,30 +46,36 @@
     font-weight: bold;
     font-size: 0.9rem;
 }
+
 .movie-meta-details {
     margin-bottom: 25px;
     line-height: 1.8;
     color: #ccc;
     font-size: 0.95rem;
 }
+
 .section-heading {
     color: #fff;
     margin-bottom: 10px;
     font-size: 1.2rem;
     text-transform: uppercase;
 }
+
 .movie-desc-section {
     margin-bottom: 25px;
 }
+
 .movie-desc {
     color: #ccc;
     line-height: 1.8;
     font-size: 0.95rem;
     margin-bottom: 0;
 }
+
 .trailer-action-container {
     margin: 20px 0 30px;
 }
+
 .btn-trailer {
     border: 1px solid var(--primary-red);
     color: var(--primary-red);
@@ -80,10 +89,12 @@
     font-weight: bold;
     transition: 0.3s;
 }
+
 .btn-trailer:hover {
     background: var(--primary-red);
     color: #fff;
 }
+
 .btn-trailer i {
     font-size: 1.2rem;
 }
@@ -94,10 +105,16 @@
     padding: 0 20px;
 }
 
+.showtime-section > h3,
+.reviews-section > h3 {
+    margin: 0 0 16px;
+    line-height: 1.2;
+}
+
 .showtime-dates {
     display: flex;
     gap: 15px;
-    margin-bottom: 20px;
+    margin-bottom: 28px;
 }
 
 .date-btn {
@@ -110,7 +127,8 @@
     transition: 0.3s;
 }
 
-.date-btn.active, .date-btn:hover {
+.date-btn.active,
+.date-btn:hover {
     background: var(--primary-red);
     border-color: var(--primary-red);
 }
@@ -139,7 +157,7 @@
 
 .reviews-section {
     max-width: 1200px;
-    margin: 50px auto;
+    margin: 70px auto 50px;
     padding: 0 20px;
 }
 
@@ -149,7 +167,61 @@
     border-radius: 8px;
     margin-bottom: 20px;
 }
+
 .review-card h4 {
     color: var(--primary-red);
     margin-bottom: 10px;
+}
+
+.trailer-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.trailer-modal.show {
+    display: flex;
+    opacity: 1;
+}
+
+.trailer-modal-content {
+    position: relative;
+    width: 90%;
+    max-width: 900px;
+    background: #000;
+    border-radius: 8px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+}
+
+.trailer-modal-content iframe {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border: none;
+    display: block;
+}
+
+.close-modal-btn {
+    position: absolute;
+    top: -40px;
+    right: 0;
+    color: #fff;
+    font-size: 30px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    transition: color 0.3s;
+}
+
+.close-modal-btn:hover {
+    color: var(--primary-red);
 }
